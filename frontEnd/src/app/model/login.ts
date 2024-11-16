@@ -1,5 +1,5 @@
 export interface Login {
-    loginid: number;
-    email: string;
-    passwordhash: string;
+    loginID: number;          // Maps to LoginID in the database
+    email: string;            // Maps to Email
+    passwordHash: string;     // Maps to PasswordHash
 }
