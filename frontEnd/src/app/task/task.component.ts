@@ -17,7 +17,7 @@ export class TaskComponent {
 
   // Method to toggle the task's completion status
   toggleComplete(): void {
-    this.task.isCompleted = !this.task.isCompleted; // Update the task's completion status
+    this.task.isCompleted = !this.task.isCompleted; // Update the task's completion status]
     this.taskUpdated.emit({ id: this.task.taskID, isCompleted: this.task.isCompleted }); // Notify parent using taskID
   }
 }

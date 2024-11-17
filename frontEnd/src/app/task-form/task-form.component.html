@@ -1,0 +1,26 @@
+<p>Task Form Works!</p>
+
+<form (ngSubmit)="onSubmit()">
+  <!-- Task Name -->
+  <label for="taskName">Task Name:</label>
+  <input id="taskName" [(ngModel)]="task.taskName" name="taskName" required />
+
+  <!-- Assigned Roomie -->
+  <label for="assignedRoomie">Assigned Roomie:</label>
+  <select id="assignedRoomie" [(ngModel)]="task.assignedRoomie" name="assignedRoomie" required>
+    <option *ngFor="let roomie of roomies" [value]="roomie.id">{{ roomie.name }}</option>
+  </select>
+
+  <!-- Day of Week -->
+  <label for="dayOfWeek">Day of Week:</label>
+  <select id="dayOfWeek" [(ngModel)]="task.dayOfWeek" name="dayOfWeek" required>
+    <option *ngFor="let day of getDaysOfWeek()" [value]="day">{{ day }}</option>
+  </select>
+
+  <!-- Note -->
+  <label for="note">Note:</label>
+  <textarea id="note" [(ngModel)]="task.note" name="note"></textarea>
+
+  <!-- Submit Button -->
+  <button type="submit">Save Task</button>
+</form>
