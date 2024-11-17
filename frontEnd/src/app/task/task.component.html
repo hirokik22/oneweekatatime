@@ -1,1 +1,6 @@
-<p>task works!</p>
+<div class="task">
+    <p><strong>{{ task.taskName }}</strong></p>
+    <small>{{ task.note }}</small>
+    <p>Status: {{ task.isCompleted ? 'Completed' : 'Incomplete' }}</p>
+    <button (click)="toggleComplete()">Mark {{ task.isCompleted ? 'Incomplete' : 'Complete' }}</button>
+  </div>

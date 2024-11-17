@@ -1,7 +1,28 @@
-<main>
-  <header class="brand-name">
-    <img class="brand-logo" src="/assets/logo.svg" alt="logo" aria-hidden="true">
+<!-- NEW CODE -->
+<div class="app-container">
+  <!-- Header Section -->
+  <header>
+    <h1>{{ title }}</h1>
   </header>
-  <section class="content">
-  </section>
-</main>
+
+  <!-- Main Section -->
+  <main>
+    <!-- Weekly Planner -->
+    <div class="weekly-planner">
+      <!-- Loop through days of the week -->
+      <div *ngFor="let day of getDaysOfWeek()" class="day-column">
+        <h3>{{ day }}</h3>
+
+        <!-- Display tasks for the current day -->
+        <div *ngFor="let task of getTasksForDay(day)">
+          <app-task
+            [task]="task"
+            (taskUpdated)="onTaskUpdated($event)">
+          </app-task>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<app-planner></app-planner>

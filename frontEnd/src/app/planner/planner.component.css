@@ -1,0 +1,52 @@
+.week {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .week button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .week button:hover {
+    background-color: #0056b3;
+  }
+  
+  .task-form {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+  }
+  
+  .task-form h3 {
+    margin-top: 0;
+  }
+  
+  .task-form div {
+    margin-bottom: 10px;
+  }
+  
+  .task-form button {
+    margin-right: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .task-form button:first-child {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .task-form button:last-child {
+    background-color: #dc3545;
+    color: white;
+  }
+  
