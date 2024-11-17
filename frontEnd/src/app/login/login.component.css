@@ -1,0 +1,21 @@
+.form-group {
+    margin-bottom: 15px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  input.is-invalid {
+    border-color: red;
+  }
+  
+  .error {
+    color: red;
+    font-size: 0.9em;
+  }
+  
