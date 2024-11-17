@@ -4,6 +4,8 @@ import { PlannerComponent } from './planner/planner.component'; // Import Planne
 import { TaskComponent } from './task/task.component'; // Import TaskComponent
 import { RoomieComponent } from './roomie/roomie.component'; // Import RoomieComponent
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,9 @@ import { CommonModule } from '@angular/common';
     PlannerComponent, 
     TaskComponent, 
     RoomieComponent,
-    CommonModule // Add CommonModule for *ngFor and *ngIf
+    CommonModule, // Add CommonModule for *ngFor and *ngIf
+    ReactiveFormsModule,
+    LoginComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']

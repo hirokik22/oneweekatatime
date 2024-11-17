@@ -1,28 +1,17 @@
 <div class="login-container">
     <h1>One Week At A Time</h1>
-    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-      <div class="input-group">
+    <form>
+      <div class="form-group">
         <label for="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          formControlName="email"
-          placeholder="Enter your email"
-        />
+        <input type="email" id="email" placeholder="Value" />
       </div>
-      <div class="input-group">
+      <div class="form-group">
         <label for="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          placeholder="Enter your password"
-        />
+        <input type="password" id="password" placeholder="Value" />
       </div>
-      <div class="button-group">
-        <button type="submit" class="btn login-btn">Log In</button>
-        <button type="button" class="btn sign-btn">Sign In</button>
+      <div class="buttons">
+        <button type="button" class="btn login-btn">Log In</button>
+        <button type="button" class="btn signup-btn">Sign In</button>
       </div>
     </form>
   </div>
-  
