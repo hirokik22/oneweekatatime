@@ -1,14 +1,28 @@
-<div>
-    <label>Username</label>
-    <input type="text" [(ngModel)]="username"/>
-</div>
-<div>
-    <label>Password</label>
-        <input type="password" [(ngModel)]="password" />
-</div>
-<div>
-    <button type="button" (click)="login()">Login</button>
-</div>
-    @if(!this.authenticated) {
-    <span>Credentials invalid</span>
-    }
+<div class="login-container">
+    <h1>One Week At A Time</h1>
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+        />
+      </div>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+        />
+      </div>
+      <div class="button-group">
+        <button type="submit" class="btn login-btn">Log In</button>
+        <button type="button" class="btn sign-btn">Sign In</button>
+      </div>
+    </form>
+  </div>
+  

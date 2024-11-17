@@ -1,20 +1,26 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  username: string = '';
-  password: string = '';
-  authenticated = false;
+  loginForm: FormGroup;
 
-  constructor(private router: Router) {}
+  constructor(private fb: FormBuilder) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
 
-  login(){}
+  onSubmit() {
+    if (this.loginForm.valid) {
+      console.log('Form Submitted:', this.loginForm.value);
+    } else {
+      console.log('Form Invalid');
+    }
+  }
 }

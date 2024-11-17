@@ -17,7 +17,7 @@ describe('AppComponent', () => {
   it(`should have the 'OneWeekAtATime' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('OneWeekAtATime');
+    expect(app.title).toEqual('One Week At A Time');
   });
 
   it('should render title', () => {
