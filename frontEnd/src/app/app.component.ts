@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Task } from './model/task'; // Import the Task model
 import { TaskComponent } from './task/task.component'; // Import TaskComponent
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TaskComponent], // Add TaskComponent to the imports
+  imports: [LoginComponent, RouterOutlet, TaskComponent], 
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'] // Correct property name
 })
