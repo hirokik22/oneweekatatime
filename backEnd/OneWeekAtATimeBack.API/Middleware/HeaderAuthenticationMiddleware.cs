@@ -1,4 +1,4 @@
-namespace CourseAdminSystem.API.Middleware;
+/*namespace CourseAdminSystem.API.Middleware;
 
 public class HeaderAuthenticationMiddleware {
     private const string MY_SECRET_VALUE = "Abc123!!!";
@@ -36,3 +36,4 @@ public static class HeaderAuthenticationMiddlewareExtensions {
         return builder.UseMiddleware<HeaderAuthenticationMiddleware>();
     }
 }
+*/

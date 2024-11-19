@@ -1,4 +1,4 @@
-using System.Text;
+/*using System.Text;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CourseAdminSystem.API.Middleware;
@@ -46,3 +46,4 @@ public static class BasicAuthenticationMiddlewareExtensions {
         return builder.UseMiddleware<BasicAuthenticationMiddleware>();
     }
 }
+*/
