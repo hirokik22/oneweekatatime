@@ -1,5 +1,5 @@
-/*namespace CourseAdminSystem.API.Middleware;
-
+namespace CourseAdminSystem.API.Middleware;
+/*
 public class HeaderAuthenticationMiddleware {
     private const string MY_SECRET_VALUE = "Abc123!!!";
     private readonly RequestDelegate _next;
