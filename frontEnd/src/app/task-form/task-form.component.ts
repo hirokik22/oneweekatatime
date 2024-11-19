@@ -14,7 +14,7 @@ export class TaskFormComponent {
 
   task = {
     taskName: '',
-    assignedRoomie: null,
+    assignedRoomie: '',
     dayOfWeek: '',
     note: '',
   };
@@ -32,7 +32,7 @@ export class TaskFormComponent {
   resetForm(): void {
     this.task = {
       taskName: '',
-      assignedRoomie: null,
+      assignedRoomie: '',
       dayOfWeek: '',
       note: '',
     };

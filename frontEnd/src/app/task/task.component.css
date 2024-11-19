@@ -1,22 +1,24 @@
 .task {
-    border: 1px solid #e10909;
-    padding: 10px;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    background-color: #ce851760;
-  }
-  
-  .task button {
-    margin-top: 5px;
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: #c1a11300;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  
-  .task button:hover {
-    background-color: #0056b3;
-  }
-  
+  border: 1px solid #1b09e1;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #1044e060;
+}
+
+.task p,
+.task small {
+  margin: 5px 0;
+}
+
+.task label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.task input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+}

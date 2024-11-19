@@ -1,6 +1,16 @@
 <div class="task">
-    <p><strong>{{ task.taskName }}</strong></p>
-    <small>{{ task.note }}</small>
-    <p>Status: {{ task.isCompleted ? 'Completed' : 'Incomplete' }}</p>
-    <button (click)="toggleComplete()">Mark {{ task.isCompleted ? 'Incomplete' : 'Complete' }}</button>
-  </div>
+  <!-- Display Task Name -->
+  <p><strong>{{ task.taskName }}</strong></p>
+
+  <!-- Display Roomie Name -->
+  <small>Assigned to: {{ getRoomieName(task.assignedRoomie) }}</small>
+
+  <!-- Display Note -->
+  <p>Note: {{ task.note }}</p>
+
+  <!-- Checkbox for Status -->
+  <label>
+    <input type="checkbox" [checked]="task.isCompleted" (change)="toggleComplete()" />
+ {{ task.isCompleted ? 'Completed' : 'Incomplete' }}
+  </label>
+</div>

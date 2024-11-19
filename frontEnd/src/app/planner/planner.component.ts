@@ -15,6 +15,7 @@ export class PlannerComponent {
   taskForm = {
     taskName: '',
     note: '',
+    assignedRoomie: '',
     dayOfWeek: '',
   };
 
@@ -32,6 +33,7 @@ export class PlannerComponent {
     this.isFormVisible = false;
     this.taskForm = {
       taskName: '',
+      assignedRoomie: '',
       note: '',
       dayOfWeek: '',
     };
