@@ -6,19 +6,21 @@ import { RoomieComponent } from './roomie/roomie.component'; // Import RoomieCom
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
+import { SignUpComponent } from "./sign-up/sign-up.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
-    PlannerComponent, 
-    TaskComponent, 
+    PlannerComponent,
+    TaskComponent,
     RoomieComponent,
     CommonModule, // Add CommonModule for *ngFor and *ngIf
     ReactiveFormsModule,
-    LoginComponent
-  ],
+    LoginComponent,
+    SignUpComponent
+],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
