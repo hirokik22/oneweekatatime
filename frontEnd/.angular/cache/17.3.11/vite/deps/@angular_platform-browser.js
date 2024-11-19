@@ -35,8 +35,11 @@ import {
   provideProtractorTestingSupport,
   withHttpTransferCacheOptions,
   withNoHttpTransferCache
-} from "./chunk-FPFBRY45.js";
-import "./chunk-NMHESRE7.js";
+} from "./chunk-HF5YLYNF.js";
+import {
+  getDOM
+} from "./chunk-DXQHJLMU.js";
+import "./chunk-U42NNVZC.js";
 export {
   BrowserModule,
   By,

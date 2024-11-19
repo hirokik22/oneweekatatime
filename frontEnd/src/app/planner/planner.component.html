@@ -16,6 +16,12 @@
       <input id="taskName" [(ngModel)]="taskForm.taskName" name="taskName" />
     </div>
     <div>
+      <label for="assignedRoomie">To Roomie:</label>
+      <textarea id="assignedRoomie" [(ngModel)]="taskForm.note" name="assignedRoomie"></textarea>
+    </div>
+
+
+    <div>
       <label for="note">Note:</label>
       <textarea id="note" [(ngModel)]="taskForm.note" name="note"></textarea>
     </div>
