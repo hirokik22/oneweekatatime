@@ -38,9 +38,11 @@
   }
   
   .buttons {
-    display: flex;
-    justify-content: space-between;
+    display: flex; /* Ensure buttons are aligned horizontally */
+    justify-content: space-between; /* Adjust button spacing */
+    gap: 10px; /* Adds a gap between buttons */
   }
+  
   
   button {
     padding: 10px 20px;
@@ -49,6 +51,19 @@
     cursor: pointer;
     font-weight: bold;
   }
+
+  .button-container {
+    display: flex;
+    gap: 10px; /* Adds space between buttons */
+    justify-content: center; /* Centers the buttons */
+  }
+  
+  .login-btn, .signup-btn {
+    padding: 10px 20px; /* Optional: Adjust padding for better visuals */
+    border: none;
+    cursor: pointer;
+  }
+  
   
   .login-btn {
     background-color: #fbb03b;
