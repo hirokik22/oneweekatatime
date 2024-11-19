@@ -1,8 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "iPorez2XGQUec4rY8+VSRR2d+E4Af0pP6EYh5rXnDnNnHF/wYER6B1JYyqq79aSz5yogfLvlWZ4OA8j+vJoMWg==",
+  "dgSpecHash": "Bc3TWQB1H4dYzEio8AzK2jcf6vnFRT8QY1RBZ54pA3lT9TpnNBicA4Pj5JN4kdLCHU9q5r3sKJCZgGvcHyzOXg==",
   "success": true,
   "projectFilePath": "/Users/francesco/Desktop/OneWeekAtATime/Appliedprogramming/backEnd/OneWeekAtATimeBack.Model/OneWeekAtATimeBack.Model.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/francesco/.nuget/packages/microsoft.extensions.configuration/9.0.0/microsoft.extensions.configuration.9.0.0.nupkg.sha512",
+    "/Users/francesco/.nuget/packages/microsoft.extensions.configuration.abstractions/9.0.0/microsoft.extensions.configuration.abstractions.9.0.0.nupkg.sha512",
+    "/Users/francesco/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.2/microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
+    "/Users/francesco/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.2/microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512",
+    "/Users/francesco/.nuget/packages/microsoft.extensions.primitives/9.0.0/microsoft.extensions.primitives.9.0.0.nupkg.sha512",
+    "/Users/francesco/.nuget/packages/npgsql/9.0.1/npgsql.9.0.1.nupkg.sha512",
+    "/Users/francesco/.nuget/packages/system.diagnostics.diagnosticsource/8.0.1/system.diagnostics.diagnosticsource.8.0.1.nupkg.sha512",
+    "/Users/francesco/.nuget/packages/system.memory/4.5.5/system.memory.4.5.5.nupkg.sha512",
+    "/Users/francesco/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "/Users/francesco/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
+    "/Users/francesco/.nuget/packages/system.text.json/8.0.5/system.text.json.8.0.5.nupkg.sha512"
+  ],
   "logs": []
 }
