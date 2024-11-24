@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from "./sign-up/sign-up.component";
 
-@Component({
+@Component({ 
   selector: 'app-root',
   standalone: true,
   imports: [
@@ -33,7 +33,7 @@ export class AppComponent {
     { id: 1, name: 'Do Laundry', dayOfWeek: 'Monday', isCompleted: false },
     { id: 2, name: 'Buy Groceries', dayOfWeek: 'Tuesday', isCompleted: false },
     { id: 3, name: 'Clean Kitchen', dayOfWeek: 'Monday', isCompleted: true },
-    { id: 4, name: 'Clean Kitchen', dayOfWeek: 'Friday', isCompleted: false }
+    { id: 4, name: 'Clean Kitchen', dayOfWeek: 'Friday', isCompleted: false } //
   ];
 
   // Get the days of the week

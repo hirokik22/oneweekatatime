@@ -1,0 +1,5 @@
+/Users/francesco/Desktop/OneWeekAtATime/Appliedprogramming/backEnd/OneWeekAtATimeBack.Model/obj/Debug/net7.0/OneWeekAtATimeBack.Model.csproj.AssemblyReference.cache
+/Users/francesco/Desktop/OneWeekAtATime/Appliedprogramming/backEnd/OneWeekAtATimeBack.Model/obj/Debug/net7.0/OneWeekAtATimeBack.Model.GeneratedMSBuildEditorConfig.editorconfig
+/Users/francesco/Desktop/OneWeekAtATime/Appliedprogramming/backEnd/OneWeekAtATimeBack.Model/obj/Debug/net7.0/OneWeekAtATimeBack.Model.AssemblyInfoInputs.cache
+/Users/francesco/Desktop/OneWeekAtATime/Appliedprogramming/backEnd/OneWeekAtATimeBack.Model/obj/Debug/net7.0/OneWeekAtATimeBack.Model.AssemblyInfo.cs
+/Users/francesco/Desktop/OneWeekAtATime/Appliedprogramming/backEnd/OneWeekAtATimeBack.Model/obj/Debug/net7.0/OneWeekAtATimeBack.Model.csproj.CoreCompileInputs.cache
