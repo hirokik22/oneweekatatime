@@ -1,4 +1,4 @@
-namespace OneWeekAtATimeBack.API;
+namespace weeklyPlanner.API;
 
 public class WeatherForecast
 {

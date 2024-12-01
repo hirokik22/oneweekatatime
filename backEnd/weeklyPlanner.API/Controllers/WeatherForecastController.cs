@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace OneWeekAtATimeBack.API.Controllers;
+namespace weeklyPlanner.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
