@@ -2,20 +2,24 @@
   <!-- Loop through days of the week -->
   <div *ngFor="let day of getDaysOfWeek()" class="day-column">
     <h3>{{ day }}</h3>
-    <div *ngFor="let task of getTasksForDay(day)" class="task-item">
-      <p>
-        <input
-          type="checkbox"
-          [checked]="task.isCompleted"
-          (change)="toggleTaskCompletion(task)"
-        />
-        {{ task.isCompleted ? 'Completed' : 'Incomplete' }}
-      </p>
-      <p><strong>Task:</strong> {{ task.taskName }}</p>
-      <p><strong>Roomie:</strong> {{ task.assignedRoomie || 'Unassigned' }}</p>
-      <p><strong>Note:</strong> {{ task.note }}</p>
+    <div class="tasks-wrapper">
+      <div *ngFor="let task of getTasksForDay(day)" class="task-item">
+        <!-- Checkbox for completion -->
+        <p>
+          <input
+            type="checkbox"
+            [checked]="task.isCompleted"
+            (change)="toggleTaskCompletion(task)"
+          />
+          {{ task.isCompleted ? 'Completed' : 'Incomplete' }}
+        </p>
+        <!-- Task details -->
+        <p><strong>Task:</strong> {{ task.taskName }}</p>
+        <p><strong>Roomie:</strong> {{ task.assignedRoomie || 'Unassigned' }}</p>
+        <p><strong>Note:</strong> {{ task.note }}</p>
+      </div>
     </div>
-    <!-- Button placed at the bottom center of each column -->
+    <!-- Add Task button at the bottom -->
     <div class="add-task-wrapper">
       <button (click)="addTaskForDay(day)" class="add-task-button">
         Add Task for {{ day }}
