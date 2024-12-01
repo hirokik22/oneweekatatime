@@ -3,10 +3,17 @@
   <div *ngFor="let day of getDaysOfWeek()" class="day-column">
     <h3>{{ day }}</h3>
     <div *ngFor="let task of getTasksForDay(day)" class="task-item">
+      <p>
+        <input
+          type="checkbox"
+          [checked]="task.isCompleted"
+          (change)="toggleTaskCompletion(task)"
+        />
+        {{ task.isCompleted ? 'Completed' : 'Incomplete' }}
+      </p>
       <p><strong>Task:</strong> {{ task.taskName }}</p>
-      <p><strong>Assigned to:</strong> {{ task.assignedRoomie || 'Unassigned' }}</p>
+      <p><strong>Roomie:</strong> {{ task.assignedRoomie || 'Unassigned' }}</p>
       <p><strong>Note:</strong> {{ task.note }}</p>
-      <p>Status: {{ task.isCompleted ? 'Completed' : 'Incomplete' }}</p>
     </div>
     <!-- Button placed at the bottom center of each column -->
     <div class="add-task-wrapper">

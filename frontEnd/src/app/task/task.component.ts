@@ -45,4 +45,8 @@ export class TaskComponent implements OnInit {
 
     this.tasks.push(newTask);
   }
+  toggleTaskCompletion(task: Task): void {
+    task.isCompleted = !task.isCompleted;
+  }
+  
 }

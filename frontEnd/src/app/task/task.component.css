@@ -54,3 +54,17 @@
 .add-task-button:hover {
   background-color: #0056b3;
 }
+
+.task-item p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  align-items: center; /* Center-align the checkbox with the text */
+  gap: 10px; /* Add space between checkbox and label */
+}
+
+input[type='checkbox'] {
+  transform: scale(1.2); /* Make the checkbox slightly larger */
+  cursor: pointer;
+}
