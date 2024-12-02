@@ -195,7 +195,11 @@
           "Microsoft.AspNetCore.App"
         ]
       },
+<<<<<<<< HEAD:backEnd/WeeklyPlanner.API/obj/project.assets.json
       "WeeklyPlanner.Model/1.0.0": {
+========
+      "weeklyPlanner.Model/1.0.0": {
+>>>>>>>> a8a9e355109f31792d240072d6c88e0e7457e1a6:backEnd/weeklyPlanner.API/obj/project.assets.json
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
@@ -203,10 +207,17 @@
           "NpgSql": "9.0.1"
         },
         "compile": {
+<<<<<<<< HEAD:backEnd/WeeklyPlanner.API/obj/project.assets.json
           "bin/placeholder/WeeklyPlanner.Model.dll": {}
         },
         "runtime": {
           "bin/placeholder/WeeklyPlanner.Model.dll": {}
+========
+          "bin/placeholder/weeklyPlanner.Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/weeklyPlanner.Model.dll": {}
+>>>>>>>> a8a9e355109f31792d240072d6c88e0e7457e1a6:backEnd/weeklyPlanner.API/obj/project.assets.json
         }
       }
     }
@@ -766,16 +777,27 @@
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
     },
+<<<<<<<< HEAD:backEnd/WeeklyPlanner.API/obj/project.assets.json
     "WeeklyPlanner.Model/1.0.0": {
       "type": "project",
       "path": "../WeeklyPlanner.Model/WeeklyPlanner.Model.csproj",
       "msbuildProject": "../WeeklyPlanner.Model/WeeklyPlanner.Model.csproj"
+========
+    "weeklyPlanner.Model/1.0.0": {
+      "type": "project",
+      "path": "../weeklyPlanner.Model/weeklyPlanner.Model.csproj",
+      "msbuildProject": "../weeklyPlanner.Model/weeklyPlanner.Model.csproj"
+>>>>>>>> a8a9e355109f31792d240072d6c88e0e7457e1a6:backEnd/weeklyPlanner.API/obj/project.assets.json
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "Swashbuckle.AspNetCore >= 6.6.2",
+<<<<<<<< HEAD:backEnd/WeeklyPlanner.API/obj/project.assets.json
       "WeeklyPlanner.Model >= 1.0.0"
+========
+      "weeklyPlanner.Model >= 1.0.0"
+>>>>>>>> a8a9e355109f31792d240072d6c88e0e7457e1a6:backEnd/weeklyPlanner.API/obj/project.assets.json
     ]
   },
   "packageFolders": {
@@ -784,11 +806,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<<< HEAD:backEnd/WeeklyPlanner.API/obj/project.assets.json
       "projectUniqueName": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/WeeklyPlanner.API.csproj",
       "projectName": "WeeklyPlanner.API",
       "projectPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/WeeklyPlanner.API.csproj",
       "packagesPath": "/Users/hiroki/.nuget/packages/",
       "outputPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/obj/",
+========
+      "projectUniqueName": "/Users/hiroki/HD Projects/project-root/backEnd/weeklyPlanner.API/weeklyPlanner.API.csproj",
+      "projectName": "weeklyPlanner.API",
+      "projectPath": "/Users/hiroki/HD Projects/project-root/backEnd/weeklyPlanner.API/weeklyPlanner.API.csproj",
+      "packagesPath": "/Users/hiroki/.nuget/packages/",
+      "outputPath": "/Users/hiroki/HD Projects/project-root/backEnd/weeklyPlanner.API/obj/",
+>>>>>>>> a8a9e355109f31792d240072d6c88e0e7457e1a6:backEnd/weeklyPlanner.API/obj/project.assets.json
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/hiroki/.nuget/NuGet/NuGet.Config"
@@ -804,8 +834,13 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
+<<<<<<<< HEAD:backEnd/WeeklyPlanner.API/obj/project.assets.json
             "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj": {
               "projectPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj"
+========
+            "/Users/hiroki/HD Projects/project-root/backEnd/weeklyPlanner.Model/weeklyPlanner.Model.csproj": {
+              "projectPath": "/Users/hiroki/HD Projects/project-root/backEnd/weeklyPlanner.Model/weeklyPlanner.Model.csproj"
+>>>>>>>> a8a9e355109f31792d240072d6c88e0e7457e1a6:backEnd/weeklyPlanner.API/obj/project.assets.json
             }
           }
         }
