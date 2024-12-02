@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../buildMultiTargeting/OneWeekAtATimeBack.API.props" />
-</Project>
