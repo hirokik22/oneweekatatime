@@ -1,30 +1,19 @@
-<!-- NEW CODE -->
-<app-login></app-login>
-<app-sign-up></app-sign-up>
 <div class="app-container">
   <!-- Header Section -->
   <header>
-    <h1>{{ title }}</h1>
+    <h1>Task Management</h1>
   </header>
 
-  <!-- Main Section -->
+  <!-- Main Content -->
+  <nav>
+    <a routerLink="/tasks">Tasks</a>
+    <a routerLink="/login">Login</a>
+    <a routerLink="/sign-up">Sign Up</a>
+  </nav>
+  <router-outlet></router-outlet>
+  
   <main>
-    <!-- Weekly Planner -->
-    <div class="weekly-planner">
-      <!-- Loop through days of the week -->
-      <div *ngFor="let day of getDaysOfWeek()" class="day-column">
-        <h3>{{ day }}</h3>
-
-        <!-- Display tasks for the current day -->
-        <div *ngFor="let task of getTasksForDay(day)">
-          <app-task
-            [task]="task"
-            (taskUpdated)="onTaskUpdated($event)">
-          </app-task>
-        </div>
-      </div>
-    </div>
+    <h1>One Week At A Time</h1>
+    <router-outlet></router-outlet> <!-- Placeholder for routing -->
   </main>
 </div>
-
-<app-planner></app-planner>

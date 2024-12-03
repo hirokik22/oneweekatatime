@@ -1,16 +1,29 @@
-<div class="task">
-  <!-- Display Task Name -->
-  <p><strong>{{ task.taskName }}</strong></p>
-
-  <!-- Display Roomie Name -->
-  <small>Assigned to: {{ getRoomieName(task.assignedRoomie) }}</small>
-
-  <!-- Display Note -->
-  <p>Note: {{ task.note }}</p>
-
-  <!-- Checkbox for Status -->
-  <label>
-    <input type="checkbox" [checked]="task.isCompleted" (change)="toggleComplete()" />
- {{ task.isCompleted ? 'Completed' : 'Incomplete' }}
-  </label>
+<div class="weekly-planner">
+  <!-- Loop through days of the week -->
+  <div *ngFor="let day of getDaysOfWeek()" class="day-column">
+    <h3>{{ day }}</h3>
+    <div class="tasks-wrapper">
+      <div *ngFor="let task of getTasksForDay(day)" class="task-item">
+        <!-- Checkbox for completion -->
+        <p>
+          <input
+            type="checkbox"
+            [checked]="task.isCompleted"
+            (change)="toggleTaskCompletion(task)"
+          />
+          {{ task.isCompleted ? 'Completed' : 'Incomplete' }}
+        </p>
+        <!-- Task details -->
+        <p><strong>Task:</strong> {{ task.taskName }}</p>
+        <p><strong>Roomie:</strong> {{ task.assignedRoomie || 'Unassigned' }}</p>
+        <p><strong>Note:</strong> {{ task.note }}</p>
+      </div>
+    </div>
+    <!-- Add Task button at the bottom -->
+    <div class="add-task-wrapper">
+      <button (click)="addTaskForDay(day)" class="add-task-button">
+        Add Task for {{ day }}
+      </button>
+    </div>
+  </div>
 </div>

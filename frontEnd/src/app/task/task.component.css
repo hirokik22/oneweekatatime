@@ -1,24 +1,66 @@
-.task {
-  border: 1px solid #1b09e1;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  background-color: #1044e060;
-}
-
-.task p,
-.task small {
-  margin: 5px 0;
-}
-
-.task label {
+.weekly-planner {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
   gap: 10px;
+}
+
+.day-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column; /* Stack tasks and button vertically */
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  min-height: calc(6 * 120px + 20px); /* Default height for 6 tasks (task height + margins) */
+}
+
+.tasks-wrapper {
+  flex: 1; /* Allow dynamic growth for tasks */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between tasks */
+}
+
+.task-item {
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #d8eaff;
+  height: 120px; /* Fixed height for task items */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.task-item p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.add-task-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: auto; /* Push the button to the bottom */
+}
+
+.add-task-button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
   font-size: 14px;
 }
 
-.task input[type="checkbox"] {
-  transform: scale(1.2);
+.add-task-button:hover {
+  background-color: #0056b3;
+}
+
+input[type='checkbox'] {
+  transform: scale(1.2); /* Make the checkbox slightly larger */
   cursor: pointer;
 }
