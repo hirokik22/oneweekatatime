@@ -54,3 +54,8 @@ typings/
 .DS_Store
 Thumbs.db
 *.tsbuildinfo
+
+# Ignore AssemblyInfo and cache files
+*.AssemblyInfoInputs.cache
+*.AssemblyReference.cache
+AssemblyInfo.cs
