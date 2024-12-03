@@ -12,10 +12,15 @@
 /yarn-error.log
 
 # Angular Cache (Generalized)
-.frontend/.angular/cache/
-.frontend/.angular/cache/*
 .angular/cache/
-.angular/cache/*
+.angular/cache/**
+**/.angular/cache/
+**/.angular/cache/**
+
+# Ignore Angular cache in frontEnd
+frontEnd/.angular/cache/
+frontEnd/.angular/cache/**
+
 
 # IDEs and editors
 .idea/

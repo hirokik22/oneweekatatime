@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 
+<<<<<<<< HEAD:backEnd/WeeklyPlanner.API/Controllers/WeatherForecastController.cs
 namespace WeeklyPlanner.API.Controllers;
+========
+namespace weeklyPlanner.API.Controllers;
+>>>>>>>> a8a9e355109f31792d240072d6c88e0e7457e1a6:backEnd/weeklyPlanner.API/Controllers/WeatherForecastController.cs
 
 [ApiController]
 [Route("[controller]")]
