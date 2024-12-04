@@ -30,7 +30,6 @@ namespace WeeklyPlanner.Model.Repositories
                         return new PlannerTask(Convert.ToInt32(data["taskid"]))
                         {
                             TaskName = data["taskname"].ToString(),
-                            AssignedRoomie = Convert.ToInt32(data["assignedroomie"]),
                             Note = data["note"].ToString(),
                             IsCompleted = Convert.ToBoolean(data["iscompleted"]),
                             DayOfWeek = data["dayofweek"].ToString(),
@@ -64,7 +63,6 @@ namespace WeeklyPlanner.Model.Repositories
                         task.Add(new PlannerTask(Convert.ToInt32(data["taskid"]))
                         {
                             TaskName = data["taskname"].ToString(),
-                            AssignedRoomie = Convert.ToInt32(data["assignedroomie"]),
                             Note = data["note"].ToString(),
                             IsCompleted = Convert.ToBoolean(data["iscompleted"]),
                             DayOfWeek = data["dayofweek"].ToString(),
@@ -81,6 +79,108 @@ namespace WeeklyPlanner.Model.Repositories
             }
         }
 
+        public List<Roomie> GetRoomiesForTask(int taskId)
+        {
+            var roomies = new List<Roomie>();
+            using (var dbConn = new NpgsqlConnection(ConnectionString))
+            {
+                try
+                {
+                    var cmd = dbConn.CreateCommand();
+                    cmd.CommandText = @"SELECT r.roomieid, r.roomiename 
+                                        FROM taskroomies tr 
+                                        INNER JOIN roomie r ON tr.roomieid = r.roomieid 
+                                        WHERE tr.taskid = @taskId";
+                    cmd.Parameters.AddWithValue("@taskId", NpgsqlDbType.Integer, taskId);
+
+                    var data = GetData(dbConn, cmd);
+
+                    while (data != null && data.Read())
+                    {
+                        roomies.Add(new Roomie
+                        {
+                            roomieid = Convert.ToInt32(data["roomieid"]),
+                            roomiename = data["roomiename"].ToString()
+                        });
+                    }
+
+                    return roomies;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error fetching roomies for task", ex);
+                }
+            }
+        }
+
+        public bool AssignRoomieToTask(int taskId, int roomieId)
+        {
+            using (var dbConn = new NpgsqlConnection(ConnectionString))
+            {
+                try
+                {
+                    // Validate taskId exists
+                    var validateTaskCmd = dbConn.CreateCommand();
+                    validateTaskCmd.CommandText = "SELECT COUNT(*) FROM task WHERE taskid = @taskId";
+                    validateTaskCmd.Parameters.AddWithValue("@taskId", NpgsqlDbType.Integer, taskId);
+
+                    dbConn.Open();
+                    var taskExists = Convert.ToInt32(validateTaskCmd.ExecuteScalar()) > 0;
+                    dbConn.Close();
+
+                    if (!taskExists)
+                        throw new Exception($"Task ID {taskId} does not exist.");
+
+                    // Validate roomieId exists
+                    var validateRoomieCmd = dbConn.CreateCommand();
+                    validateRoomieCmd.CommandText = "SELECT COUNT(*) FROM roomie WHERE roomieid = @roomieId";
+                    validateRoomieCmd.Parameters.AddWithValue("@roomieId", NpgsqlDbType.Integer, roomieId);
+
+                    dbConn.Open();
+                    var roomieExists = Convert.ToInt32(validateRoomieCmd.ExecuteScalar()) > 0;
+                    dbConn.Close();
+
+                    if (!roomieExists)
+                        throw new Exception($"Roomie ID {roomieId} does not exist.");
+
+                    // Perform insert into taskroomies
+                    var cmd = dbConn.CreateCommand();
+                    cmd.CommandText = @"INSERT INTO taskroomies (taskid, roomieid)
+                                        VALUES (@taskId, @roomieId)";
+                    cmd.Parameters.AddWithValue("@taskId", NpgsqlDbType.Integer, taskId);
+                    cmd.Parameters.AddWithValue("@roomieId", NpgsqlDbType.Integer, roomieId);
+
+                    return InsertData(dbConn, cmd);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error assigning roomie to task", ex);
+                }
+            }
+        }
+
+
+        public bool RemoveRoomieFromTask(int taskId, int roomieId)
+        {
+            using (var dbConn = new NpgsqlConnection(ConnectionString))
+            {
+                try
+                {
+                    var cmd = dbConn.CreateCommand();
+                    cmd.CommandText = @"DELETE FROM taskroomies 
+                                        WHERE taskid = @taskId AND roomieid = @roomieId";
+                    cmd.Parameters.AddWithValue("@taskId", NpgsqlDbType.Integer, taskId);
+                    cmd.Parameters.AddWithValue("@roomieId", NpgsqlDbType.Integer, roomieId);
+
+                    return DeleteData(dbConn, cmd);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error removing roomie from task", ex);
+                }
+            }
+        }
+
         public bool InsertTask(PlannerTask task)
         {
             using (var dbConn = new NpgsqlConnection(ConnectionString))
@@ -88,11 +188,10 @@ namespace WeeklyPlanner.Model.Repositories
                 try
                 {
                     var cmd = dbConn.CreateCommand();
-                    cmd.CommandText = @"INSERT INTO task (taskname, assignedroomie, note, iscompleted, dayofweek, taskorder)
-                                        VALUES (@taskName, @assignedRoomie, @note, @isCompleted, @dayOfWeek, @taskOrder)";
+                    cmd.CommandText = @"INSERT INTO task (taskname, note, iscompleted, dayofweek, taskorder)
+                                        VALUES (@taskName, @note, @isCompleted, @dayOfWeek, @taskOrder)";
 
                     cmd.Parameters.AddWithValue("@taskName", NpgsqlDbType.Text, task.TaskName ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@assignedRoomie", NpgsqlDbType.Integer, task.AssignedRoomie);
                     cmd.Parameters.AddWithValue("@note", NpgsqlDbType.Text, task.Note ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@isCompleted", NpgsqlDbType.Boolean, task.IsCompleted);
                     cmd.Parameters.AddWithValue("@dayOfWeek", NpgsqlDbType.Text, task.DayOfWeek ?? (object)DBNull.Value);
@@ -116,7 +215,6 @@ namespace WeeklyPlanner.Model.Repositories
                     var cmd = dbConn.CreateCommand();
                     cmd.CommandText = @"UPDATE task SET 
                                         taskname = @taskName,
-                                        assignedroomie = @assignedRoomie,
                                         note = @note,
                                         iscompleted = @isCompleted,
                                         dayofweek = @dayOfWeek,
@@ -124,7 +222,6 @@ namespace WeeklyPlanner.Model.Repositories
                                     WHERE taskid = @taskId";
 
                     cmd.Parameters.AddWithValue("@taskName", NpgsqlDbType.Text, task.TaskName ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@assignedRoomie", NpgsqlDbType.Integer, task.AssignedRoomie);
                     cmd.Parameters.AddWithValue("@note", NpgsqlDbType.Text, task.Note ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@isCompleted", NpgsqlDbType.Boolean, task.IsCompleted);
                     cmd.Parameters.AddWithValue("@dayOfWeek", NpgsqlDbType.Text, task.DayOfWeek ?? (object)DBNull.Value);

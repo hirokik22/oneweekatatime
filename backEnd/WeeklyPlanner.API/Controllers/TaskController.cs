@@ -36,6 +36,19 @@ namespace WeeklyPlanner.API.Controllers
             return Ok(tasks);
         }
 
+        // GET: api/task/getRoomiesForTask/{taskId}
+        [HttpGet("getRoomiesForTask/{taskId}")]
+        public ActionResult<IEnumerable<Roomie>> GetRoomiesForTask([FromRoute] int taskId)
+        {
+            var roomies = Repository.GetRoomiesForTask(taskId);
+            if (roomies == null || !roomies.Any())
+            {
+                return NotFound($"No roomies found for Task ID {taskId}.");
+            }
+
+            return Ok(roomies);
+        }
+
         // POST: api/task
         [HttpPost]
         public ActionResult CreateTask([FromBody] PlannerTask task)
@@ -59,13 +72,34 @@ namespace WeeklyPlanner.API.Controllers
             return BadRequest("Failed to create task.");
         }
 
+        // POST: api/task/addRoomiesToTask/{taskId}
+        [HttpPost("addRoomiesToTask/{taskId}")]
+        public ActionResult AddRoomiesToTask([FromRoute] int taskId, [FromBody] List<int> roomieIds)
+        {
+            if (roomieIds == null || !roomieIds.Any())
+            {
+                return BadRequest("No roomie IDs provided.");
+            }
+
+            foreach (var roomieId in roomieIds)
+            {
+                bool result = Repository.AssignRoomieToTask(taskId, roomieId);
+                if (!result)
+                {
+                    return BadRequest($"Failed to assign Roomie ID {roomieId} to Task ID {taskId}.");
+                }
+            }
+
+            return Ok("Roomies assigned successfully.");
+        }
+
         // PUT: api/task/{taskId}
         [HttpPut("{taskId}")]
         public ActionResult UpdateTask([FromRoute] int taskId, [FromBody] PlannerTask task)
         {
             if (task == null || taskId != task.TaskId)
             {
-                return BadRequest("Task data is invalid or TaskIds do not match.");
+                return BadRequest("Task data is invalid or Task IDs do not match.");
             }
 
             var existingTask = Repository.GetTaskById(taskId);
@@ -100,6 +134,19 @@ namespace WeeklyPlanner.API.Controllers
             }
 
             return BadRequest("Failed to delete task.");
+        }
+
+        // DELETE: api/task/removeRoomieFromTask/{taskId}/{roomieId}
+        [HttpDelete("removeRoomieFromTask/{taskId}/{roomieId}")]
+        public ActionResult RemoveRoomieFromTask([FromRoute] int taskId, [FromRoute] int roomieId)
+        {
+            bool result = Repository.RemoveRoomieFromTask(taskId, roomieId);
+            if (!result)
+            {
+                return BadRequest($"Failed to remove Roomie ID {roomieId} from Task ID {taskId}.");
+            }
+
+            return NoContent();
         }
     }
 }
