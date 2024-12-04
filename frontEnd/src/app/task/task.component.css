@@ -64,3 +64,27 @@ input[type='checkbox'] {
   transform: scale(1.2); /* Make the checkbox slightly larger */
   cursor: pointer;
 }
+
+/* Error message styling */
+.error-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Delete button styling */
+.delete-task-button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  align-self: flex-start; /* Align the button to the left */
+}
+
+.delete-task-button:hover {
+  background-color: #a71d2a;
+}

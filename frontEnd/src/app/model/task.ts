@@ -1,5 +1,5 @@
   export interface Task {
-    taskID: number;           // Maps to TaskID in the database
+    taskId: number;           // Maps to TaskID in the database
     taskName: string;         // Maps to TaskName
     assignedRoomie: number | null; // Changed from string to number | null
     note: string;             // Task details or notes
