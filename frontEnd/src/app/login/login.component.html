@@ -1,17 +1,24 @@
 <div class="login-container">
-    <h1>One Week At A Time</h1>
-    <form>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Value" />
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Value" />
-      </div>
-      <div class="button-container">
-        <button class="login-btn">Log In</button>
-        <button class="signup-btn">Sign Up</button>
-      </div>
-    </form>
-  </div>
+  <h1>One Week At A Time</h1>
+  <form>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Value" />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Value" />
+    </div>
+    <div class="button-container">
+      <button type="button" class="login-btn">Log In</button>
+      <!-- Use routerLink to navigate to the Sign Up page -->
+      <button
+        type="button"
+        class="signup-btn"
+        [routerLink]="['/sign-up']"
+      >
+        Sign Up
+      </button>
+    </div>
+  </form>
+</div>
