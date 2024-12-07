@@ -1,33 +1,52 @@
+<h1 class="planner-title">One Day At A Time</h1>
 <div class="weekly-planner">
-  <!-- Display error message if any -->
-  <div *ngIf="errorMessage" class="error-message">
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="error-message" role="alert">
     {{ errorMessage }}
   </div>
 
   <!-- Loop through days of the week -->
   <div *ngFor="let day of getDaysOfWeek()" class="day-column">
-    <h3>{{ day }}</h3>
+    <!-- Day Title -->
+    <h3 class="day-title">{{ day }}</h3>
+
+    <!-- Tasks Wrapper -->
     <div class="tasks-wrapper">
+      <!-- Loop through tasks for the current day -->
       <div *ngFor="let task of getTasksForDay(day)" class="task-item">
+        <!-- Task Completion -->
         <p>
-          <input
-            type="checkbox"
-            [checked]="task.isCompleted"
-            (change)="toggleTaskCompletion(task)"
-          />
-          {{ task.isCompleted ? 'Completed' : 'Incomplete' }}
+          <label>
+            <input
+              type="checkbox"
+              [checked]="task.isCompleted"
+              (change)="toggleTaskCompletion(task)"
+              aria-label="Mark task as completed or incomplete"
+            />
+            {{ task.isCompleted ? 'Completed' : 'Incomplete' }}
+          </label>
         </p>
+
+        <!-- Task Details -->
         <p><strong>Task:</strong> {{ task.taskName }}</p>
         <p><strong>Roomie:</strong> {{ task.assignedRoomie || 'Unassigned' }}</p>
         <p><strong>Note:</strong> {{ task.note }}</p>
-        <button (click)="deleteTask(task.taskId)" class="delete-task-button">
+
+        <!-- Delete Task Button -->
+        <button
+          (click)="deleteTask(task.taskId)"
+          class="delete-task-button"
+          aria-label="Delete this task"
+        >
           Delete Task
         </button>
       </div>
     </div>
+
+    <!-- Add Task Button -->
     <div class="add-task-wrapper">
       <button (click)="addTaskForDay(day)" class="add-task-button">
-        Add Task for {{ day }}
+        +
       </button>
     </div>
   </div>
