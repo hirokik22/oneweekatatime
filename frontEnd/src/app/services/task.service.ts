@@ -47,6 +47,13 @@ export class TaskService {
       .pipe(catchError(this.handleError));
   }
 
+    // **NEW METHOD**: Get all roomies
+    getRoomies(): Observable<{ roomieId: number; roomieName: string }[]> {
+      return this.http
+        .get<{ roomieId: number; roomieName: string }[]>(`${this.baseUrl}/Roomie`)
+        .pipe(catchError(this.handleError));
+    }
+
   // Error handling method
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
