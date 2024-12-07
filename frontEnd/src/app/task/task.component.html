@@ -1,53 +1,60 @@
-<h1 class="planner-title">One Day At A Time</h1>
 <div class="weekly-planner">
-  <!-- Error Message -->
-  <div *ngIf="errorMessage" class="error-message" role="alert">
+  <!-- Display error message if any -->
+  <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </div>
 
   <!-- Loop through days of the week -->
   <div *ngFor="let day of getDaysOfWeek()" class="day-column">
-    <!-- Day Title -->
-    <h3 class="day-title">{{ day }}</h3>
-
-    <!-- Tasks Wrapper -->
+    <h3>{{ day }}</h3>
     <div class="tasks-wrapper">
-      <!-- Loop through tasks for the current day -->
       <div *ngFor="let task of getTasksForDay(day)" class="task-item">
-        <!-- Task Completion -->
         <p>
-          <label>
-            <input
-              type="checkbox"
-              [checked]="task.isCompleted"
-              (change)="toggleTaskCompletion(task)"
-              aria-label="Mark task as completed or incomplete"
-            />
-            {{ task.isCompleted ? 'Completed' : 'Incomplete' }}
-          </label>
+          <input
+            type="checkbox"
+            [checked]="task.isCompleted"
+            (change)="toggleTaskCompletion(task)"
+          />
+          {{ task.isCompleted ? 'Completed' : 'Incomplete' }}
         </p>
-
-        <!-- Task Details -->
         <p><strong>Task:</strong> {{ task.taskName }}</p>
         <p><strong>Roomie:</strong> {{ task.assignedRoomie || 'Unassigned' }}</p>
         <p><strong>Note:</strong> {{ task.note }}</p>
-
-        <!-- Delete Task Button -->
-        <button
-          (click)="deleteTask(task.taskId)"
-          class="delete-task-button"
-          aria-label="Delete this task"
-        >
+        <button (click)="deleteTask(task.taskId)" class="delete-task-button">
           Delete Task
         </button>
       </div>
     </div>
-
-    <!-- Add Task Button -->
     <div class="add-task-wrapper">
-      <button (click)="addTaskForDay(day)" class="add-task-button">
-        +
-      </button>
+      <button (click)="toggleTaskForm(day)" class="add-task-button">+</button>
+    </div>
+    <div *ngIf="showTaskForm[day]" class="task-form">
+      <h4>Add Task for {{ day }}</h4>
+      <form (ngSubmit)="addTaskForDay()">
+        <label for="taskName">Task Name:</label>
+        <input
+          id="taskName"
+          type="text"
+          [(ngModel)]="newTask.taskName"
+          name="taskName"
+          required
+        />
+        <label for="assignedRoomie">To Roomie:</label>
+        <input
+          id="assignedRoomie"
+          type="number"
+          [(ngModel)]="newTask.assignedRoomie"
+          name="assignedRoomie"
+        />
+        <label for="note">Note:</label>
+        <textarea
+          id="note"
+          [(ngModel)]="newTask.note"
+          name="note"
+        ></textarea>
+        <button type="submit" class="save-task-button">Save Task</button>
+        <button type="button" (click)="toggleTaskForm(day)" class="cancel-task-button">Cancel</button>
+      </form>
     </div>
   </div>
 </div>

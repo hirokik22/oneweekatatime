@@ -8,11 +8,9 @@ import { Task } from '../model/task';
   providedIn: 'root',
 })
 export class TaskService {
-  baseUrl: string = 'http://localhost:5193/api';
+  baseUrl: string = 'http://localhost:5193/api'; // Update if backend port changes
 
-  constructor(private http: HttpClient) {
-    console.log('HttpClient instance:', http);
-  }
+  constructor(private http: HttpClient) {}
 
   // Get all tasks
   getTasks(): Observable<Task[]> {
@@ -29,7 +27,7 @@ export class TaskService {
   }
 
   // Create a new task
-  createTask(task: Task): Observable<any> {
+  createTask(task: Partial<Task>): Observable<any> {
     return this.http
       .post(`${this.baseUrl}/task`, task)
       .pipe(catchError(this.handleError));
@@ -54,12 +52,12 @@ export class TaskService {
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {
       // Client-side error
-      errorMessage = `Error: ${error.error.message}`;
+      errorMessage = `Client-side error: ${error.error.message}`;
     } else {
       // Server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      errorMessage = `Server-side error: Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    console.error(errorMessage);
+    console.error('TaskService Error:', errorMessage);
     return throwError(() => new Error(errorMessage));
   }
 }
