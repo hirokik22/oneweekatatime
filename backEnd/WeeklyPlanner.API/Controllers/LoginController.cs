@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WeeklyPlanner.Model.Entities;
 using WeeklyPlanner.Model.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WeeklyPlanner.API.Controllers
 {
@@ -14,19 +15,20 @@ namespace WeeklyPlanner.API.Controllers
         {
             _loginRepository = loginRepository ?? throw new ArgumentNullException(nameof(loginRepository));
         }
-                [AllowAnonymous]
+        [AllowAnonymous]
         [HttpPost("login")]
         public ActionResult Login([FromBody] Login credentials)
         {
-            var login = _loginRepository.GetLoginByUsername(credentials.Username);
-            if (login == null || login.Password != credentials.Password)
+            var login = _loginRepository.GetLoginByUsername(credentials.Email); // Corrected property name
+            if (login == null || login.PasswordHash != credentials.PasswordHash) // Corrected property names
             {
                 return Unauthorized("Invalid username or password.");
             }
 
-            // Return success response with basic info (e.g., username)
-            return Ok(new { Message = "Login successful", Username = credentials.Username });
+            // Return success response with basic info (e.g., email)
+            return Ok(new { Message = "Login successful", Email = credentials.Email }); // Corrected property name
         }
+
 
         [HttpGet("status")]
         public ActionResult<string> Status()

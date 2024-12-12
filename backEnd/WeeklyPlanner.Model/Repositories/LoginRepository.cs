@@ -13,16 +13,15 @@ namespace WeeklyPlanner.Model.Repositories
     {
         public LoginRepository(IConfiguration configuration) : base(configuration) { }
 
-        // Retrieve a login by username
-        public Login GetLoginByUsername(string username)
+        public Login GetLoginByUsername(string email)
         {
             using (var dbConn = new NpgsqlConnection(ConnectionString))
             {
                 try
                 {
                     var cmd = dbConn.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM login WHERE email = @username"; // Assuming 'email' is used as the username
-                    cmd.Parameters.AddWithValue("@username", NpgsqlDbType.Varchar, username);
+                    cmd.CommandText = "SELECT * FROM login WHERE email = @Email"; // Correct property name
+                    cmd.Parameters.AddWithValue("@Email", NpgsqlDbType.Varchar, email);
 
                     var data = GetData(dbConn, cmd);
 
@@ -31,8 +30,8 @@ namespace WeeklyPlanner.Model.Repositories
                         return new Login
                         {
                             LoginId = Convert.ToInt32(data["loginid"]),
-                            Email = data["email"].ToString(),
-                            PasswordHash = data["passwordhash"].ToString()
+                            Email = data["email"].ToString(), // Correct property name
+                            PasswordHash = data["passwordhash"].ToString() // Correct property name
                         };
                     }
 
