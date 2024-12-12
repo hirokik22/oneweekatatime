@@ -8,13 +8,70 @@ namespace WeeklyPlanner.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
+
     {
         private readonly LoginRepository _loginRepository;
-
-        public LoginController(LoginRepository loginRepository)
+        private readonly RoomieRepository _roomieRepository;
+        public LoginController(LoginRepository loginRepository, RoomieRepository roomieRepository)
         {
             _loginRepository = loginRepository ?? throw new ArgumentNullException(nameof(loginRepository));
+            _roomieRepository = roomieRepository ?? throw new ArgumentNullException(nameof(roomieRepository));
         }
+
+        [AllowAnonymous]
+        [HttpPost("signup")]
+        public ActionResult Signup([FromBody] SignupRequest signupRequest)
+        {
+            if (signupRequest == null || string.IsNullOrWhiteSpace(signupRequest.Email) ||
+                string.IsNullOrWhiteSpace(signupRequest.PasswordHash) || signupRequest.RoomieNames == null)
+            {
+                return BadRequest("Invalid signup data.");
+            }
+
+            // Create the login
+            var login = new Login
+            {
+                Email = signupRequest.Email,
+                PasswordHash = signupRequest.PasswordHash
+            };
+
+            try
+            {
+                if (!_loginRepository.CreateLogin(login))
+                {
+                    return BadRequest("Failed to create login.");
+                }
+
+                // Get the created login ID
+                var createdLogin = _loginRepository.GetLoginByUsername(signupRequest.Email);
+                if (createdLogin == null)
+                {
+                    return StatusCode(500, "Unable to retrieve created login.");
+                }
+
+                // Create roomies associated with the login
+                foreach (var roomieName in signupRequest.RoomieNames)
+                {
+                    var roomie = new Roomie
+                    {
+                        roomiename = roomieName,
+                        loginid = createdLogin.LoginId
+                    };
+
+                    if (!_roomieRepository.AddRoomie(roomie))
+                    {
+                        return StatusCode(500, $"Failed to create roomie: {roomieName}");
+                    }
+                }
+
+                return Ok("Signup successful.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [AllowAnonymous]
         [HttpPost("login")]
         public ActionResult Login([FromBody] Login credentials)
@@ -140,5 +197,11 @@ namespace WeeklyPlanner.API.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+    }
+        public class SignupRequest
+    {
+        public string Email { get; set; }
+        public string PasswordHash { get; set; }
+        public List<string> RoomieNames { get; set; }
     }
 }
