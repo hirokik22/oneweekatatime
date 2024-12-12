@@ -109,19 +109,25 @@ namespace WeeklyPlanner.Model.Repositories
         }
 
         // Add a new login
-        public bool CreateLogin(Login login)
+        public int CreateLogin(Login login)
         {
             using (var dbConn = new NpgsqlConnection(ConnectionString))
             {
                 try
                 {
                     var cmd = dbConn.CreateCommand();
-                    cmd.CommandText = @"INSERT INTO login (email, passwordhash)
-                                        VALUES (@Email, @PasswordHash)";
+                    cmd.CommandText = @"
+                        INSERT INTO login (email, passwordhash)
+                        VALUES (@Email, @PasswordHash)
+                        RETURNING loginid;
+                    ";
+
                     cmd.Parameters.AddWithValue("@Email", NpgsqlDbType.Varchar, login.Email);
                     cmd.Parameters.AddWithValue("@PasswordHash", NpgsqlDbType.Varchar, login.PasswordHash);
 
-                    return InsertData(dbConn, cmd);
+                    dbConn.Open();
+                    var loginId = (int)cmd.ExecuteScalar(); // Get the generated ID
+                    return loginId;
                 }
                 catch (Exception ex)
                 {

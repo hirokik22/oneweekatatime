@@ -8,10 +8,10 @@ namespace WeeklyPlanner.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
-
     {
         private readonly LoginRepository _loginRepository;
         private readonly RoomieRepository _roomieRepository;
+
         public LoginController(LoginRepository loginRepository, RoomieRepository roomieRepository)
         {
             _loginRepository = loginRepository ?? throw new ArgumentNullException(nameof(loginRepository));
@@ -28,34 +28,35 @@ namespace WeeklyPlanner.API.Controllers
                 return BadRequest("Invalid signup data.");
             }
 
-            // Create the login
-            var login = new Login
+            // Check if email already exists
+            var existingLogin = _loginRepository.GetLoginByUsername(signupRequest.Email);
+            if (existingLogin != null)
             {
-                Email = signupRequest.Email,
-                PasswordHash = signupRequest.PasswordHash
-            };
+                return Conflict("An account with this email already exists."); // HTTP 409 Conflict
+            }
 
             try
             {
-                if (!_loginRepository.CreateLogin(login))
+                // Create login
+                var login = new Login
                 {
-                    return BadRequest("Failed to create login.");
+                    Email = signupRequest.Email,
+                    PasswordHash = signupRequest.PasswordHash
+                };
+
+                var loginId = _loginRepository.CreateLogin(login);
+                if (loginId <= 0)
+                {
+                    return StatusCode(500, "Failed to create login.");
                 }
 
-                // Get the created login ID
-                var createdLogin = _loginRepository.GetLoginByUsername(signupRequest.Email);
-                if (createdLogin == null)
-                {
-                    return StatusCode(500, "Unable to retrieve created login.");
-                }
-
-                // Create roomies associated with the login
+                // Create associated roomies
                 foreach (var roomieName in signupRequest.RoomieNames)
                 {
                     var roomie = new Roomie
                     {
                         roomiename = roomieName,
-                        loginid = createdLogin.LoginId
+                        loginid = loginId // Associate roomie with the login
                     };
 
                     if (!_roomieRepository.AddRoomie(roomie))
@@ -83,9 +84,8 @@ namespace WeeklyPlanner.API.Controllers
             }
 
             // Return success response with basic info (e.g., email)
-            return Ok(new { Message = "Login successful", Email = credentials.Email }); // Corrected property name
+            return Ok(new { Message = "Login successful", Email = credentials.Email });
         }
-
 
         [HttpGet("status")]
         public ActionResult<string> Status()
@@ -139,8 +139,8 @@ namespace WeeklyPlanner.API.Controllers
 
             try
             {
-                var result = _loginRepository.CreateLogin(login);
-                if (result)
+                var loginId = _loginRepository.CreateLogin(login);
+                if (loginId > 0)
                 {
                     return Ok("Login created successfully.");
                 }
@@ -198,10 +198,11 @@ namespace WeeklyPlanner.API.Controllers
             }
         }
     }
-        public class SignupRequest
+
+    public class SignupRequest
     {
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }
-        public List<string> RoomieNames { get; set; }
+        public required string Email { get; set; }
+        public required string PasswordHash { get; set; }
+        public required List<string> RoomieNames { get; set; }
     }
 }
