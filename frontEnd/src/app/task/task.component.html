@@ -1,3 +1,6 @@
+<div class="planner-title">
+  One Week at a Time
+</div>
 <div class="weekly-planner">
   <!-- Display error message if any -->
   <div *ngIf="errorMessage" class="error-message">
@@ -26,9 +29,35 @@
       </div>
     </div>
     <div class="add-task-wrapper">
-      <button (click)="addTaskForDay(day)" class="add-task-button">
-        Add Task for {{ day }}
-      </button>
+      <button (click)="toggleTaskForm(day)" class="add-task-button">+</button>
+    </div>
+    <div *ngIf="showTaskForm[day]" class="task-form">
+      <h4>Add Task for {{ day }}</h4>
+      <form (ngSubmit)="addTaskForDay()">
+        <label for="taskName">Task Name:</label>
+        <input
+          id="taskName"
+          type="text"
+          [(ngModel)]="newTask.taskName"
+          name="taskName"
+          required
+        />
+        <label for="assignedRoomie">To Roomie:</label>
+        <input
+          id="assignedRoomie"
+          type="number"
+          [(ngModel)]="newTask.assignedRoomie"
+          name="assignedRoomie"
+        />
+        <label for="note">Note:</label>
+        <textarea
+          id="note"
+          [(ngModel)]="newTask.note"
+          name="note"
+        ></textarea>
+        <button type="submit" class="save-task-button">Save Task</button>
+        <button type="button" (click)="toggleTaskForm(day)" class="cancel-task-button">Cancel</button>
+      </form>
     </div>
   </div>
 </div>

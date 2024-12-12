@@ -8,7 +8,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<TaskRepository, TaskRepository>();
+
+// Register repositories
+builder.Services.AddScoped<TaskRepository>();
+builder.Services.AddScoped<RoomieRepository>();
+builder.Services.AddScoped<LoginRepository>(); // Register LoginRepository
 
 // Add CORS Policy
 builder.Services.AddCors(options =>
@@ -33,7 +37,7 @@ if (app.Environment.IsDevelopment())
 // Enable CORS
 app.UseCors("AllowAll");
 
-//app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // Uncomment this line if HTTPS redirection is needed.
 
 app.UseAuthorization();
 

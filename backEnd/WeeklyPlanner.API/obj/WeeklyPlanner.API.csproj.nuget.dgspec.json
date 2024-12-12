@@ -120,7 +120,7 @@
               "target": "Package",
               "version": "[9.0.0, )"
             },
-            "NpgSql": {
+            "Npgsql": {
               "target": "Package",
               "version": "[9.0.1, )"
             }

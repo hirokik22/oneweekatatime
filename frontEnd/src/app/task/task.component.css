@@ -1,14 +1,34 @@
+/* Container for the planner */
+.weekly-planner-container {
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f0f4f8; /* Light background for the planner */
+}
+
+.planner-title {
+  font-size: 2.5rem; /* Increased font size for better visibility */
+  font-weight: bold;
+  color: #0056b3;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center; /* Ensure the title is centered */
+}
+
+/* Weekly planner layout */
 .weekly-planner {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: 15px;
 }
 
 .day-column {
   flex: 1;
   display: flex;
   flex-direction: column; /* Stack tasks and button vertically */
-  justify-content: space-between;
+  justify-content: space-between; /* Space tasks and the button */
+  align-items: stretch; /* Ensure the button stretches properly */
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
@@ -17,7 +37,7 @@
 }
 
 .tasks-wrapper {
-  flex: 1; /* Allow dynamic growth for tasks */
+  flex: 1; /* Allow tasks to grow dynamically */
   display: flex;
   flex-direction: column;
   gap: 10px; /* Space between tasks */
@@ -31,7 +51,7 @@
   height: 120px; /* Fixed height for task items */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between; /* Space out content in tasks */
 }
 
 .task-item p {
@@ -40,26 +60,40 @@
   color: #333;
 }
 
+/* Add task wrapper */
 .add-task-wrapper {
+  margin-top: 10px; /* Add spacing between tasks and the button */
   display: flex;
-  justify-content: center;
-  margin-top: auto; /* Push the button to the bottom */
+  justify-content: center; /* Center-align the button horizontally */
+  align-items: center; /* Center-align the button vertically if needed */
+  margin-top: auto; /* Push the button to the bottom of the day-column */
 }
 
+/* Circular button for adding tasks */
 .add-task-button {
-  padding: 10px 15px;
+  width: 50px; /* Small, circular button */
+  height: 50px;
+  padding: 0;
   border: none;
   background-color: #007bff;
   color: white;
-  border-radius: 5px;
+  border-radius: 50%; /* Circular shape */
   cursor: pointer;
-  font-size: 14px;
+  font-size: 40px; /* Larger font size for "+" */
+  text-align: center;
+  display: flex; /* Make the button content flex */
+  align-items: center; /* Center-align the "+" inside the button */
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Hover effect for the button */
 .add-task-button:hover {
   background-color: #0056b3;
+  transform: scale(1.1);
 }
 
+/* Checkbox styling */
 input[type='checkbox'] {
   transform: scale(1.2); /* Make the checkbox slightly larger */
   cursor: pointer;
@@ -86,5 +120,72 @@ input[type='checkbox'] {
 }
 
 .delete-task-button:hover {
+  background-color: #a71d2a;
+}
+
+/* Add Task Form Styling */
+.task-form {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+}
+
+.task-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.task-form input,
+.task-form textarea,
+.task-form select {
+  width: 100%; /* Ensure full-width input fields */
+  padding: 5px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Style for the dropdown (select) */
+.task-form select {
+  background-color: white; /* Ensure the dropdown is visible */
+  cursor: pointer;
+}
+
+/* Style for dropdown options */
+.task-form option {
+  font-size: 14px;
+  padding: 5px;
+}
+
+/* Buttons in the form */
+.task-form .save-task-button,
+.task-form .cancel-task-button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.task-form .save-task-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.task-form .save-task-button:hover {
+  background-color: #0056b3;
+}
+
+.task-form .cancel-task-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.task-form .cancel-task-button:hover {
   background-color: #a71d2a;
 }

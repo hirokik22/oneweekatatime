@@ -321,7 +321,7 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "Microsoft.Extensions.Configuration >= 9.0.0",
-      "NpgSql >= 9.0.1"
+      "Npgsql >= 9.0.1"
     ]
   },
   "packageFolders": {
@@ -371,7 +371,7 @@
             "target": "Package",
             "version": "[9.0.0, )"
           },
-          "NpgSql": {
+          "Npgsql": {
             "target": "Package",
             "version": "[9.0.1, )"
           }
