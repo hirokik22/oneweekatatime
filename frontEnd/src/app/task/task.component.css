@@ -42,8 +42,25 @@
   flex-direction: column;
   gap: 10px; /* Space between tasks */
 }
+/* Position and style for the 'x' delete icon */
+.delete-icon {
+  position: absolute; /* Position it relative to the task-item */
+  top: 5px; /* Adjust positioning as needed */
+  right: 5px;
+  color: #dc3545; /* Red color for delete */
+  font-size: 20px; /* Adjust size */
+  font-weight: bold;
+  cursor: pointer; /* Show pointer on hover */
+  z-index: 1; /* Ensure it's on top of other content */
+  transition: color 0.3s ease, transform 0.2s ease;
+}
 
+.delete-icon:hover {
+  color: #a71d2a; /* Darker red on hover */
+  transform: scale(1.2); /* Slight zoom-in effect */
+}
 .task-item {
+  position: relative;
   border: 1px solid #007bff;
   border-radius: 5px;
   padding: 10px;
@@ -105,22 +122,6 @@ input[type='checkbox'] {
   font-weight: bold;
   text-align: center;
   margin-bottom: 1rem;
-}
-
-/* Delete button styling */
-.delete-task-button {
-  padding: 8px 12px;
-  border: none;
-  background-color: #dc3545;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 12px;
-  align-self: flex-start; /* Align the button to the left */
-}
-
-.delete-task-button:hover {
-  background-color: #a71d2a;
 }
 
 /* Add Task Form Styling */

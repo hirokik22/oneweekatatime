@@ -12,6 +12,8 @@
     <h3>{{ day }}</h3>
     <div class="tasks-wrapper">
       <div *ngFor="let task of getTasksForDay(day)" class="task-item">
+        <span class="delete-icon" (click)="deleteTask(task.taskId)">×</span>
+        <p>
         <p>
           <input
             type="checkbox"
@@ -23,9 +25,6 @@
         <p><strong>Task:</strong> {{ task.taskName }}</p>
         <p><strong>Roomie:</strong> {{ task.assignedRoomie || 'Unassigned' }}</p>
         <p><strong>Note:</strong> {{ task.note }}</p>
-        <button (click)="deleteTask(task.taskId)" class="delete-task-button">
-          Delete Task
-        </button>
       </div>
     </div>
     <div class="add-task-wrapper">
