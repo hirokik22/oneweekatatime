@@ -1,10 +1,17 @@
+<div class="planner-title">
+  One Week at a Time
+</div>
 <div class="weekly-planner">
+  <!-- Display error message if any -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
   <!-- Loop through days of the week -->
   <div *ngFor="let day of getDaysOfWeek()" class="day-column">
     <h3>{{ day }}</h3>
     <div class="tasks-wrapper">
       <div *ngFor="let task of getTasksForDay(day)" class="task-item">
-        <!-- Checkbox for completion -->
         <p>
           <input
             type="checkbox"
@@ -13,17 +20,44 @@
           />
           {{ task.isCompleted ? 'Completed' : 'Incomplete' }}
         </p>
-        <!-- Task details -->
         <p><strong>Task:</strong> {{ task.taskName }}</p>
         <p><strong>Roomie:</strong> {{ task.assignedRoomie || 'Unassigned' }}</p>
         <p><strong>Note:</strong> {{ task.note }}</p>
+        <button (click)="deleteTask(task.taskId)" class="delete-task-button">
+          Delete Task
+        </button>
       </div>
     </div>
-    <!-- Add Task button at the bottom -->
     <div class="add-task-wrapper">
-      <button (click)="addTaskForDay(day)" class="add-task-button">
-        Add Task for {{ day }}
-      </button>
+      <button (click)="toggleTaskForm(day)" class="add-task-button">+</button>
+    </div>
+    <div *ngIf="showTaskForm[day]" class="task-form">
+      <h4>Add Task for {{ day }}</h4>
+      <form (ngSubmit)="addTaskForDay()">
+        <label for="taskName">Task Name:</label>
+        <input
+          id="taskName"
+          type="text"
+          [(ngModel)]="newTask.taskName"
+          name="taskName"
+          required
+        />
+        <label for="assignedRoomie">To Roomie:</label>
+        <input
+          id="assignedRoomie"
+          type="number"
+          [(ngModel)]="newTask.assignedRoomie"
+          name="assignedRoomie"
+        />
+        <label for="note">Note:</label>
+        <textarea
+          id="note"
+          [(ngModel)]="newTask.note"
+          name="note"
+        ></textarea>
+        <button type="submit" class="save-task-button">Save Task</button>
+        <button type="button" (click)="toggleTaskForm(day)" class="cancel-task-button">Cancel</button>
+      </form>
     </div>
   </div>
 </div>
