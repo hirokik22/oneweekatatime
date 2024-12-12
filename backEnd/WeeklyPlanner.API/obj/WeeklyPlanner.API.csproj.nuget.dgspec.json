@@ -1,17 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD:backEnd/weeklyPlanner.API/obj/weeklyPlanner.API.csproj.nuget.dgspec.json
-    "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/weeklyPlanner.API.csproj": {}
-  },
-  "projects": {
-    "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/weeklyPlanner.API.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/weeklyPlanner.API.csproj",
-        "projectName": "weeklyPlanner.API",
-        "projectPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/weeklyPlanner.API.csproj",
-=======
     "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/WeeklyPlanner.API.csproj": {}
   },
   "projects": {
@@ -21,7 +10,6 @@
         "projectUniqueName": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/WeeklyPlanner.API.csproj",
         "projectName": "WeeklyPlanner.API",
         "projectPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/WeeklyPlanner.API.csproj",
->>>>>>> f4d7738fb05fd358d0bbef01a720f9e532fefcb1:backEnd/WeeklyPlanner.API/obj/WeeklyPlanner.API.csproj.nuget.dgspec.json
         "packagesPath": "/Users/hiroki/.nuget/packages/",
         "outputPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/obj/",
         "projectStyle": "PackageReference",
@@ -38,15 +26,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-<<<<<<< HEAD:backEnd/weeklyPlanner.API/obj/weeklyPlanner.API.csproj.nuget.dgspec.json
-            "projectReferences": {}
-=======
             "projectReferences": {
               "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj": {
                 "projectPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj"
               }
             }
->>>>>>> f4d7738fb05fd358d0bbef01a720f9e532fefcb1:backEnd/WeeklyPlanner.API/obj/WeeklyPlanner.API.csproj.nuget.dgspec.json
           }
         },
         "warningProperties": {
@@ -64,6 +48,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.6.2, )"
@@ -91,8 +79,6 @@
           "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
-<<<<<<< HEAD:backEnd/weeklyPlanner.API/obj/weeklyPlanner.API.csproj.nuget.dgspec.json
-=======
     },
     "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj": {
       "version": "1.0.0",
@@ -162,7 +148,6 @@
           "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
->>>>>>> f4d7738fb05fd358d0bbef01a720f9e532fefcb1:backEnd/WeeklyPlanner.API/obj/WeeklyPlanner.API.csproj.nuget.dgspec.json
     }
   }
 }
