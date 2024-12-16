@@ -23,37 +23,33 @@ export class SignUpComponent {
 
   constructor(private signUpService: SignUpService, private router: Router) {}
 
-  signUp() {
-    if (this.password !== this.rePassword) {
-      this.errorMessage = 'Passwords do not match.';
-      return;
-    }
-  
-    const signUpPayload = {
-      email: this.email,
-      passwordHash: this.password,
-      roomieNames: [
-        this.roomie1,
-        this.roomie2,
-        this.roomie3,
-        this.roomie4,
-      ].filter((name) => name), // Filter out empty roomie names
-    };
-  
-    this.signUpService.signUp(signUpPayload).subscribe({
-      next: (response) => {
-        console.log('Sign-up successful:', response);
-        this.router.navigate(['/tasks']); // Navigate to tasks after successful sign-up
-      },
-      error: (error) => {
-        if (error.status === 409) {
-          // Backend indicates email already exists
-          this.errorMessage = 'This account already exists, please login.';
-        } else {
-          // Generic error message
-          this.errorMessage = 'Sign-up failed. Please try again.';
-        }
-      },
-    });
-  }  
+    signUp() {
+      if (this.password !== this.rePassword) {
+          this.errorMessage = 'Passwords do not match.';
+          return;
+      }
+
+      const signUpData = {
+          email: this.email,
+          passwordHash: this.password,
+          roomieNames: [this.roomie1, this.roomie2, this.roomie3, this.roomie4].filter(name => name)
+      };
+
+      this.signUpService.signUp(signUpData).subscribe({
+          next: (response) => {
+              // Handle success response
+              console.log(response);
+              this.errorMessage = ''; // Clear any error message
+              alert('Signup successful!');
+
+              // Navigate to the tasks page
+              this.router.navigate(['/tasks']);
+          },
+          error: (err) => {
+              // Handle error response
+              console.error(err);
+              this.errorMessage = err.message || 'Signup failed. Please try again.';
+          }
+      });
+  }
 }

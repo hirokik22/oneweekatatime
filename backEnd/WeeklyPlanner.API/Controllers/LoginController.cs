@@ -19,7 +19,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("signup")]
+        [HttpPost("sign-up")]
         public ActionResult Signup([FromBody] SignupRequest signupRequest)
         {
             if (signupRequest == null || string.IsNullOrWhiteSpace(signupRequest.Email) ||
@@ -65,7 +65,7 @@ namespace WeeklyPlanner.API.Controllers
                     }
                 }
 
-                return Ok("Signup successful.");
+                return Ok(new { success = true, message = "Signup successful." });
             }
             catch (Exception ex)
             {

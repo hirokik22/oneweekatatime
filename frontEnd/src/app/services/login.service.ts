@@ -15,14 +15,14 @@ export class LoginService {
   // Get all logins
   Logins(): Observable<Login[]> {
     return this.http
-      .get<Login[]>(`${this.baseUrl}/login`) // Assuming /login returns a list of logins
+      .get<Login[]>(`${this.baseUrl}/Login`) // Assuming /login returns a list of logins
       .pipe(catchError(this.handleError)); // Error handling
   }
 
   // Login user
   Login(credentials: Login): Observable<any> {
     return this.http
-      .post<any>(`${this.baseUrl}/login/login`, credentials)
+      .post<any>(`${this.baseUrl}/Login/login`, credentials)
       .pipe(catchError(this.handleError)); // Error handling
   }
 
