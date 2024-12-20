@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WeeklyPlanner.Model.Entities;
 using WeeklyPlanner.Model.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WeeklyPlanner.API.Controllers
 {
