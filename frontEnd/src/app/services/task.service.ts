@@ -22,7 +22,7 @@ export class TaskService {
   // Get tasks by Login ID
   getTasksByLoginId(loginId: number): Observable<Task[]> {
     return this.http
-      .get<Task[]>(`${this.baseUrl}/task?loginId=${loginId}`)
+      .get<Task[]>(`${this.baseUrl}/Task?loginId=${loginId}`)
       .pipe(catchError(this.handleError));
   }
   

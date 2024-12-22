@@ -82,40 +82,54 @@ namespace WeeklyPlanner.Model.Repositories
         public List<PlannerTask> GetTaskByLoginId(int loginId)
         {
             var tasks = new List<PlannerTask>();
+
+            // Use a using statement to ensure the connection is properly disposed
             using (var dbConn = new NpgsqlConnection(ConnectionString))
             {
                 try
                 {
-                    dbConn.Open();
-                    var cmd = dbConn.CreateCommand();
-
-                    // Query to filter tasks by LoginId
-                    cmd.CommandText = "SELECT * FROM task WHERE loginid = @LoginId";
-                    cmd.Parameters.AddWithValue("@LoginId", loginId);
-
-                    var data = GetData(dbConn, cmd);
-
-                    while (data != null && data.Read())
+                    dbConn.Open(); // Open the connection
+                    using (var cmd = dbConn.CreateCommand())
                     {
-                        tasks.Add(new PlannerTask(Convert.ToInt32(data["taskid"]))
+                        // Prepare the SQL query
+                        cmd.CommandText = "SELECT * FROM task WHERE loginid = @LoginId";
+                        cmd.Parameters.AddWithValue("@LoginId", NpgsqlDbType.Integer, loginId);
+
+                        // Execute the query and fetch data
+                        using (var data = cmd.ExecuteReader())
                         {
-                            TaskName = data["taskname"].ToString(),
-                            Note = data["note"].ToString(),
-                            IsCompleted = Convert.ToBoolean(data["iscompleted"]),
-                            DayOfWeek = data["dayofweek"].ToString(),
-                            TaskOrder = Convert.ToInt32(data["taskorder"]),
-                            LoginId = Convert.ToInt32(data["loginid"]) // Include the LoginId field
-                        });
+                            while (data != null && data.Read())
+                            {
+                                tasks.Add(new PlannerTask(Convert.ToInt32(data["taskid"]))
+                                {
+                                    TaskName = data["taskname"].ToString(),
+                                    Note = data["note"].ToString(),
+                                    IsCompleted = Convert.ToBoolean(data["iscompleted"]),
+                                    DayOfWeek = data["dayofweek"].ToString(),
+                                    TaskOrder = Convert.ToInt32(data["taskorder"]),
+                                    LoginId = Convert.ToInt32(data["loginid"]) // Include the LoginId field
+                                });
+                            }
+                        }
                     }
 
-                    return tasks;
+                    return tasks; // Return the task list
                 }
                 catch (Exception ex)
                 {
                     throw new Exception("Error fetching tasks by LoginId", ex);
                 }
+                finally
+                {
+                    // Ensure the connection is closed even if an exception occurs
+                    if (dbConn.State == System.Data.ConnectionState.Open)
+                    {
+                        dbConn.Close();
+                    }
+                }
             }
         }
+
 
 
         public List<Roomie> GetRoomiesForTask(int taskId)
