@@ -23,33 +23,39 @@ export class SignUpComponent {
 
   constructor(private signUpService: SignUpService, private router: Router) {}
 
-    signUp() {
-      if (this.password !== this.rePassword) {
-          this.errorMessage = 'Passwords do not match.';
-          return;
+
+  signUp() {
+    if (this.password !== this.rePassword) {
+      this.errorMessage = 'Passwords do not match.';
+      return;
+    }
+  
+    const signUpData = {
+      email: this.email,
+      passwordHash: this.password,
+      roomieNames: [this.roomie1, this.roomie2, this.roomie3, this.roomie4].filter(name => name)
+    };
+  
+    this.signUpService.signUp(signUpData).subscribe({
+      next: (response: any) => {
+        console.log('Signup successful:', response);
+  
+        // Store loginId in session storage
+        if (response.loginId) {
+          sessionStorage.setItem('loginId', response.loginId.toString());
+          console.log('LoginId stored:', response.loginId);
+        }
+  
+        this.errorMessage = ''; // Clear any error message
+        alert('Signup successful!');
+  
+        // Navigate to the tasks page
+        this.router.navigate(['/tasks']);
+      },
+      error: (err) => {
+        console.error('Signup failed:', err);
+        this.errorMessage = err.message || 'Signup failed. Please try again.';
       }
-
-      const signUpData = {
-          email: this.email,
-          passwordHash: this.password,
-          roomieNames: [this.roomie1, this.roomie2, this.roomie3, this.roomie4].filter(name => name)
-      };
-
-      this.signUpService.signUp(signUpData).subscribe({
-          next: (response) => {
-              // Handle success response
-              console.log(response);
-              this.errorMessage = ''; // Clear any error message
-              alert('Signup successful!');
-
-              // Navigate to the tasks page
-              this.router.navigate(['/tasks']);
-          },
-          error: (err) => {
-              // Handle error response
-              console.error(err);
-              this.errorMessage = err.message || 'Signup failed. Please try again.';
-          }
-      });
-  }
+    });
+  }  
 }

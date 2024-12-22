@@ -79,6 +79,45 @@ namespace WeeklyPlanner.Model.Repositories
             }
         }
 
+        public List<PlannerTask> GetTaskByLoginId(int loginId)
+        {
+            var tasks = new List<PlannerTask>();
+            using (var dbConn = new NpgsqlConnection(ConnectionString))
+            {
+                try
+                {
+                    dbConn.Open();
+                    var cmd = dbConn.CreateCommand();
+
+                    // Query to filter tasks by LoginId
+                    cmd.CommandText = "SELECT * FROM task WHERE loginid = @LoginId";
+                    cmd.Parameters.AddWithValue("@LoginId", loginId);
+
+                    var data = GetData(dbConn, cmd);
+
+                    while (data != null && data.Read())
+                    {
+                        tasks.Add(new PlannerTask(Convert.ToInt32(data["taskid"]))
+                        {
+                            TaskName = data["taskname"].ToString(),
+                            Note = data["note"].ToString(),
+                            IsCompleted = Convert.ToBoolean(data["iscompleted"]),
+                            DayOfWeek = data["dayofweek"].ToString(),
+                            TaskOrder = Convert.ToInt32(data["taskorder"]),
+                            LoginId = Convert.ToInt32(data["loginid"]) // Include the LoginId field
+                        });
+                    }
+
+                    return tasks;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error fetching tasks by LoginId", ex);
+                }
+            }
+        }
+
+
         public List<Roomie> GetRoomiesForTask(int taskId)
         {
             var roomies = new List<Roomie>();

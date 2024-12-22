@@ -65,7 +65,8 @@ namespace WeeklyPlanner.API.Controllers
                     }
                 }
 
-                return Ok(new { success = true, message = "Signup successful." });
+                // Include loginId in the response
+                return Ok(new { success = true, message = "Signup successful.", loginId });
             }
             catch (Exception ex)
             {
@@ -73,18 +74,21 @@ namespace WeeklyPlanner.API.Controllers
             }
         }
 
+
+
         [AllowAnonymous]
         [HttpPost("login")]
         public ActionResult Login([FromBody] Login credentials)
         {
-            var login = _loginRepository.GetLoginByUsername(credentials.Email); // Corrected property name
-            if (login == null || login.PasswordHash != credentials.PasswordHash) // Corrected property names
+            var login = _loginRepository.GetLoginByUsername(credentials.Email);
+            if (login == null || login.PasswordHash != credentials.PasswordHash)
             {
                 return Unauthorized("Invalid username or password.");
             }
 
-            // Return success response with basic info (e.g., email)
-            return Ok(new { Message = "Login successful", Email = credentials.Email });
+
+            // Return success response with loginId and basic info
+            return Ok(new { Message = "Login successful", Email = login.Email, LoginId = login.LoginId });
         }
 
         [HttpGet("status")]

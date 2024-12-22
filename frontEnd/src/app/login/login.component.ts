@@ -27,10 +27,18 @@ export class LoginComponent {
   login() {
     this.errorMessage = ''; // Clear any previous error messages
     this.loginService.Login(this.credentials).subscribe(
-      (response) => {
+      (response: any) => {
         console.log('Login successful:', response);
+  
+        // Store loginId in session storage
+        if (response.loginId) {
+          console.log('Storing loginId:', response.loginId);
+          sessionStorage.setItem('loginId', response.loginId.toString());
+          console.log('LoginId stored:', response.loginId);
+        }
+  
         alert('Login successful!');
-        this.router.navigate(['/tasks']); // Navigate to another page on success
+        this.router.navigate(['/tasks']); // Navigate to tasks page on success
       },
       (error) => {
         console.error('Login failed:', error);
@@ -38,6 +46,7 @@ export class LoginComponent {
       }
     );
   }
+  
 
   // Handle navigation to sign-up page
   navigateToSignUp() {

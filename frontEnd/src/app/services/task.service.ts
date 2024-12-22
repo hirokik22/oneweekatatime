@@ -19,6 +19,14 @@ export class TaskService {
       .pipe(catchError(this.handleError));
   }
 
+  // Get tasks by Login ID
+  getTasksByLoginId(loginId: number): Observable<Task[]> {
+    return this.http
+      .get<Task[]>(`${this.baseUrl}/task?loginId=${loginId}`)
+      .pipe(catchError(this.handleError));
+  }
+  
+
   // Get a single task by ID
   getTask(taskId: number): Observable<Task> {
     return this.http

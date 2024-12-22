@@ -29,12 +29,26 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // GET: api/task
+        // GET: api/task?loginId=1
         [HttpGet]
-        public ActionResult<IEnumerable<PlannerTask>> GetAllTasks()
+        public ActionResult<IEnumerable<PlannerTask>> GetAllTasks([FromQuery] int? loginId)
         {
-            var tasks = Repository.GetTask();
+            IEnumerable<PlannerTask> tasks;
+
+            if (loginId.HasValue)
+            {
+                // Fetch tasks specific to the login ID
+                tasks = Repository.GetTaskByLoginId(loginId.Value);
+            }
+            else
+            {
+                // Fetch all tasks
+                tasks = Repository.GetTask();
+            }
+
             return Ok(tasks);
         }
+
 
         // GET: api/task/getRoomiesForTask/{taskId}
         [HttpGet("getRoomiesForTask/{taskId}")]
