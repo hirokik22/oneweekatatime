@@ -72,15 +72,15 @@ namespace WeeklyPlanner.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (task == null)
+            if (task == null || task.LoginId == 0)
             {
-                return BadRequest("Task data is invalid.");
+                return BadRequest("Task data is invalid or LoginId is missing.");
             }
 
             bool result = Repository.InsertTask(task);
             if (result)
             {
-                return Ok();
+                return Ok("Task created successfully.");
             }
 
             return BadRequest("Failed to create task.");
@@ -111,9 +111,9 @@ namespace WeeklyPlanner.API.Controllers
         [HttpPut("{taskId}")]
         public ActionResult UpdateTask([FromRoute] int taskId, [FromBody] PlannerTask task)
         {
-            if (task == null || taskId != task.TaskId)
+            if (task == null || taskId != task.TaskId || task.LoginId == 0)
             {
-                return BadRequest("Task data is invalid or Task IDs do not match.");
+                return BadRequest("Task data is invalid, Task IDs do not match, or LoginId is missing.");
             }
 
             var existingTask = Repository.GetTaskById(taskId);
@@ -122,10 +122,15 @@ namespace WeeklyPlanner.API.Controllers
                 return NotFound($"Task with ID {taskId} not found.");
             }
 
+            if (existingTask.LoginId != task.LoginId)
+            {
+                return Unauthorized("You are not authorized to update this task.");
+            }
+
             bool result = Repository.UpdateTask(task);
             if (result)
             {
-                return Ok();
+                return Ok("Task updated successfully.");
             }
 
             return BadRequest("Failed to update task.");
@@ -133,7 +138,7 @@ namespace WeeklyPlanner.API.Controllers
 
         // DELETE: api/task/{taskId}
         [HttpDelete("{taskId}")]
-        public ActionResult DeleteTask([FromRoute] int taskId)
+        public ActionResult DeleteTask([FromRoute] int taskId, [FromQuery] int loginId)
         {
             var existingTask = Repository.GetTaskById(taskId);
             if (existingTask == null)
@@ -141,7 +146,12 @@ namespace WeeklyPlanner.API.Controllers
                 return NotFound($"Task with ID {taskId} not found.");
             }
 
-            bool result = Repository.DeleteTask(taskId);
+            if (existingTask.LoginId != loginId)
+            {
+                return Unauthorized("You are not authorized to delete this task.");
+            }
+
+            bool result = Repository.DeleteTask(taskId, loginId);
             if (result)
             {
                 return NoContent();
