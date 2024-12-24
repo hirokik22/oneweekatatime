@@ -74,16 +74,16 @@ namespace WeeklyPlanner.API.Controllers
 
             if (task == null || task.LoginId == 0)
             {
-                return BadRequest("Task data is invalid or LoginId is missing.");
+                return BadRequest(new { error = "Task data is invalid or LoginId is missing." });
             }
 
             bool result = Repository.InsertTask(task);
             if (result)
             {
-                return Ok("Task created successfully.");
+                return Ok(new { message = "Task created successfully.", task });
             }
 
-            return BadRequest("Failed to create task.");
+            return BadRequest(new { error = "Failed to create task." });
         }
 
         // POST: api/task/addRoomiesToTask/{taskId}

@@ -35,11 +35,17 @@ export class TaskService {
   }
 
   // Create a new task
-  createTask(task: Partial<Task>): Observable<any> {
+  createTask(task: Partial<Task>): Observable<{ message: string; task: Task }> {
     return this.http
-      .post(`${this.baseUrl}/task`, task)
-      .pipe(catchError(this.handleError));
+      .post<{ message: string; task: Task }>(`${this.baseUrl}/task`, task)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('Error occurred during task creation:', error);
+          return throwError(() => new Error('Failed to create task.'));
+        })
+      );
   }
+  
 
   // Update an existing task
   updateTask(task: Task): Observable<any> {
