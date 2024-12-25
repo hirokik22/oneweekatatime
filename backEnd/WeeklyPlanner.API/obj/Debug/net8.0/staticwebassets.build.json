@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "dH3O1tni7AhaYMxJDhh+rid4ek4UhXrpfYyqt/VZyDE=",
+  "Hash": "f910wnWoWWzqzGwrjwVZGqgXaD9LmTku+0GO9uiiGOw=",
   "Source": "WeeklyPlanner.API",
   "BasePath": "_content/WeeklyPlanner.API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }
