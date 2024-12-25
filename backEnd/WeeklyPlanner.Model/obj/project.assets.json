@@ -326,18 +326,24 @@
   },
   "packageFolders": {
     "/Users/hiroki/.nuget/packages/": {}
+    "/Users/philiptorring/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj",
+      "projectUniqueName": "/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj",
       "projectName": "WeeklyPlanner.Model",
       "projectPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj",
       "packagesPath": "/Users/hiroki/.nuget/packages/",
       "outputPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/",
+      "projectPath": "/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj",
+      "packagesPath": "/Users/philiptorring/.nuget/packages/",
+      "outputPath": "/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/hiroki/.nuget/NuGet/NuGet.Config"
+        "/Users/philiptorring/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -362,6 +368,8 @@
         "auditLevel": "low",
         "auditMode": "direct"
       }
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -387,12 +395,23 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[8.0.11, 8.0.11]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[8.0.11, 8.0.11]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
         "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
