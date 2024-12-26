@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using WeeklyPlanner.Model.Entities;
 using WeeklyPlanner.Model.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace WeeklyPlanner.API.Controllers
 {
@@ -64,6 +66,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // POST: api/task
+        [Authorize]
         [HttpPost]
         public ActionResult CreateTask([FromBody] PlannerTask task)
         {
@@ -87,6 +90,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // POST: api/task/addRoomiesToTask/{taskId}
+        [Authorize]
         [HttpPost("addRoomiesToTask/{taskId}")]
         public ActionResult AddRoomiesToTask([FromRoute] int taskId, [FromBody] List<int> roomieIds)
         {
@@ -108,12 +112,19 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // PUT: api/task/{taskId}
+        [Authorize]
         [HttpPut("{taskId}")]
         public ActionResult UpdateTask([FromRoute] int taskId, [FromBody] PlannerTask task)
         {
-            if (task == null || taskId != task.TaskId || task.LoginId == 0)
+            if (task == null || taskId != task.TaskId)
             {
-                return BadRequest("Task data is invalid, Task IDs do not match, or LoginId is missing.");
+                return BadRequest("Task data is invalid or Task IDs do not match.");
+            }
+
+            var loginIdClaim = User.Claims.FirstOrDefault(c => c.Type == "LoginId");
+            if (loginIdClaim == null || !int.TryParse(loginIdClaim.Value, out int loginId))
+            {
+                return Unauthorized("You are not authenticated.");
             }
 
             var existingTask = Repository.GetTaskById(taskId);
@@ -122,7 +133,7 @@ namespace WeeklyPlanner.API.Controllers
                 return NotFound($"Task with ID {taskId} not found.");
             }
 
-            if (existingTask.LoginId != task.LoginId)
+            if (existingTask.LoginId != loginId)
             {
                 return Unauthorized("You are not authorized to update this task.");
             }
@@ -136,10 +147,18 @@ namespace WeeklyPlanner.API.Controllers
             return BadRequest("Failed to update task.");
         }
 
+
         // DELETE: api/task/{taskId}
+        [Authorize]
         [HttpDelete("{taskId}")]
-        public ActionResult DeleteTask([FromRoute] int taskId, [FromQuery] int loginId)
+        public ActionResult DeleteTask([FromRoute] int taskId)
         {
+            var loginIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            if (loginIdClaim == null || !int.TryParse(loginIdClaim.Value, out int loginId))
+            {
+                return Unauthorized("You are not authenticated.");
+            }
+
             var existingTask = Repository.GetTaskById(taskId);
             if (existingTask == null)
             {
@@ -161,9 +180,22 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // DELETE: api/task/removeRoomieFromTask/{taskId}/{roomieId}
+        [Authorize]
         [HttpDelete("removeRoomieFromTask/{taskId}/{roomieId}")]
         public ActionResult RemoveRoomieFromTask([FromRoute] int taskId, [FromRoute] int roomieId)
         {
+            var loginIdClaim = User.Claims.FirstOrDefault(c => c.Type == "LoginId");
+            if (loginIdClaim == null || !int.TryParse(loginIdClaim.Value, out int loginId))
+            {
+                return Unauthorized("You are not authenticated.");
+            }
+
+            var existingTask = Repository.GetTaskById(taskId);
+            if (existingTask == null || existingTask.LoginId != loginId)
+            {
+                return Unauthorized("You are not authorized to modify this task.");
+            }
+
             bool result = Repository.RemoveRoomieFromTask(taskId, roomieId);
             if (!result)
             {

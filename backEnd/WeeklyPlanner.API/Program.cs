@@ -1,5 +1,8 @@
 using WeeklyPlanner.Model.Repositories;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using WeeklyPlanner.API.Middleware;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,10 +11,30 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "WeeklyPlanner.API", Version = "v1" });
+
+    c.AddSecurityDefinition("basic", new OpenApiSecurityScheme
     {
-        Title = "WeeklyPlanner.API",
-        Version = "v1"
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "basic",
+        In = ParameterLocation.Header,
+        Description = "Basic Authentication header using the Basic scheme."
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "basic"
+                }
+            },
+            new string[] { }
+        }
     });
 });
 
@@ -19,6 +42,10 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddScoped<TaskRepository>();
 builder.Services.AddScoped<RoomieRepository>();
 builder.Services.AddScoped<LoginRepository>();
+
+// Add Basic Authentication
+builder.Services.AddAuthentication("BasicAuthentication")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
 // Add CORS Policy
 builder.Services.AddCors(options =>
@@ -54,9 +81,9 @@ app.Use(async (context, next) =>
 // Enable CORS
 app.UseCors("AllowAll");
 
-// Temporarily disable authentication and authorization
-// app.UseAuthentication();
-// app.UseAuthorization();
+// Use Authentication and Authorization Middleware
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

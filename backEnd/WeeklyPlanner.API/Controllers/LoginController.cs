@@ -17,6 +17,12 @@ namespace WeeklyPlanner.API.Controllers
             _loginRepository = loginRepository ?? throw new ArgumentNullException(nameof(loginRepository));
             _roomieRepository = roomieRepository ?? throw new ArgumentNullException(nameof(roomieRepository));
         }
+        
+        [HttpGet("test")]
+        public ActionResult<string> Test()
+        {
+            return "LoginRepository resolved successfully!";
+        }
 
         [AllowAnonymous]
         [HttpPost("sign-up")]

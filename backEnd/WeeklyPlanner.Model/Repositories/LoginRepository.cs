@@ -12,7 +12,6 @@ namespace WeeklyPlanner.Model.Repositories
     public class LoginRepository : BaseRepository
     {
         public LoginRepository(IConfiguration configuration) : base(configuration) { }
-
         public Login GetLoginByUsername(string email)
         {
             using (var dbConn = new NpgsqlConnection(ConnectionString))
@@ -180,5 +179,37 @@ namespace WeeklyPlanner.Model.Repositories
                 }
             }
         }
+
+        public Login GetLoginByEmail(string email)
+        {
+            using (var dbConn = new NpgsqlConnection(ConnectionString))
+            {
+                try
+                {
+                    var cmd = dbConn.CreateCommand();
+                    cmd.CommandText = "SELECT * FROM login WHERE email = @Email";
+                    cmd.Parameters.AddWithValue("@Email", NpgsqlDbType.Text, email);
+
+                    var data = GetData(dbConn, cmd);
+
+                    if (data != null && data.Read())
+                    {
+                        return new Login
+                        {
+                            LoginId = Convert.ToInt32(data["loginid"]),
+                            Email = data["email"].ToString(),
+                            PasswordHash = data["passwordhash"].ToString()
+                        };
+                    }
+
+                    return null;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error fetching login by email", ex);
+                }
+            }
+        }
+
     }
 }

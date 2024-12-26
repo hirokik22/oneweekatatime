@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators'; // Add the map operator here
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -17,16 +17,33 @@ export class SignUpService {
    */
   signUp(signUpData: { email: string; passwordHash: string; roomieNames: string[] }): Observable<any> {
     const url = `${this.baseUrl}Login/sign-up`; // Ensure this matches your backend endpoint
-    return this.http.post(url, signUpData).pipe(
-      map((response: any) => {
-        if (response?.success) {
-          return response; // Success case
-        } else {
-          throw new Error(response?.message || 'Unexpected error occurred.');
-        }
-      }),
-      catchError(this.handleError) // Handle HTTP and parsing errors
-    );
+
+    // Generate the Basic Auth header
+    const authHeader = this.createAuthHeader(signUpData.email, signUpData.passwordHash);
+
+    return this.http
+      .post(url, signUpData, {
+        headers: { Authorization: authHeader }, // Include Authorization header
+      })
+      .pipe(
+        map((response: any) => {
+          if (response?.success) {
+            return response; // Success case
+          } else {
+            throw new Error(response?.message || 'Unexpected error occurred.');
+          }
+        }),
+        catchError(this.handleError) // Handle HTTP and parsing errors
+      );
+  }
+
+  /**
+   * Create Basic Auth header
+   * @param email - User email
+   * @param passwordHash - User password hash
+   */
+  private createAuthHeader(email: string, passwordHash: string): string {
+    return `Basic ${btoa(`${email}:${passwordHash}`)}`;
   }
 
   /**
@@ -40,7 +57,13 @@ export class SignUpService {
       errorMessage = `Client-side error: ${error.error.message}`;
     } else {
       // Server-side error
-      errorMessage = `Server-side error: Code ${error.status}\nMessage: ${error.message}`;
+      if (error.status === 401) {
+        errorMessage = 'Unauthorized: Invalid email or password.';
+      } else if (error.status === 400) {
+        errorMessage = 'Bad request: Please check your input.';
+      } else {
+        errorMessage = `Server-side error: Code ${error.status}\nMessage: ${error.message}`;
+      }
     }
     console.error('SignUpService Error:', errorMessage);
     return throwError(() => new Error(errorMessage));
