@@ -5,16 +5,24 @@
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API.runtimeconfig.json
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API.dll
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API.pdb
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.Configuration.dll
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.Configuration.Abstractions.dll
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.Logging.Abstractions.dll
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.Primitives.dll
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.OpenApi.dll
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Npgsql.dll
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.Model.dll
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.Model.pdb
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.csproj.AssemblyReference.cache
@@ -39,88 +47,3 @@
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.pdb
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.genruntimeconfig.cache
 /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/ref/WeeklyPlanner.API.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/appsettings.Development.json
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/appsettings.json
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API.deps.json
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API.runtimeconfig.json
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API.pdb
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.Configuration.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.Configuration.Abstractions.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.Logging.Abstractions.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.Primitives.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.OpenApi.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Npgsql.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.Model.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.Model.pdb
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.csproj.AssemblyReference.cache
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.GeneratedMSBuildEditorConfig.editorconfig
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.AssemblyInfoInputs.cache
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.AssemblyInfo.cs
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.csproj.CoreCompileInputs.cache
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.MvcApplicationPartsAssemblyInfo.cs
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.MvcApplicationPartsAssemblyInfo.cache
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.sourcelink.json
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets.build.json
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets.development.json
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets/msbuild.WeeklyPlanner.API.Microsoft.AspNetCore.StaticWebAssets.props
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets/msbuild.build.WeeklyPlanner.API.props
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.WeeklyPlanner.API.props
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.WeeklyPlanner.API.props
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets.pack.json
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/scopedcss/bundle/WeeklyPlanner.API.styles.css
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPl.A1DFDD04.Up2Date
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/refint/WeeklyPlanner.API.dll
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.pdb
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.genruntimeconfig.cache
-/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/ref/WeeklyPlanner.API.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.csproj.AssemblyReference.cache
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.GeneratedMSBuildEditorConfig.editorconfig
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.AssemblyInfoInputs.cache
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.AssemblyInfo.cs
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.csproj.CoreCompileInputs.cache
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.MvcApplicationPartsAssemblyInfo.cs
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.MvcApplicationPartsAssemblyInfo.cache
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.sourcelink.json
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/refint/WeeklyPlanner.API.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.pdb
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/appsettings.Development.json
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/appsettings.json
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API.staticwebassets.endpoints.json
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API.deps.json
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API.runtimeconfig.json
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.API.pdb
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.Configuration.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.Configuration.Abstractions.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.Logging.Abstractions.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.Extensions.Primitives.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Microsoft.OpenApi.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Npgsql.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.Model.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/bin/Debug/net8.0/WeeklyPlanner.Model.pdb
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/scopedcss/bundle/WeeklyPlanner.API.styles.css
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets.build.json
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets.development.json
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets.build.endpoints.json
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets/msbuild.WeeklyPlanner.API.Microsoft.AspNetCore.StaticWebAssets.props
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets/msbuild.WeeklyPlanner.API.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets/msbuild.build.WeeklyPlanner.API.props
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.WeeklyPlanner.API.props
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.WeeklyPlanner.API.props
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/staticwebassets.pack.json
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPl.A1DFDD04.Up2Date
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/WeeklyPlanner.API.genruntimeconfig.cache
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/Debug/net8.0/ref/WeeklyPlanner.API.dll
