@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WeeklyPlanner.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+820395c9af0229982be2b2aabd7877493f7d4072")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c7733b2012886e10c06af8e9b372b6149490d3be")]
 [assembly: System.Reflection.AssemblyProductAttribute("WeeklyPlanner.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WeeklyPlanner.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
