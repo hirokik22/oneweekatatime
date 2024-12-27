@@ -26,6 +26,7 @@ export class TaskComponent {
     dayOfWeek: '',
     isCompleted: false,
     taskOrder: 0,
+    LoginID: 0, // Updated field for LoginId
   };
 
   constructor(private taskService: TaskService) {}
@@ -46,6 +47,7 @@ export class TaskComponent {
   toggleTaskForm(day: string): void {
     this.showTaskForm[day] = !this.showTaskForm[day];
     if (this.showTaskForm[day]) {
+      const loginId = this.getLoginIdFromStorage();
       this.newTask = {
         taskId: 0,
         taskName: '',
@@ -54,6 +56,7 @@ export class TaskComponent {
         dayOfWeek: day,
         isCompleted: false,
         taskOrder: this.getTasksForDay(day).length + 1,
+        LoginID: loginId || 0, // Assign LoginId to the new task
       };
     }
   }
@@ -96,13 +99,27 @@ export class TaskComponent {
   }
 
   private loadTasks(): void {
-    this.taskService.getTasks().subscribe({
-      next: (tasks) => {
-        this.tasks = tasks;
-      },
-      error: (err) => {
-        this.errorMessage = err.message || 'Failed to load tasks.';
-      },
-    });
+    const loginId = this.getLoginIdFromStorage(); // Retrieve the loginId
+    console.log('Retrieved loginId:', loginId);
+
+    if (loginId) {
+      this.taskService.getTasksByLoginId(loginId).subscribe({
+        next: (tasks) => {
+          this.tasks = tasks;
+        },
+        error: (err) => {
+          this.errorMessage = err.message || 'Failed to load tasks for this user.';
+        },
+      });
+    } else {
+      this.errorMessage = 'No user ID found. Please log in again.';
+    }
+  }
+
+  // Helper method to retrieve loginId from session storage or other source
+  private getLoginIdFromStorage(): number | null {
+    console.log('Raw sessionStorage loginId:', sessionStorage.getItem('loginId'));
+    const loginId = sessionStorage.getItem('loginId'); // Or replace with appropriate key
+    return loginId ? Number(loginId) : null;
   }
 }

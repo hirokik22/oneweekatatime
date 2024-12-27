@@ -5,7 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'tasks', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'tasks', component: TaskComponent },  
   { path: 'login', component: LoginComponent }, // LoginComponent route
   { path: 'sign-up', component: SignUpComponent }, // SignUpComponent route

@@ -1,16 +1,3 @@
-/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/bin/Debug/net8.0/WeeklyPlanner.Model.deps.json
-/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/bin/Debug/net8.0/WeeklyPlanner.Model.dll
-/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/bin/Debug/net8.0/WeeklyPlanner.Model.pdb
-/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.csproj.AssemblyReference.cache
-/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.GeneratedMSBuildEditorConfig.editorconfig
-/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.AssemblyInfoInputs.cache
-/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.AssemblyInfo.cs
-/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.csproj.CoreCompileInputs.cache
-/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.sourcelink.json
-/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.dll
-/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/refint/WeeklyPlanner.Model.dll
-/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.pdb
-/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/ref/WeeklyPlanner.Model.dll
 /Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/bin/Debug/net8.0/WeeklyPlanner.Model.deps.json
 /Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/bin/Debug/net8.0/WeeklyPlanner.Model.dll
 /Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/bin/Debug/net8.0/WeeklyPlanner.Model.pdb
@@ -24,16 +11,16 @@
 /Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/refint/WeeklyPlanner.Model.dll
 /Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.pdb
 /Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/ref/WeeklyPlanner.Model.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/bin/Debug/net8.0/WeeklyPlanner.Model.deps.json
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/bin/Debug/net8.0/WeeklyPlanner.Model.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/bin/Debug/net8.0/WeeklyPlanner.Model.pdb
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.csproj.AssemblyReference.cache
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.GeneratedMSBuildEditorConfig.editorconfig
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.AssemblyInfoInputs.cache
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.AssemblyInfo.cs
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.csproj.CoreCompileInputs.cache
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.sourcelink.json
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/refint/WeeklyPlanner.Model.dll
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.pdb
-/Users/philiptorring/Documents/GitHub/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/ref/WeeklyPlanner.Model.dll
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/bin/Debug/net8.0/WeeklyPlanner.Model.deps.json
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/bin/Debug/net8.0/WeeklyPlanner.Model.dll
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/bin/Debug/net8.0/WeeklyPlanner.Model.pdb
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.csproj.AssemblyReference.cache
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.GeneratedMSBuildEditorConfig.editorconfig
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.AssemblyInfoInputs.cache
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.AssemblyInfo.cs
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.csproj.CoreCompileInputs.cache
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.sourcelink.json
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.dll
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/refint/WeeklyPlanner.Model.dll
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/WeeklyPlanner.Model.pdb
+/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/Debug/net8.0/ref/WeeklyPlanner.Model.dll

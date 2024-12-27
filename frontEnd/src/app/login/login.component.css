@@ -109,3 +109,13 @@ button {
   background-color: #555;
   transform: scale(1.05);
 }
+.button-group {
+  display: flex;
+  justify-content: space-between; /* Adjust spacing between buttons */
+  gap: 10px; /* Add gap between buttons */
+}
+
+.btn {
+  flex: 1; /* Optional: Make buttons the same width */
+  text-align: center;
+}
