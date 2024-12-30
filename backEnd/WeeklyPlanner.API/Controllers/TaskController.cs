@@ -66,7 +66,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // POST: api/task
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult CreateTask([FromBody] PlannerTask task)
         {
@@ -75,9 +75,15 @@ namespace WeeklyPlanner.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (task == null || task.LoginId == 0)
+            var loginId = GetLoginIdFromClaims();
+            if (loginId == null)
             {
-                return BadRequest(new { error = "Task data is invalid or LoginId is missing." });
+                return Unauthorized("You are not authenticated.");
+            }
+
+            if (task.LoginId != loginId)
+            {
+                return Unauthorized("You are not authorized to create tasks for this LoginId.");
             }
 
             bool result = Repository.InsertTask(task);
@@ -90,7 +96,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // POST: api/task/addRoomiesToTask/{taskId}
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost("addRoomiesToTask/{taskId}")]
         public ActionResult AddRoomiesToTask([FromRoute] int taskId, [FromBody] List<int> roomieIds)
         {
@@ -120,14 +126,13 @@ namespace WeeklyPlanner.API.Controllers
             {
                 return BadRequest("Task data is invalid or Task IDs do not match.");
             }
-            
-            var loginIdClaim = User.Claims.FirstOrDefault(c => c.Type == "LoginId");
-            Console.WriteLine($"LoginId claim: {loginIdClaim}");
 
-            if (loginIdClaim == null || !int.TryParse(loginIdClaim.Value, out int loginId))
+            var loginId = GetLoginIdFromClaims();
+            if (loginId == null)
             {
                 return Unauthorized("You are not authenticated.");
             }
+
 
             var existingTask = Repository.GetTaskById(taskId);
             if (existingTask == null)
@@ -137,7 +142,7 @@ namespace WeeklyPlanner.API.Controllers
 
             if (existingTask.LoginId != loginId)
             {
-                return Unauthorized("You are not authorized to update this task.");
+                return Unauthorized("You are not authorized to perform this action.");
             }
 
             bool result = Repository.UpdateTask(task);
@@ -155,10 +160,8 @@ namespace WeeklyPlanner.API.Controllers
         [HttpDelete("{taskId}")]
         public ActionResult DeleteTask([FromRoute] int taskId)
         {
-            var loginIdClaim = User.Claims.FirstOrDefault(c => c.Type == "LoginId");
-            Console.WriteLine($"LoginId claim: {loginIdClaim}");
-
-            if (loginIdClaim == null || !int.TryParse(loginIdClaim.Value, out int loginId))
+            var loginId = GetLoginIdFromClaims();
+            if (loginId == null)
             {
                 return Unauthorized("You are not authenticated.");
             }
@@ -174,7 +177,7 @@ namespace WeeklyPlanner.API.Controllers
                 return Unauthorized("You are not authorized to delete this task.");
             }
 
-            bool result = Repository.DeleteTask(taskId, loginId);
+            bool result = Repository.DeleteTask(taskId, loginId.Value);
             if (result)
             {
                 return NoContent();
@@ -184,16 +187,15 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // DELETE: api/task/removeRoomieFromTask/{taskId}/{roomieId}
-        [Authorize]
+        [AllowAnonymous]
         [HttpDelete("removeRoomieFromTask/{taskId}/{roomieId}")]
         public ActionResult RemoveRoomieFromTask([FromRoute] int taskId, [FromRoute] int roomieId)
         {
-            var loginIdClaim = User.Claims.FirstOrDefault(c => c.Type == "LoginId");
-            if (loginIdClaim == null || !int.TryParse(loginIdClaim.Value, out int loginId))
+            var loginId = GetLoginIdFromClaims();
+            if (loginId == null)
             {
                 return Unauthorized("You are not authenticated.");
             }
-
             var existingTask = Repository.GetTaskById(taskId);
             if (existingTask == null || existingTask.LoginId != loginId)
             {
@@ -207,6 +209,17 @@ namespace WeeklyPlanner.API.Controllers
             }
 
             return NoContent();
+        }
+
+        // helper method
+        private int? GetLoginIdFromClaims()
+        {
+            var loginIdClaim = User.Claims.FirstOrDefault(c => c.Type == "LoginId");
+            if (loginIdClaim != null && int.TryParse(loginIdClaim.Value, out int loginId))
+            {
+                return loginId;
+            }
+            return null;
         }
     }
 }

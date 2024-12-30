@@ -33,7 +33,8 @@ namespace WeeklyPlanner.Model.Repositories
                             Note = data["note"].ToString(),
                             IsCompleted = Convert.ToBoolean(data["iscompleted"]),
                             DayOfWeek = data["dayofweek"].ToString(),
-                            TaskOrder = Convert.ToInt32(data["taskorder"])
+                            TaskOrder = Convert.ToInt32(data["taskorder"]),
+                            LoginId = Convert.ToInt32(data["loginid"]) // Add this line
                         };
                     }
 

@@ -1,6 +1,4 @@
 using WeeklyPlanner.Model.Repositories;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using WeeklyPlanner.API.Middleware;
 using Microsoft.OpenApi.Models;
 
@@ -43,10 +41,6 @@ builder.Services.AddScoped<TaskRepository>();
 builder.Services.AddScoped<RoomieRepository>();
 builder.Services.AddScoped<LoginRepository>();
 
-// Add Basic Authentication
-builder.Services.AddAuthentication("BasicAuthentication")
-    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
-
 // Add CORS Policy
 builder.Services.AddCors(options =>
 {
@@ -81,11 +75,10 @@ app.Use(async (context, next) =>
 // Enable CORS
 app.UseCors("AllowAll");
 
-// Use Basic Authentication Middleware
-app.UseBasicAuthentication(); // <-- Add this line here
+// Use New Basic Authentication Middleware
+app.UseMiddleware<NewBasicAuthenticationMiddleware>(); // Updated line
 
-// Use Authentication and Authorization Middleware
-app.UseAuthentication();
+// Use Authorization Middleware
 app.UseAuthorization();
 
 app.MapControllers();

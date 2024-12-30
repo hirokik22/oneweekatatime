@@ -35,7 +35,7 @@ namespace WeeklyPlanner.API.Controllers
             }
 
             // Check if email already exists
-            var existingLogin = _loginRepository.GetLoginByUsername(signupRequest.Email);
+            var existingLogin = _loginRepository.GetLoginByEmail(signupRequest.Email);
             if (existingLogin != null)
             {
                 return Conflict("An account with this email already exists."); // HTTP 409 Conflict
@@ -86,7 +86,7 @@ namespace WeeklyPlanner.API.Controllers
         [HttpPost("login")]
         public ActionResult Login([FromBody] Login credentials)
         {
-            var login = _loginRepository.GetLoginByUsername(credentials.Email);
+            var login = _loginRepository.GetLoginByEmail(credentials.Email);
             if (login == null || login.PasswordHash != credentials.PasswordHash)
             {
                 return Unauthorized("Invalid username or password.");
@@ -104,6 +104,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // GET: api/login
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<Login>> GetAllLogins()
         {
@@ -119,6 +120,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // GET: api/login/{loginid}
+        [AllowAnonymous]
         [HttpGet("{loginid}")]
         public ActionResult<Login> GetLoginById([FromRoute] int loginid)
         {
@@ -139,6 +141,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // POST: api/login
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult CreateLogin([FromBody] Login login)
         {
@@ -164,6 +167,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // PUT: api/login/{loginid}
+        [AllowAnonymous]
         [HttpPut("{loginid}")]
         public ActionResult UpdateLogin([FromRoute] int loginid, [FromBody] Login login)
         {
@@ -189,6 +193,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // DELETE: api/login/{loginid}
+        [AllowAnonymous]
         [HttpDelete("{loginid}")]
         public ActionResult DeleteLogin([FromRoute] int loginid)
         {

@@ -14,6 +14,7 @@ namespace WeeklyPlanner.Model.Repositories
         public LoginRepository(IConfiguration configuration) : base(configuration) { }
 
 
+/*  replacing below with GetLoginByEmail
         public Login GetLoginByUsername(string email)
         {
             using (var dbConn = new NpgsqlConnection(ConnectionString))
@@ -45,6 +46,7 @@ namespace WeeklyPlanner.Model.Repositories
                 }
             }
         }
+*/
 
         // Retrieve all logins
         public List<Login> GetAllLogins()
@@ -185,13 +187,21 @@ namespace WeeklyPlanner.Model.Repositories
 
         public Login GetLoginByEmail(string email)
         {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentException("Email cannot be null or empty.");
+            }
+
             using (var dbConn = new NpgsqlConnection(ConnectionString))
             {
                 try
                 {
+                    dbConn.Open();
                     var cmd = dbConn.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM login WHERE email = @Email";
-                    cmd.Parameters.AddWithValue("@Email", NpgsqlDbType.Text, email);
+                    cmd.CommandText = "SELECT * FROM login WHERE LOWER(email) = LOWER(@Email)";
+                    cmd.Parameters.AddWithValue("@Email", NpgsqlDbType.Varchar, email);
+
+                    Console.WriteLine($"Executing query: {cmd.CommandText} with parameter: {email}");
 
                     var data = GetData(dbConn, cmd);
 
@@ -204,15 +214,14 @@ namespace WeeklyPlanner.Model.Repositories
                             PasswordHash = data["passwordhash"].ToString()
                         };
                     }
-
                     return null;
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Error fetching login by email", ex);
+                    Console.WriteLine($"Error fetching login by email: {ex.Message}");
+                    throw;
                 }
             }
         }
-
     }
 }
