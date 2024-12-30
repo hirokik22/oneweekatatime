@@ -11,5 +11,12 @@
     "/Users/francesco/.nuget/packages/microsoft.extensions.primitives/9.0.0/microsoft.extensions.primitives.9.0.0.nupkg.sha512",
     "/Users/francesco/.nuget/packages/npgsql/9.0.1/npgsql.9.0.1.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file /Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

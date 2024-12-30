@@ -1,22 +1,45 @@
 <div class="login-container">
   <h1>One Week At A Time</h1>
-  <form>
+  <form (ngSubmit)="login()" #loginForm="ngForm">
+    <!-- Email Input -->
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Value" />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="form-control"
+        [(ngModel)]="credentials.email"
+        required
+        placeholder="Enter your email"
+      />
     </div>
+
+    <!-- Password Input -->
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Value" />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        class="form-control"
+        [(ngModel)]="credentials.passwordHash"
+        required
+        placeholder="Enter your password"
+      />
     </div>
-    <div class="button-container">
-      <button type="button" class="login-btn">Log In</button>
-      <!-- Use routerLink to navigate to the Sign Up page -->
-      <button
-        type="button"
-        class="signup-btn"
-        [routerLink]="['/sign-up']"
-      >
+
+    <!-- Display Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Buttons Container -->
+    <div class="button-group">
+      <button type="submit" class="btn btn-primary" [disabled]="!loginForm.form.valid">
+        Log In
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="navigateToSignUp()">
         Sign Up
       </button>
     </div>

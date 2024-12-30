@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backEnd", "backEnd", "{D66BEC55-D642-4BEE-BCF6-62DBB1C6F58D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "weeklyPlanner.API", "backEnd\WeeklyPlanner.API\weeklyPlanner.API.csproj", "{E4812EFA-8790-431E-BE11-105F620BBE6B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E4812EFA-8790-431E-BE11-105F620BBE6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4812EFA-8790-431E-BE11-105F620BBE6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4812EFA-8790-431E-BE11-105F620BBE6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4812EFA-8790-431E-BE11-105F620BBE6B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E4812EFA-8790-431E-BE11-105F620BBE6B} = {D66BEC55-D642-4BEE-BCF6-62DBB1C6F58D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DE3F7ED4-5CD9-4ACC-A0B0-7CA73416B514}
+	EndGlobalSection
+EndGlobal
