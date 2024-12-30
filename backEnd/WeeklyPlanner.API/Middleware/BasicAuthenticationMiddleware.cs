@@ -1,4 +1,5 @@
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using WeeklyPlanner.Model.Repositories;
 
@@ -15,6 +16,7 @@ namespace WeeklyPlanner.API.Middleware
 
         public async Task InvokeAsync(HttpContext context, IServiceProvider serviceProvider)
         {
+            Console.WriteLine($"Authorization Header: {context.Request.Headers["Authorization"]}");
             // Resolve LoginRepository within the scope of this request
             using (var scope = serviceProvider.CreateScope())
             {

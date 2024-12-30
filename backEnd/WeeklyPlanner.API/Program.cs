@@ -81,6 +81,9 @@ app.Use(async (context, next) =>
 // Enable CORS
 app.UseCors("AllowAll");
 
+// Use Basic Authentication Middleware
+app.UseBasicAuthentication(); // <-- Add this line here
+
 // Use Authentication and Authorization Middleware
 app.UseAuthentication();
 app.UseAuthorization();

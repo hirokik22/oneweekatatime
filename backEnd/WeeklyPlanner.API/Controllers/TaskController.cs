@@ -120,8 +120,10 @@ namespace WeeklyPlanner.API.Controllers
             {
                 return BadRequest("Task data is invalid or Task IDs do not match.");
             }
-
+            
             var loginIdClaim = User.Claims.FirstOrDefault(c => c.Type == "LoginId");
+            Console.WriteLine($"LoginId claim: {loginIdClaim}");
+
             if (loginIdClaim == null || !int.TryParse(loginIdClaim.Value, out int loginId))
             {
                 return Unauthorized("You are not authenticated.");
@@ -153,7 +155,9 @@ namespace WeeklyPlanner.API.Controllers
         [HttpDelete("{taskId}")]
         public ActionResult DeleteTask([FromRoute] int taskId)
         {
-            var loginIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            var loginIdClaim = User.Claims.FirstOrDefault(c => c.Type == "LoginId");
+            Console.WriteLine($"LoginId claim: {loginIdClaim}");
+
             if (loginIdClaim == null || !int.TryParse(loginIdClaim.Value, out int loginId))
             {
                 return Unauthorized("You are not authenticated.");

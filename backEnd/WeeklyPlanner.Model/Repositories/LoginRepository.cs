@@ -12,14 +12,17 @@ namespace WeeklyPlanner.Model.Repositories
     public class LoginRepository : BaseRepository
     {
         public LoginRepository(IConfiguration configuration) : base(configuration) { }
+
+
         public Login GetLoginByUsername(string email)
         {
             using (var dbConn = new NpgsqlConnection(ConnectionString))
             {
                 try
                 {
+                    dbConn.Open();
                     var cmd = dbConn.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM login WHERE email = @Email"; // Correct property name
+                    cmd.CommandText = "SELECT * FROM login WHERE LOWER(email) = LOWER(@Email)";
                     cmd.Parameters.AddWithValue("@Email", NpgsqlDbType.Varchar, email);
 
                     var data = GetData(dbConn, cmd);
@@ -29,15 +32,15 @@ namespace WeeklyPlanner.Model.Repositories
                         return new Login
                         {
                             LoginId = Convert.ToInt32(data["loginid"]),
-                            Email = data["email"].ToString(), // Correct property name
-                            PasswordHash = data["passwordhash"].ToString() // Correct property name
+                            Email = data["email"].ToString(),
+                            PasswordHash = data["passwordhash"].ToString()
                         };
                     }
-
                     return null;
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine($"Error fetching login: {ex.Message}");
                     throw new Exception("Error fetching login by username", ex);
                 }
             }
