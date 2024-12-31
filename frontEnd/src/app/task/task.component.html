@@ -42,12 +42,16 @@
           required
         />
         <label for="assignedRoomie">To Roomie:</label>
-        <input
+        <select
           id="assignedRoomie"
-          type="number"
           [(ngModel)]="newTask.assignedRoomie"
           name="assignedRoomie"
-        />
+          required
+        >
+          <option *ngFor="let roomie of roomies" [value]="roomie.roomieid">
+            {{ roomie.roomiename }}
+          </option>
+        </select>            
         <label for="note">Note:</label>
         <textarea
           id="note"

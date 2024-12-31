@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { TaskService } from '../services/task.service';
+import { RoomieService } from '../services/roomie.service';
 import { Task } from '../model/task';
+import { Roomie } from '../model/roomie';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 
@@ -14,14 +16,14 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
 export class TaskComponent {
   errorMessage: string | null = null;
   tasks: Task[] = [];
+  roomies: Roomie[] = []; // Array to hold roomies
   daysOfWeek: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   showTaskForm: { [day: string]: boolean } = {}; // Tracks visibility of the form for each day
 
-  // Initialize newTask with empty defaults
   newTask: Task = {
     taskId: 0,
     taskName: '',
-    assignedRoomie: null, // Ensure type matches the model
+    assignedRoomie: null,
     note: '',
     dayOfWeek: '',
     isCompleted: false,
@@ -29,10 +31,11 @@ export class TaskComponent {
     LoginID: 0, // Updated field for LoginId
   };
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private roomieService: RoomieService) {}
 
   ngOnInit(): void {
     this.loadTasks();
+    this.loadRoomies();
     this.daysOfWeek.forEach((day) => (this.showTaskForm[day] = false));
   }
 
@@ -113,6 +116,21 @@ export class TaskComponent {
       });
     } else {
       this.errorMessage = 'No user ID found. Please log in again.';
+    }
+  }
+
+  private loadRoomies(): void {
+    const loginId = this.getLoginIdFromStorage();
+    if (loginId) {
+      this.roomieService.getRoomiesByLoginId(loginId).subscribe({
+        next: (roomies) => {
+          console.log('Fetched roomies:', roomies);
+          this.roomies = roomies;
+        },
+        error: (err) => {
+          this.errorMessage = err.message || 'Failed to load roomies for this user.';
+        },
+      });      
     }
   }
 

@@ -1,5 +1,5 @@
 export interface Roomie {
-    roomieID?: number;
-    roomieName: string;
+    roomieid?: number;
+    roomiename: string;
     loginID?: number;
 }
