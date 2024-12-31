@@ -18,6 +18,7 @@ namespace WeeklyPlanner.API.Controllers
             _roomieRepository = roomieRepository ?? throw new ArgumentNullException(nameof(roomieRepository));
         }
         
+        [AllowAnonymous]
         [HttpGet("test")]
         public ActionResult<string> Test()
         {
@@ -97,6 +98,7 @@ namespace WeeklyPlanner.API.Controllers
             return Ok(new { Message = "Login successful", Email = login.Email, LoginId = login.LoginId });
         }
 
+        [AllowAnonymous]
         [HttpGet("status")]
         public ActionResult<string> Status()
         {

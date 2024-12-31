@@ -18,6 +18,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // GET: api/task/{taskId}
+        [Authorize]
         [HttpGet("{taskId}")]
         public ActionResult<PlannerTask> GetTask([FromRoute] int taskId)
         {
@@ -32,6 +33,7 @@ namespace WeeklyPlanner.API.Controllers
 
         // GET: api/task
         // GET: api/task?loginId=1
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<PlannerTask>> GetAllTasks([FromQuery] int? loginId)
         {
@@ -53,6 +55,7 @@ namespace WeeklyPlanner.API.Controllers
 
 
         // GET: api/task/getRoomiesForTask/{taskId}
+        [Authorize]
         [HttpGet("getRoomiesForTask/{taskId}")]
         public ActionResult<IEnumerable<Roomie>> GetRoomiesForTask([FromRoute] int taskId)
         {
@@ -66,7 +69,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // POST: api/task
-        [AllowAnonymous]
+        [Authorize]
         [HttpPost]
         public ActionResult CreateTask([FromBody] PlannerTask task)
         {
@@ -96,7 +99,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // POST: api/task/addRoomiesToTask/{taskId}
-        [AllowAnonymous]
+        [Authorize]
         [HttpPost("addRoomiesToTask/{taskId}")]
         public ActionResult AddRoomiesToTask([FromRoute] int taskId, [FromBody] List<int> roomieIds)
         {
@@ -124,36 +127,43 @@ namespace WeeklyPlanner.API.Controllers
         {
             if (task == null || taskId != task.TaskId)
             {
-                return BadRequest("Task data is invalid or Task IDs do not match.");
+                return BadRequest(new { error = "Task data is invalid or Task IDs do not match.", taskId, providedTaskId = task?.TaskId });
             }
 
             var loginId = GetLoginIdFromClaims();
             if (loginId == null)
             {
-                return Unauthorized("You are not authenticated.");
+                return Unauthorized(new { error = "You are not authenticated.", claimType = "LoginId" });
             }
-
 
             var existingTask = Repository.GetTaskById(taskId);
             if (existingTask == null)
             {
-                return NotFound($"Task with ID {taskId} not found.");
+                return NotFound(new { error = $"Task with ID {taskId} not found." });
             }
 
             if (existingTask.LoginId != loginId)
             {
-                return Unauthorized("You are not authorized to perform this action.");
+                return Unauthorized(new { error = "You are not authorized to perform this action.", existingTaskLoginId = existingTask.LoginId, currentLoginId = loginId });
             }
 
-            bool result = Repository.UpdateTask(task);
-            if (result)
+            try
             {
-                return Ok("Task updated successfully.");
+                bool result = Repository.UpdateTask(task);
+                if (result)
+                {
+                    return Ok(new { message = "Task updated successfully.", updatedTask = task });
+                }
+                else
+                {
+                    return BadRequest(new { error = "Failed to update task.", taskId });
+                }
             }
-
-            return BadRequest("Failed to update task.");
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "An error occurred while updating the task.", exceptionMessage = ex.Message, taskId });
+            }
         }
-
 
         // DELETE: api/task/{taskId}
         [Authorize]
@@ -187,7 +197,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // DELETE: api/task/removeRoomieFromTask/{taskId}/{roomieId}
-        [AllowAnonymous]
+        [Authorize]
         [HttpDelete("removeRoomieFromTask/{taskId}/{roomieId}")]
         public ActionResult RemoveRoomieFromTask([FromRoute] int taskId, [FromRoute] int roomieId)
         {
