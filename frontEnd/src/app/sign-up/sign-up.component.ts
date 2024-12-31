@@ -50,7 +50,7 @@ export class SignUpComponent {
         alert('Signup successful!');
   
         // Navigate to the tasks page
-        this.router.navigate(['/tasks']);
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Signup failed:', err);
