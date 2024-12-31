@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { Login } from '../model/login';
 
 @Injectable({
@@ -12,18 +12,39 @@ export class LoginService {
 
   constructor(private http: HttpClient) {}
 
+  // Store Authorization header
+  storeAuthHeader(email: string, passwordHash: string): void {
+    const authHeader = `Basic ${btoa(`${email}:${passwordHash}`)}`;
+    localStorage.setItem('authHeader', authHeader); // Use sessionStorage if needed
+  }
+
   // Get all logins
   Logins(): Observable<Login[]> {
     return this.http
-      .get<Login[]>(`${this.baseUrl}/login`) // Assuming /login returns a list of logins
+      .get<Login[]>(`${this.baseUrl}/Login`) // Assuming /login returns a list of logins
       .pipe(catchError(this.handleError)); // Error handling
   }
 
   // Login user
   Login(credentials: Login): Observable<any> {
     return this.http
-      .post<any>(`${this.baseUrl}/login/login`, credentials)
-      .pipe(catchError(this.handleError)); // Error handling
+      .post<any>(`${this.baseUrl}/Login/login`, credentials)
+      .pipe(
+        catchError(this.handleError),
+        // Store the Authorization header on successful login
+        tap((response: any) => {
+          this.storeAuthHeader(credentials.email, credentials.passwordHash);
+        })
+      );
+  }
+
+  // Retrieve Authorization header
+  getAuthHeader(): string | null {
+    const authHeader = localStorage.getItem('authHeader');
+    if (!authHeader) {
+      console.warn('Authorization header is missing.');
+    }
+    return authHeader;
   }
 
   // Error handling method
@@ -34,7 +55,13 @@ export class LoginService {
       errorMessage = `Client-side error: ${error.error.message}`;
     } else {
       // Server-side error
-      errorMessage = `Server-side error: Error Code: ${error.status}\nMessage: ${error.message}`;
+      if (error.status === 401) {
+        errorMessage = 'Unauthorized: Please check your credentials.';
+      } else if (error.status === 500) {
+        errorMessage = 'Server error: Please try again later.';
+      } else {
+        errorMessage = `Server-side error: Error Code: ${error.status}\nMessage: ${error.message}`;
+      }
     }
     console.error('LoginService Error:', errorMessage);
     return throwError(() => new Error(errorMessage));

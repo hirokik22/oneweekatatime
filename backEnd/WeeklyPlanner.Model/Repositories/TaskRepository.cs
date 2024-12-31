@@ -33,7 +33,8 @@ namespace WeeklyPlanner.Model.Repositories
                             Note = data["note"].ToString(),
                             IsCompleted = Convert.ToBoolean(data["iscompleted"]),
                             DayOfWeek = data["dayofweek"].ToString(),
-                            TaskOrder = Convert.ToInt32(data["taskorder"])
+                            TaskOrder = Convert.ToInt32(data["taskorder"]),
+                            LoginId = Convert.ToInt32(data["loginid"]) // Add this line
                         };
                     }
 
@@ -78,6 +79,59 @@ namespace WeeklyPlanner.Model.Repositories
                 }
             }
         }
+
+        public List<PlannerTask> GetTaskByLoginId(int loginId)
+        {
+            var tasks = new List<PlannerTask>();
+
+            // Use a using statement to ensure the connection is properly disposed
+            using (var dbConn = new NpgsqlConnection(ConnectionString))
+            {
+                try
+                {
+                    dbConn.Open(); // Open the connection
+                    using (var cmd = dbConn.CreateCommand())
+                    {
+                        // Prepare the SQL query
+                        cmd.CommandText = "SELECT * FROM task WHERE loginid = @LoginId";
+                        cmd.Parameters.AddWithValue("@LoginId", NpgsqlDbType.Integer, loginId);
+
+                        // Execute the query and fetch data
+                        using (var data = cmd.ExecuteReader())
+                        {
+                            while (data != null && data.Read())
+                            {
+                                tasks.Add(new PlannerTask(Convert.ToInt32(data["taskid"]))
+                                {
+                                    TaskName = data["taskname"].ToString(),
+                                    Note = data["note"].ToString(),
+                                    IsCompleted = Convert.ToBoolean(data["iscompleted"]),
+                                    DayOfWeek = data["dayofweek"].ToString(),
+                                    TaskOrder = Convert.ToInt32(data["taskorder"]),
+                                    LoginId = Convert.ToInt32(data["loginid"]) // Include the LoginId field
+                                });
+                            }
+                        }
+                    }
+
+                    return tasks; // Return the task list
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error fetching tasks by LoginId", ex);
+                }
+                finally
+                {
+                    // Ensure the connection is closed even if an exception occurs
+                    if (dbConn.State == System.Data.ConnectionState.Open)
+                    {
+                        dbConn.Close();
+                    }
+                }
+            }
+        }
+
+
 
         public List<Roomie> GetRoomiesForTask(int taskId)
         {
@@ -188,14 +242,15 @@ namespace WeeklyPlanner.Model.Repositories
                 try
                 {
                     var cmd = dbConn.CreateCommand();
-                    cmd.CommandText = @"INSERT INTO task (taskname, note, iscompleted, dayofweek, taskorder)
-                                        VALUES (@taskName, @note, @isCompleted, @dayOfWeek, @taskOrder)";
+                    cmd.CommandText = @"INSERT INTO task (taskname, note, iscompleted, dayofweek, taskorder, loginid)
+                                        VALUES (@taskName, @note, @isCompleted, @dayOfWeek, @taskOrder, @loginId)";
 
                     cmd.Parameters.AddWithValue("@taskName", NpgsqlDbType.Text, task.TaskName ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@note", NpgsqlDbType.Text, task.Note ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@isCompleted", NpgsqlDbType.Boolean, task.IsCompleted);
                     cmd.Parameters.AddWithValue("@dayOfWeek", NpgsqlDbType.Text, task.DayOfWeek ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@taskOrder", NpgsqlDbType.Integer, task.TaskOrder);
+                    cmd.Parameters.AddWithValue("@loginId", NpgsqlDbType.Integer, task.LoginId);
 
                     return InsertData(dbConn, cmd);
                 }
@@ -218,7 +273,8 @@ namespace WeeklyPlanner.Model.Repositories
                                         note = @note,
                                         iscompleted = @isCompleted,
                                         dayofweek = @dayOfWeek,
-                                        taskorder = @taskOrder
+                                        taskorder = @taskOrder,
+                                        loginid = @loginId
                                     WHERE taskid = @taskId";
 
                     cmd.Parameters.AddWithValue("@taskName", NpgsqlDbType.Text, task.TaskName ?? (object)DBNull.Value);
@@ -226,6 +282,7 @@ namespace WeeklyPlanner.Model.Repositories
                     cmd.Parameters.AddWithValue("@isCompleted", NpgsqlDbType.Boolean, task.IsCompleted);
                     cmd.Parameters.AddWithValue("@dayOfWeek", NpgsqlDbType.Text, task.DayOfWeek ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@taskOrder", NpgsqlDbType.Integer, task.TaskOrder);
+                    cmd.Parameters.AddWithValue("@loginId", NpgsqlDbType.Integer, task.LoginId); // Include LoginId
                     cmd.Parameters.AddWithValue("@taskId", NpgsqlDbType.Integer, task.TaskId);
 
                     return UpdateData(dbConn, cmd);
@@ -237,15 +294,16 @@ namespace WeeklyPlanner.Model.Repositories
             }
         }
 
-        public bool DeleteTask(int taskId)
+        public bool DeleteTask(int taskId, int loginId)
         {
             using (var dbConn = new NpgsqlConnection(ConnectionString))
             {
                 try
                 {
                     var cmd = dbConn.CreateCommand();
-                    cmd.CommandText = "DELETE FROM task WHERE taskid = @taskId";
+                    cmd.CommandText = "DELETE FROM task WHERE taskid = @taskId AND loginid = @loginId";
                     cmd.Parameters.AddWithValue("@taskId", NpgsqlDbType.Integer, taskId);
+                    cmd.Parameters.AddWithValue("@loginId", NpgsqlDbType.Integer, loginId);
 
                     return DeleteData(dbConn, cmd);
                 }

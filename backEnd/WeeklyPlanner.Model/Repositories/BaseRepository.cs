@@ -21,11 +21,22 @@ namespace WeeklyPlanner.Model.Repositories
         {
             try
             {
-                conn.Open();
-                return cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open(); // Ensure connection is open only once
+                }
+
+                Console.WriteLine("Executing Query: " + cmd.CommandText);
+                foreach (NpgsqlParameter parameter in cmd.Parameters)
+                {
+                    Console.WriteLine($"Parameter: {parameter.ParameterName} = {parameter.Value}");
+                }
+
+                return cmd.ExecuteReader(CommandBehavior.CloseConnection); // Close connection after data is read
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in GetData: {ex.Message}");
                 throw new Exception("Error executing GetData", ex);
             }
         }
@@ -34,12 +45,23 @@ namespace WeeklyPlanner.Model.Repositories
         {
             try
             {
-                conn.Open();
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+
+                Console.WriteLine("Executing Insert Query: " + cmd.CommandText);
+                foreach (NpgsqlParameter parameter in cmd.Parameters)
+                {
+                    Console.WriteLine($"Parameter: {parameter.ParameterName} = {parameter.Value}");
+                }
+
                 cmd.ExecuteNonQuery();
                 return true;
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in InsertData: {ex.Message}");
                 throw new Exception("Error executing InsertData", ex);
             }
             finally
@@ -52,12 +74,23 @@ namespace WeeklyPlanner.Model.Repositories
         {
             try
             {
-                conn.Open();
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+
+                Console.WriteLine("Executing Update Query: " + cmd.CommandText);
+                foreach (NpgsqlParameter parameter in cmd.Parameters)
+                {
+                    Console.WriteLine($"Parameter: {parameter.ParameterName} = {parameter.Value}");
+                }
+
                 cmd.ExecuteNonQuery();
                 return true;
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in UpdateData: {ex.Message}");
                 throw new Exception("Error executing UpdateData", ex);
             }
             finally
@@ -70,12 +103,23 @@ namespace WeeklyPlanner.Model.Repositories
         {
             try
             {
-                conn.Open();
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+
+                Console.WriteLine("Executing Delete Query: " + cmd.CommandText);
+                foreach (NpgsqlParameter parameter in cmd.Parameters)
+                {
+                    Console.WriteLine($"Parameter: {parameter.ParameterName} = {parameter.Value}");
+                }
+
                 cmd.ExecuteNonQuery();
                 return true;
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in DeleteData: {ex.Message}");
                 throw new Exception("Error executing DeleteData", ex);
             }
             finally

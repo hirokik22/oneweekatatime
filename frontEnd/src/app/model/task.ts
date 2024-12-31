@@ -6,4 +6,5 @@
     isCompleted: boolean;     // Task completion status
     dayOfWeek: string;        // Day the task is scheduled for
     taskOrder: number;        // Order of the task within the day
+    LoginID: number;
   }

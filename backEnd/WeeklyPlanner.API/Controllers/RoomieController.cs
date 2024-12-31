@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using WeeklyPlanner.Model.Entities;
 using WeeklyPlanner.Model.Repositories;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace WeeklyPlanner.API.Controllers
 {
@@ -16,6 +18,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // GET: api/roomie/{loginid}
+        [AllowAnonymous]
         [HttpGet("{loginid}")]
         public ActionResult<IEnumerable<Roomie>> GetRoomiesByLoginId([FromRoute] int loginid)
         {
@@ -31,6 +34,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // POST: api/roomie
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult AddRoomie([FromBody] Roomie roomie)
         {
@@ -56,6 +60,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // DELETE: api/roomie/{roomieid}
+        [AllowAnonymous]
         [HttpDelete("{roomieid}")]
         public ActionResult DeleteRoomie([FromRoute] int roomieid)
         {

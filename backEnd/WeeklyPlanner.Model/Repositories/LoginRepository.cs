@@ -13,14 +13,17 @@ namespace WeeklyPlanner.Model.Repositories
     {
         public LoginRepository(IConfiguration configuration) : base(configuration) { }
 
+
+/*  replacing below with GetLoginByEmail
         public Login GetLoginByUsername(string email)
         {
             using (var dbConn = new NpgsqlConnection(ConnectionString))
             {
                 try
                 {
+                    dbConn.Open();
                     var cmd = dbConn.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM login WHERE email = @Email"; // Correct property name
+                    cmd.CommandText = "SELECT * FROM login WHERE LOWER(email) = LOWER(@Email)";
                     cmd.Parameters.AddWithValue("@Email", NpgsqlDbType.Varchar, email);
 
                     var data = GetData(dbConn, cmd);
@@ -30,19 +33,20 @@ namespace WeeklyPlanner.Model.Repositories
                         return new Login
                         {
                             LoginId = Convert.ToInt32(data["loginid"]),
-                            Email = data["email"].ToString(), // Correct property name
-                            PasswordHash = data["passwordhash"].ToString() // Correct property name
+                            Email = data["email"].ToString(),
+                            PasswordHash = data["passwordhash"].ToString()
                         };
                     }
-
                     return null;
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine($"Error fetching login: {ex.Message}");
                     throw new Exception("Error fetching login by username", ex);
                 }
             }
         }
+*/
 
         // Retrieve all logins
         public List<Login> GetAllLogins()
@@ -109,19 +113,25 @@ namespace WeeklyPlanner.Model.Repositories
         }
 
         // Add a new login
-        public bool CreateLogin(Login login)
+        public int CreateLogin(Login login)
         {
             using (var dbConn = new NpgsqlConnection(ConnectionString))
             {
                 try
                 {
                     var cmd = dbConn.CreateCommand();
-                    cmd.CommandText = @"INSERT INTO login (email, passwordhash)
-                                        VALUES (@Email, @PasswordHash)";
+                    cmd.CommandText = @"
+                        INSERT INTO login (email, passwordhash)
+                        VALUES (@Email, @PasswordHash)
+                        RETURNING loginid;
+                    ";
+
                     cmd.Parameters.AddWithValue("@Email", NpgsqlDbType.Varchar, login.Email);
                     cmd.Parameters.AddWithValue("@PasswordHash", NpgsqlDbType.Varchar, login.PasswordHash);
 
-                    return InsertData(dbConn, cmd);
+                    dbConn.Open();
+                    var loginId = (int)cmd.ExecuteScalar(); // Get the generated ID
+                    return loginId;
                 }
                 catch (Exception ex)
                 {
@@ -171,6 +181,45 @@ namespace WeeklyPlanner.Model.Repositories
                 catch (Exception ex)
                 {
                     throw new Exception("Error deleting login", ex);
+                }
+            }
+        }
+
+        public Login GetLoginByEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentException("Email cannot be null or empty.");
+            }
+
+            using (var dbConn = new NpgsqlConnection(ConnectionString))
+            {
+                try
+                {
+                    dbConn.Open();
+                    var cmd = dbConn.CreateCommand();
+                    cmd.CommandText = "SELECT * FROM login WHERE LOWER(email) = LOWER(@Email)";
+                    cmd.Parameters.AddWithValue("@Email", NpgsqlDbType.Varchar, email);
+
+                    Console.WriteLine($"Executing query: {cmd.CommandText} with parameter: {email}");
+
+                    var data = GetData(dbConn, cmd);
+
+                    if (data != null && data.Read())
+                    {
+                        return new Login
+                        {
+                            LoginId = Convert.ToInt32(data["loginid"]),
+                            Email = data["email"].ToString(),
+                            PasswordHash = data["passwordhash"].ToString()
+                        };
+                    }
+                    return null;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error fetching login by email: {ex.Message}");
+                    throw;
                 }
             }
         }

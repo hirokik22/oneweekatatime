@@ -10,26 +10,95 @@ namespace WeeklyPlanner.API.Controllers
     public class LoginController : ControllerBase
     {
         private readonly LoginRepository _loginRepository;
+        private readonly RoomieRepository _roomieRepository;
 
-        public LoginController(LoginRepository loginRepository)
+        public LoginController(LoginRepository loginRepository, RoomieRepository roomieRepository)
         {
             _loginRepository = loginRepository ?? throw new ArgumentNullException(nameof(loginRepository));
+            _roomieRepository = roomieRepository ?? throw new ArgumentNullException(nameof(roomieRepository));
         }
+        
+        [AllowAnonymous]
+        [HttpGet("test")]
+        public ActionResult<string> Test()
+        {
+            return "LoginRepository resolved successfully!";
+        }
+
+        [AllowAnonymous]
+        [HttpPost("sign-up")]
+        public ActionResult Signup([FromBody] SignupRequest signupRequest)
+        {
+            if (signupRequest == null || string.IsNullOrWhiteSpace(signupRequest.Email) ||
+                string.IsNullOrWhiteSpace(signupRequest.PasswordHash) || signupRequest.RoomieNames == null)
+            {
+                return BadRequest("Invalid signup data.");
+            }
+
+            // Check if email already exists
+            var existingLogin = _loginRepository.GetLoginByEmail(signupRequest.Email);
+            if (existingLogin != null)
+            {
+                return Conflict("An account with this email already exists."); // HTTP 409 Conflict
+            }
+
+            try
+            {
+                // Create login
+                var login = new Login
+                {
+                    Email = signupRequest.Email,
+                    PasswordHash = signupRequest.PasswordHash
+                };
+
+                var loginId = _loginRepository.CreateLogin(login);
+                if (loginId <= 0)
+                {
+                    return StatusCode(500, "Failed to create login.");
+                }
+
+                // Create associated roomies
+                foreach (var roomieName in signupRequest.RoomieNames)
+                {
+                    var roomie = new Roomie
+                    {
+                        roomiename = roomieName,
+                        loginid = loginId // Associate roomie with the login
+                    };
+
+                    if (!_roomieRepository.AddRoomie(roomie))
+                    {
+                        return StatusCode(500, $"Failed to create roomie: {roomieName}");
+                    }
+                }
+
+                // Include loginId in the response
+                return Ok(new { success = true, message = "Signup successful.", loginId });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+
         [AllowAnonymous]
         [HttpPost("login")]
         public ActionResult Login([FromBody] Login credentials)
         {
-            var login = _loginRepository.GetLoginByUsername(credentials.Email); // Corrected property name
-            if (login == null || login.PasswordHash != credentials.PasswordHash) // Corrected property names
+            var login = _loginRepository.GetLoginByEmail(credentials.Email);
+            if (login == null || login.PasswordHash != credentials.PasswordHash)
             {
                 return Unauthorized("Invalid username or password.");
             }
 
-            // Return success response with basic info (e.g., email)
-            return Ok(new { Message = "Login successful", Email = credentials.Email }); // Corrected property name
+
+            // Return success response with loginId and basic info
+            return Ok(new { Message = "Login successful", Email = login.Email, LoginId = login.LoginId });
         }
 
-
+        [AllowAnonymous]
         [HttpGet("status")]
         public ActionResult<string> Status()
         {
@@ -37,6 +106,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // GET: api/login
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<Login>> GetAllLogins()
         {
@@ -52,6 +122,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // GET: api/login/{loginid}
+        [AllowAnonymous]
         [HttpGet("{loginid}")]
         public ActionResult<Login> GetLoginById([FromRoute] int loginid)
         {
@@ -72,6 +143,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // POST: api/login
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult CreateLogin([FromBody] Login login)
         {
@@ -82,8 +154,8 @@ namespace WeeklyPlanner.API.Controllers
 
             try
             {
-                var result = _loginRepository.CreateLogin(login);
-                if (result)
+                var loginId = _loginRepository.CreateLogin(login);
+                if (loginId > 0)
                 {
                     return Ok("Login created successfully.");
                 }
@@ -97,6 +169,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // PUT: api/login/{loginid}
+        [AllowAnonymous]
         [HttpPut("{loginid}")]
         public ActionResult UpdateLogin([FromRoute] int loginid, [FromBody] Login login)
         {
@@ -122,6 +195,7 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // DELETE: api/login/{loginid}
+        [AllowAnonymous]
         [HttpDelete("{loginid}")]
         public ActionResult DeleteLogin([FromRoute] int loginid)
         {
@@ -140,5 +214,12 @@ namespace WeeklyPlanner.API.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+    }
+
+    public class SignupRequest
+    {
+        public required string Email { get; set; }
+        public required string PasswordHash { get; set; }
+        public required List<string> RoomieNames { get; set; }
     }
 }
