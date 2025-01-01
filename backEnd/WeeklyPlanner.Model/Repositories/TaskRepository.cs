@@ -235,7 +235,8 @@ namespace WeeklyPlanner.Model.Repositories
             }
         }
 
-        public bool InsertTask(PlannerTask task)
+
+        public int InsertTask(PlannerTask task)
         {
             using (var dbConn = new NpgsqlConnection(ConnectionString))
             {
@@ -243,7 +244,8 @@ namespace WeeklyPlanner.Model.Repositories
                 {
                     var cmd = dbConn.CreateCommand();
                     cmd.CommandText = @"INSERT INTO task (taskname, note, iscompleted, dayofweek, taskorder, loginid)
-                                        VALUES (@taskName, @note, @isCompleted, @dayOfWeek, @taskOrder, @loginId)";
+                                        VALUES (@taskName, @note, @isCompleted, @dayOfWeek, @taskOrder, @loginId)
+                                        RETURNING taskid";
 
                     cmd.Parameters.AddWithValue("@taskName", NpgsqlDbType.Text, task.TaskName ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@note", NpgsqlDbType.Text, task.Note ?? (object)DBNull.Value);
@@ -252,7 +254,9 @@ namespace WeeklyPlanner.Model.Repositories
                     cmd.Parameters.AddWithValue("@taskOrder", NpgsqlDbType.Integer, task.TaskOrder);
                     cmd.Parameters.AddWithValue("@loginId", NpgsqlDbType.Integer, task.LoginId);
 
-                    return InsertData(dbConn, cmd);
+                    dbConn.Open();
+                    var taskId = cmd.ExecuteScalar();
+                    return Convert.ToInt32(taskId); // Return the generated task ID
                 }
                 catch (Exception ex)
                 {
@@ -282,10 +286,25 @@ namespace WeeklyPlanner.Model.Repositories
                     cmd.Parameters.AddWithValue("@isCompleted", NpgsqlDbType.Boolean, task.IsCompleted);
                     cmd.Parameters.AddWithValue("@dayOfWeek", NpgsqlDbType.Text, task.DayOfWeek ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@taskOrder", NpgsqlDbType.Integer, task.TaskOrder);
-                    cmd.Parameters.AddWithValue("@loginId", NpgsqlDbType.Integer, task.LoginId); // Include LoginId
+                    cmd.Parameters.AddWithValue("@loginId", NpgsqlDbType.Integer, task.LoginId);
                     cmd.Parameters.AddWithValue("@taskId", NpgsqlDbType.Integer, task.TaskId);
 
-                    return UpdateData(dbConn, cmd);
+                    dbConn.Open();
+                    var rowsAffected = cmd.ExecuteNonQuery();
+
+                    // Handle roomie assignment
+                    if (task.AssignedRoomie.HasValue)
+                    {
+                        var roomieCmd = dbConn.CreateCommand();
+                        roomieCmd.CommandText = @"DELETE FROM taskroomies WHERE taskid = @taskId;
+                                                INSERT INTO taskroomies (taskid, roomieid)
+                                                VALUES (@taskId, @roomieId)";
+                        roomieCmd.Parameters.AddWithValue("@taskId", NpgsqlDbType.Integer, task.TaskId);
+                        roomieCmd.Parameters.AddWithValue("@roomieId", NpgsqlDbType.Integer, task.AssignedRoomie.Value);
+                        roomieCmd.ExecuteNonQuery();
+                    }
+
+                    return rowsAffected > 0;
                 }
                 catch (Exception ex)
                 {

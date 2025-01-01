@@ -121,13 +121,31 @@ namespace WeeklyPlanner.API.Controllers
                 return Unauthorized("You are not authorized to create tasks for this LoginId.");
             }
 
-            bool result = Repository.InsertTask(task);
-            if (result)
+            // Insert the task and retrieve the generated taskId
+            int taskId = Repository.InsertTask(task);
+            if (taskId <= 0)
             {
-                return Ok(new { message = "Task created successfully.", task });
+                return BadRequest(new { error = "Failed to create task." });
             }
 
-            return BadRequest(new { error = "Failed to create task." });
+            // Assign the roomie to the task if AssignedRoomie is provided
+            if (task.AssignedRoomie.HasValue)
+            {
+                bool roomieAssigned = Repository.AssignRoomieToTask(taskId, task.AssignedRoomie.Value);
+                if (!roomieAssigned)
+                {
+                    return BadRequest(new { error = "Task created but failed to assign roomie." });
+                }
+            }
+
+            // Retrieve the created task along with the assigned roomie
+            var createdTask = Repository.GetTaskById(taskId);
+            if (createdTask == null)
+            {
+                return BadRequest(new { error = "Failed to retrieve created task." });
+            }
+
+            return Ok(new { message = "Task created successfully.", task = createdTask });
         }
 
         // POST: api/task/addRoomiesToTask/{taskId}
