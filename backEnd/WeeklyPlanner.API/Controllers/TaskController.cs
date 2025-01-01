@@ -11,16 +11,18 @@ namespace WeeklyPlanner.API.Controllers
     public class TaskController : ControllerBase
     {
         protected TaskRepository Repository { get; }
+        protected RoomieRepository RoomieRepository { get; }
 
-        public TaskController(TaskRepository repository)
+        public TaskController(TaskRepository repository, RoomieRepository roomieRepository)
         {
             Repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            RoomieRepository = roomieRepository ?? throw new ArgumentNullException(nameof(roomieRepository));
         }
 
         // GET: api/task/{taskId}
         [Authorize]
         [HttpGet("{taskId}")]
-        public ActionResult<PlannerTask> GetTask([FromRoute] int taskId)
+        public ActionResult<object> GetTask([FromRoute] int taskId)
         {
             var task = Repository.GetTaskById(taskId);
             if (task == null)
@@ -28,31 +30,61 @@ namespace WeeklyPlanner.API.Controllers
                 return NotFound($"Task with ID {taskId} not found.");
             }
 
-            return Ok(task);
+            // Fetch the assigned roomie
+            var roomie = RoomieRepository.GetRoomieByTaskId(taskId);
+
+            // Build the response
+            var response = new
+            {
+                task.TaskId,
+                task.TaskName,
+                AssignedRoomie = roomie?.roomiename ?? "Unassigned",
+                task.Note,
+                task.IsCompleted,
+                task.DayOfWeek,
+                task.TaskOrder,
+                task.LoginId
+            };
+
+            return Ok(response);
         }
 
         // GET: api/task
         // GET: api/task?loginId=1
         [Authorize]
         [HttpGet]
-        public ActionResult<IEnumerable<PlannerTask>> GetAllTasks([FromQuery] int? loginId)
+        public ActionResult<IEnumerable<object>> GetAllTasks([FromQuery] int? loginId)
         {
             IEnumerable<PlannerTask> tasks;
 
             if (loginId.HasValue)
             {
-                // Fetch tasks specific to the login ID
                 tasks = Repository.GetTaskByLoginId(loginId.Value);
             }
             else
             {
-                // Fetch all tasks
                 tasks = Repository.GetTask();
             }
 
-            return Ok(tasks);
-        }
+            // Fetch associated roomies and build response
+            var tasksWithRoomies = tasks.Select(task =>
+            {
+                var roomie = RoomieRepository.GetRoomieByTaskId(task.TaskId);
+                return new
+                {
+                    task.TaskId,
+                    task.TaskName,
+                    AssignedRoomie = roomie?.roomiename ?? "Unassigned",
+                    task.Note,
+                    task.IsCompleted,
+                    task.DayOfWeek,
+                    task.TaskOrder,
+                    task.LoginId
+                };
+            });
 
+            return Ok(tasksWithRoomies);
+        }
 
         // GET: api/task/getRoomiesForTask/{taskId}
         [Authorize]

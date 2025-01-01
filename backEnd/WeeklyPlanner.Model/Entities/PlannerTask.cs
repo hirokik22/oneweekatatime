@@ -12,8 +12,7 @@ namespace WeeklyPlanner.Model.Entities
         [StringLength(100, ErrorMessage = "Task Name cannot exceed 100 characters.")]
         public string TaskName { get; set; }
 
-        [Required(ErrorMessage = "Assigned Roomie is required.")]
-        public int AssignedRoomie { get; set; }
+        public int? AssignedRoomie { get; set; }
 
         [StringLength(500, ErrorMessage = "Note cannot exceed 500 characters.")]
         public string Note { get; set; }

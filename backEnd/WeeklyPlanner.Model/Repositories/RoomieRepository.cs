@@ -68,6 +68,50 @@ namespace WeeklyPlanner.Model.Repositories
             }
         }
 
+        // Retrieve the roomie associated with a specific task
+        public Roomie GetRoomieByTaskId(int taskId)
+        {
+            using (var dbConn = new NpgsqlConnection(ConnectionString))
+            {
+                try
+                {
+                    var cmd = dbConn.CreateCommand();
+                    cmd.CommandText = @"
+                        SELECT r.*
+                        FROM taskroomies tr
+                        INNER JOIN roomie r ON tr.roomieid = r.roomieid
+                        WHERE tr.taskid = @taskId";
+                    cmd.Parameters.AddWithValue("@taskId", NpgsqlDbType.Integer, taskId);
+
+                    dbConn.Open();
+                    var data = cmd.ExecuteReader();
+
+                    if (data != null && data.Read())
+                    {
+                        return new Roomie
+                        {
+                            roomieid = Convert.ToInt32(data["roomieid"]),
+                            roomiename = data["roomiename"].ToString(),
+                            loginid = Convert.ToInt32(data["loginid"])
+                        };
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error fetching roomie for task ID", ex);
+                }
+                finally
+                {
+                    if (dbConn.State == System.Data.ConnectionState.Open)
+                    {
+                        dbConn.Close();
+                    }
+                }
+
+                return null; // Return null if no roomie is associated
+            }
+        }
+
         // Delete a specific roomie
         public bool DeleteRoomie(int roomieid)
         {
