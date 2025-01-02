@@ -93,13 +93,21 @@ export class TaskComponent {
 
   toggleTaskCompletion(task: Task): void {
     task.isCompleted = !task.isCompleted;
-    this.taskService.updateTask(task).subscribe({
-      next: () => this.loadTasks(),
-      error: (err) => {
-        this.errorMessage = err.message || 'Failed to update task.';
-      },
+
+    // Exclude unnecessary fields
+    const sanitizedTask = { ...task };
+    delete (sanitizedTask as any).assignedRoomie;
+
+    console.log('Updating task with sanitized payload:', sanitizedTask);
+
+    this.taskService.updateTask(sanitizedTask).subscribe({
+        next: () => this.loadTasks(),
+        error: (err) => {
+            this.errorMessage = `Failed to update task: ${err.message}`;
+            console.error('Task update error:', err);
+        },
     });
-  }
+}
 
   private loadTasks(): void {
     const loginId = this.getLoginIdFromStorage(); // Retrieve the loginId

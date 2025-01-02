@@ -18,8 +18,8 @@ export class TaskService {
   private getAuthHeader(): HttpHeaders {
     const authHeader = localStorage.getItem('authHeader');
     if (!authHeader) {
-      console.warn('Authorization header is missing.');
-      throw new Error('User is not authenticated.');
+      console.error('Authorization header is missing.');
+      throw new Error('User is not authenticated. Please log in again.');
     }
     return new HttpHeaders({ Authorization: authHeader });
   }
@@ -59,9 +59,17 @@ export class TaskService {
 
   // Update an existing task
   updateTask(task: Task): Observable<any> {
+    if (!task.taskId) {
+      throw new Error('Task ID is missing in the request.');
+    }
     return this.http
       .put(`${this.baseUrl}/task/${task.taskId}`, task, { headers: this.getAuthHeader() })
-      .pipe(catchError(this.handleError));
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error(`Error updating task with ID ${task.taskId}:`, error.message);
+          return throwError(() => new Error(`Failed to update task: ${error.message}`));
+        })
+      );
   }
 
   // Delete a task by ID

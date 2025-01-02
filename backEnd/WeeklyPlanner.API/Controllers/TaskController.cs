@@ -175,6 +175,11 @@ namespace WeeklyPlanner.API.Controllers
         [HttpPut("{taskId}")]
         public ActionResult UpdateTask([FromRoute] int taskId, [FromBody] PlannerTask task)
         {
+            Console.WriteLine("Received Update Request:");
+            Console.WriteLine($"TaskId in URL: {taskId}, TaskId in Body: {task?.TaskId}");
+            Console.WriteLine($"TaskName: {task?.TaskName}, AssignedRoomie: {task?.AssignedRoomie}");
+            Console.WriteLine($"IsCompleted: {task?.IsCompleted}, LoginId: {task?.LoginId}");
+
             if (task == null || taskId != task.TaskId)
             {
                 return BadRequest(new { error = "Task data is invalid or Task IDs do not match.", taskId, providedTaskId = task?.TaskId });
