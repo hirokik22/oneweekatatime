@@ -84,22 +84,23 @@ namespace WeeklyPlanner.Model.Repositories
         {
             var tasks = new List<PlannerTask>();
 
-            // Use a using statement to ensure the connection is properly disposed
             using (var dbConn = new NpgsqlConnection(ConnectionString))
             {
                 try
                 {
-                    dbConn.Open(); // Open the connection
+                    dbConn.Open();
                     using (var cmd = dbConn.CreateCommand())
                     {
-                        // Prepare the SQL query
-                        cmd.CommandText = "SELECT * FROM task WHERE loginid = @LoginId";
+                        // Query to fetch tasks
+                        cmd.CommandText = @"
+                            SELECT * 
+                            FROM task 
+                            WHERE loginid = @LoginId";
                         cmd.Parameters.AddWithValue("@LoginId", NpgsqlDbType.Integer, loginId);
 
-                        // Execute the query and fetch data
                         using (var data = cmd.ExecuteReader())
                         {
-                            while (data != null && data.Read())
+                            while (data.Read())
                             {
                                 tasks.Add(new PlannerTask(Convert.ToInt32(data["taskid"]))
                                 {
@@ -108,30 +109,28 @@ namespace WeeklyPlanner.Model.Repositories
                                     IsCompleted = Convert.ToBoolean(data["iscompleted"]),
                                     DayOfWeek = data["dayofweek"].ToString(),
                                     TaskOrder = Convert.ToInt32(data["taskorder"]),
-                                    LoginId = Convert.ToInt32(data["loginid"]) // Include the LoginId field
+                                    LoginId = Convert.ToInt32(data["loginid"])
                                 });
                             }
                         }
                     }
-
-                    return tasks; // Return the task list
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Error fetching tasks by LoginId", ex);
+                    Console.WriteLine($"Error fetching tasks by LoginId {loginId}: {ex.Message}");
+                    throw new Exception($"Error fetching tasks by LoginId {loginId}", ex);
                 }
                 finally
                 {
-                    // Ensure the connection is closed even if an exception occurs
                     if (dbConn.State == System.Data.ConnectionState.Open)
                     {
                         dbConn.Close();
                     }
                 }
             }
+
+            return tasks;
         }
-
-
 
         public List<Roomie> GetRoomiesForTask(int taskId)
         {
@@ -156,6 +155,13 @@ namespace WeeklyPlanner.Model.Repositories
                             roomieid = Convert.ToInt32(data["roomieid"]),
                             roomiename = data["roomiename"].ToString()
                         });
+                    }
+
+                    // Log the fetched roomies
+                    Console.WriteLine($"Fetched roomies for TaskId {taskId}: {roomies.Count}");
+                    foreach (var roomie in roomies)
+                    {
+                        Console.WriteLine($"Roomie: {roomie.roomieid}, {roomie.roomiename}");
                     }
 
                     return roomies;
@@ -265,7 +271,7 @@ namespace WeeklyPlanner.Model.Repositories
             }
         }
 
-        public bool UpdateTask(PlannerTask task)
+        public bool UpdateTask(PlannerTask task, List<int> roomieIds)
         {
             using (var dbConn = new NpgsqlConnection(ConnectionString))
             {
@@ -279,7 +285,7 @@ namespace WeeklyPlanner.Model.Repositories
                                         dayofweek = @dayOfWeek,
                                         taskorder = @taskOrder,
                                         loginid = @loginId
-                                    WHERE taskid = @taskId";
+                                        WHERE taskid = @taskId";
 
                     cmd.Parameters.AddWithValue("@taskName", NpgsqlDbType.Text, task.TaskName ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@note", NpgsqlDbType.Text, task.Note ?? (object)DBNull.Value);
@@ -292,16 +298,19 @@ namespace WeeklyPlanner.Model.Repositories
                     dbConn.Open();
                     var rowsAffected = cmd.ExecuteNonQuery();
 
-                    // Handle roomie assignment
-                    if (task.AssignedRoomie.HasValue)
+                    // Update roomies
+                    var roomieCmd = dbConn.CreateCommand();
+                    roomieCmd.CommandText = @"DELETE FROM taskroomies WHERE taskid = @taskId";
+                    roomieCmd.Parameters.AddWithValue("@taskId", NpgsqlDbType.Integer, task.TaskId);
+                    roomieCmd.ExecuteNonQuery();
+
+                    foreach (var roomieId in roomieIds)
                     {
-                        var roomieCmd = dbConn.CreateCommand();
-                        roomieCmd.CommandText = @"DELETE FROM taskroomies WHERE taskid = @taskId;
-                                                INSERT INTO taskroomies (taskid, roomieid)
-                                                VALUES (@taskId, @roomieId)";
-                        roomieCmd.Parameters.AddWithValue("@taskId", NpgsqlDbType.Integer, task.TaskId);
-                        roomieCmd.Parameters.AddWithValue("@roomieId", NpgsqlDbType.Integer, task.AssignedRoomie.Value);
-                        roomieCmd.ExecuteNonQuery();
+                        var assignCmd = dbConn.CreateCommand();
+                        assignCmd.CommandText = @"INSERT INTO taskroomies (taskid, roomieid) VALUES (@taskId, @roomieId)";
+                        assignCmd.Parameters.AddWithValue("@taskId", NpgsqlDbType.Integer, task.TaskId);
+                        assignCmd.Parameters.AddWithValue("@roomieId", NpgsqlDbType.Integer, roomieId);
+                        assignCmd.ExecuteNonQuery();
                     }
 
                     return rowsAffected > 0;

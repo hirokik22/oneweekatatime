@@ -23,13 +23,14 @@ export class TaskComponent {
   newTask: Task = {
     taskId: 0,
     taskName: '',
-    assignedRoomie: null,
     note: '',
     dayOfWeek: '',
     isCompleted: false,
     taskOrder: 0,
-    LoginID: 0, // Updated field for LoginId
+    loginId: 0, // Updated field for LoginId
+    roomies: [], // Initialize as an empty array
   };
+  
 
   constructor(private taskService: TaskService, private roomieService: RoomieService) {}
 
@@ -54,23 +55,25 @@ export class TaskComponent {
       this.newTask = {
         taskId: 0,
         taskName: '',
-        assignedRoomie: null,
         note: '',
         dayOfWeek: day,
         isCompleted: false,
         taskOrder: this.getTasksForDay(day).length + 1,
-        LoginID: loginId || 0, // Assign LoginId to the new task
+        loginId: loginId || 0, // Assign LoginId to the new task
+        roomies: [], // Initialize with an empty array
       };
     }
-  }
+  }  
 
   addTaskForDay(): void {
     if (!this.newTask.taskName) {
       this.errorMessage = 'Task Name is required.';
       return;
     }
-
-    this.taskService.createTask(this.newTask).subscribe({
+  
+    const roomieIds = this.newTask.roomies.map((roomie) => roomie.roomieid); // Extract selected roomie IDs
+  
+    this.taskService.createTask(this.newTask, roomieIds).subscribe({
       next: () => {
         this.errorMessage = null;
         this.loadTasks();
@@ -80,7 +83,8 @@ export class TaskComponent {
         this.errorMessage = err.message || 'Failed to create task.';
       },
     });
-  }
+  }  
+  
 
   deleteTask(taskId: number): void {
     this.taskService.deleteTask(taskId).subscribe({
@@ -93,30 +97,34 @@ export class TaskComponent {
 
   toggleTaskCompletion(task: Task): void {
     task.isCompleted = !task.isCompleted;
-
+  
     // Exclude unnecessary fields
     const sanitizedTask = { ...task };
     delete (sanitizedTask as any).assignedRoomie;
-
-    console.log('Updating task with sanitized payload:', sanitizedTask);
-
-    this.taskService.updateTask(sanitizedTask).subscribe({
-        next: () => this.loadTasks(),
-        error: (err) => {
-            this.errorMessage = `Failed to update task: ${err.message}`;
-            console.error('Task update error:', err);
-        },
+  
+    // Extract roomie IDs from the task
+    const roomieIds = task.roomies.map((roomie) => roomie.roomieid);
+  
+    console.log('Updating task with sanitized payload:', sanitizedTask, 'Roomie IDs:', roomieIds);
+  
+    this.taskService.updateTask(sanitizedTask, roomieIds).subscribe({
+      next: () => this.loadTasks(),
+      error: (err) => {
+        this.errorMessage = `Failed to update task: ${err.message}`;
+        console.error('Task update error:', err);
+      },
     });
-}
+  }  
 
   private loadTasks(): void {
-    const loginId = this.getLoginIdFromStorage(); // Retrieve the loginId
-    console.log('Retrieved loginId:', loginId);
-
+    const loginId = this.getLoginIdFromStorage();
     if (loginId) {
       this.taskService.getTasksByLoginId(loginId).subscribe({
         next: (tasks) => {
-          this.tasks = tasks;
+          this.tasks = tasks.map((task) => ({
+            ...task,
+            roomies: task.roomies || [], // Ensure roomies are initialized as an empty array if undefined
+          }));
         },
         error: (err) => {
           this.errorMessage = err.message || 'Failed to load tasks for this user.';
@@ -125,7 +133,8 @@ export class TaskComponent {
     } else {
       this.errorMessage = 'No user ID found. Please log in again.';
     }
-  }
+  }  
+  
 
   private loadRoomies(): void {
     const loginId = this.getLoginIdFromStorage();
@@ -148,4 +157,42 @@ export class TaskComponent {
     const loginId = sessionStorage.getItem('loginId'); // Or replace with appropriate key
     return loginId ? Number(loginId) : null;
   }
+
+  onRoomieSelectionChange(roomie: Roomie, event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+  
+    // Ensure `newTask.roomies` is initialized
+    if (!this.newTask.roomies) {
+      this.newTask.roomies = [];
+    }
+  
+    if (checkbox.checked) {
+      // Check if the roomie is already added to prevent duplicates
+      if (!this.newTask.roomies.some(r => r.roomieid === roomie.roomieid)) {
+        this.newTask.roomies.push(roomie);
+      }
+    } else {
+      // Remove roomie from the array
+      this.newTask.roomies = this.newTask.roomies.filter(
+        r => r.roomieid !== roomie.roomieid
+      );
+    }
+  }  
+
+  getRoomieNames(task: Task): string {
+    return task.roomies && task.roomies.length > 0
+      ? task.roomies.map((r) => r.roomiename).join(', ')
+      : 'Unassigned';
+  }
+
+  isRoomieAssigned(roomie: Roomie): boolean {
+    return this.newTask.roomies.some(r => r.roomieid === roomie.roomieid);
+  }
+
+  getRoomiesForTask(task: any): string {
+    if (!task.roomies || task.roomies.length === 0) {
+      return 'Unassigned';
+    }
+    return task.roomies.map((roomie: any) => roomie.roomiename).join(', ');
+  }   
 }

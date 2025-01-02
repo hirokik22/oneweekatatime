@@ -46,9 +46,10 @@ export class TaskService {
   }
 
   // Create a new task
-  createTask(task: Partial<Task>): Observable<{ message: string; task: Task }> {
+  createTask(task: Partial<Task>, roomieIds: number[]): Observable<{ message: string; task: Task }> {
+    const payload = { ...task, roomieIds }; // Combine task and roomieIds into a single payload
     return this.http
-      .post<{ message: string; task: Task }>(`${this.baseUrl}/task`, task, { headers: this.getAuthHeader() })
+      .post<{ message: string; task: Task }>(`${this.baseUrl}/task`, payload, { headers: this.getAuthHeader() })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.error('Error occurred during task creation:', error);
@@ -56,21 +57,23 @@ export class TaskService {
         })
       );
   }
+  
 
   // Update an existing task
-  updateTask(task: Task): Observable<any> {
+  updateTask(task: Task, roomieIds: number[]): Observable<any> {
     if (!task.taskId) {
       throw new Error('Task ID is missing in the request.');
     }
+    const payload = { ...task, roomieIds }; // Combine task and roomieIds into a single payload
     return this.http
-      .put(`${this.baseUrl}/task/${task.taskId}`, task, { headers: this.getAuthHeader() })
+      .put(`${this.baseUrl}/task/${task.taskId}`, payload, { headers: this.getAuthHeader() })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.error(`Error updating task with ID ${task.taskId}:`, error.message);
           return throwError(() => new Error(`Failed to update task: ${error.message}`));
         })
       );
-  }
+  }  
 
   // Delete a task by ID
   deleteTask(taskId: number): Observable<any> {

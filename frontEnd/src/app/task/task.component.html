@@ -23,7 +23,9 @@
           {{ task.isCompleted ? 'Completed' : 'Incomplete' }}
         </p>
         <p><strong>Task:</strong> {{ task.taskName }}</p>
-        <p><strong>Roomie:</strong> {{ task.assignedRoomie || 'Unassigned' }}</p>
+        <p>
+          <strong>Roomies:</strong> {{ getRoomiesForTask(task) }}
+        </p>           
         <p><strong>Note:</strong> {{ task.note }}</p>
       </div>
     </div>
@@ -41,17 +43,15 @@
           name="taskName"
           required
         />
-        <label for="assignedRoomie">To Roomie:</label>
-        <select
-          id="assignedRoomie"
-          [(ngModel)]="newTask.assignedRoomie"
-          name="assignedRoomie"
-          required
-        >
-          <option *ngFor="let roomie of roomies" [value]="roomie.roomieid">
-            {{ roomie.roomiename }}
-          </option>
-        </select>            
+        <label>Assign Roomies:</label>
+        <div *ngFor="let roomie of roomies">
+          <input
+            type="checkbox"
+            [checked]="isRoomieAssigned(roomie)"
+            (change)="onRoomieSelectionChange(roomie, $event)"
+          />
+          {{ roomie.roomiename }}
+        </div>             
         <label for="note">Note:</label>
         <textarea
           id="note"

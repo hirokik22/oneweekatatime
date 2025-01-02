@@ -30,15 +30,15 @@ namespace WeeklyPlanner.API.Controllers
                 return NotFound($"Task with ID {taskId} not found.");
             }
 
-            // Fetch the assigned roomie
-            var roomie = RoomieRepository.GetRoomieByTaskId(taskId);
+            // Fetch all assigned roomies
+            var roomies = Repository.GetRoomiesForTask(taskId);
 
             // Build the response
             var response = new
             {
                 task.TaskId,
                 task.TaskName,
-                AssignedRoomie = roomie?.roomiename ?? "Unassigned",
+                AssignedRoomies = roomies.Select(r => r.roomiename).ToList(),
                 task.Note,
                 task.IsCompleted,
                 task.DayOfWeek,
@@ -53,37 +53,51 @@ namespace WeeklyPlanner.API.Controllers
         // GET: api/task?loginId=1
         [Authorize]
         [HttpGet]
-        public ActionResult<IEnumerable<object>> GetAllTasks([FromQuery] int? loginId)
+        public ActionResult<IEnumerable<object>> GetAllTasks()
         {
-            IEnumerable<PlannerTask> tasks;
-
-            if (loginId.HasValue)
+            var loginId = GetLoginIdFromClaims();
+            if (loginId == null)
             {
-                tasks = Repository.GetTaskByLoginId(loginId.Value);
-            }
-            else
-            {
-                tasks = Repository.GetTask();
+                return Unauthorized("You are not authenticated.");
             }
 
-            // Fetch associated roomies and build response
-            var tasksWithRoomies = tasks.Select(task =>
+            try
             {
-                var roomie = RoomieRepository.GetRoomieByTaskId(task.TaskId);
-                return new
+                // Fetch tasks only for the authenticated user
+                var tasks = Repository.GetTaskByLoginId(loginId.Value);
+
+                // Fetch associated roomies and build response
+                var tasksWithRoomies = tasks.Select(task =>
                 {
-                    task.TaskId,
-                    task.TaskName,
-                    AssignedRoomie = roomie?.roomiename ?? "Unassigned",
-                    task.Note,
-                    task.IsCompleted,
-                    task.DayOfWeek,
-                    task.TaskOrder,
-                    task.LoginId
-                };
-            });
+                    var roomies = Repository.GetRoomiesForTask(task.TaskId);
 
-            return Ok(tasksWithRoomies);
+                    // Log fetched roomies for the task
+                    Console.WriteLine($"Fetched roomies for TaskId {task.TaskId}: {roomies.Count}");
+                    foreach (var roomie in roomies)
+                    {
+                        Console.WriteLine($"Roomie: {roomie.roomieid}, {roomie.roomiename}");
+                    }
+
+                    return new
+                    {
+                        task.TaskId,
+                        task.TaskName,
+                        AssignedRoomies = roomies.Select(r => r.roomiename).ToList(),
+                        task.Note,
+                        task.IsCompleted,
+                        task.DayOfWeek,
+                        task.TaskOrder,
+                        task.LoginId
+                    };
+                });
+
+                return Ok(tasksWithRoomies);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetAllTasks for LoginId {loginId}: {ex.Message}");
+                return StatusCode(500, "Internal server error. Please try again later.");
+            }
         }
 
         // GET: api/task/getRoomiesForTask/{taskId}
@@ -91,13 +105,34 @@ namespace WeeklyPlanner.API.Controllers
         [HttpGet("getRoomiesForTask/{taskId}")]
         public ActionResult<IEnumerable<Roomie>> GetRoomiesForTask([FromRoute] int taskId)
         {
-            var roomies = Repository.GetRoomiesForTask(taskId);
-            if (roomies == null || !roomies.Any())
+            var loginId = GetLoginIdFromClaims();
+            if (loginId == null)
             {
-                return NotFound($"No roomies found for Task ID {taskId}.");
+                return Unauthorized("You are not authenticated.");
             }
 
-            return Ok(roomies);
+            // Validate that the task belongs to the authenticated user
+            var task = Repository.GetTaskById(taskId);
+            if (task == null || task.LoginId != loginId)
+            {
+                return Unauthorized("You are not authorized to view roomies for this task.");
+            }
+
+            try
+            {
+                var roomies = Repository.GetRoomiesForTask(taskId);
+                if (roomies == null || !roomies.Any())
+                {
+                    return NotFound($"No roomies found for Task ID {taskId}.");
+                }
+
+                return Ok(roomies);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetRoomiesForTask: {ex.Message}");
+                return StatusCode(500, "Internal server error. Please try again later.");
+            }
         }
 
         // POST: api/task
@@ -128,24 +163,36 @@ namespace WeeklyPlanner.API.Controllers
                 return BadRequest(new { error = "Failed to create task." });
             }
 
-            // Assign the roomie to the task if AssignedRoomie is provided
-            if (task.AssignedRoomie.HasValue)
+            // Assign roomies to the task
+            var roomieIds = task.Roomies.Select(r => r.roomieid).ToList();
+            foreach (var roomieId in roomieIds)
             {
-                bool roomieAssigned = Repository.AssignRoomieToTask(taskId, task.AssignedRoomie.Value);
-                if (!roomieAssigned)
+                bool result = Repository.AssignRoomieToTask(taskId, roomieId);
+                if (!result)
                 {
-                    return BadRequest(new { error = "Task created but failed to assign roomie." });
+                    return BadRequest(new { error = $"Task created but failed to assign roomie ID {roomieId}." });
                 }
             }
 
-            // Retrieve the created task along with the assigned roomie
+            // Retrieve the created task with assigned roomies
             var createdTask = Repository.GetTaskById(taskId);
-            if (createdTask == null)
-            {
-                return BadRequest(new { error = "Failed to retrieve created task." });
-            }
+            var roomies = Repository.GetRoomiesForTask(taskId);
 
-            return Ok(new { message = "Task created successfully.", task = createdTask });
+            return Ok(new
+            {
+                message = "Task created successfully.",
+                task = new
+                {
+                    createdTask.TaskId,
+                    createdTask.TaskName,
+                    AssignedRoomies = roomies.Select(r => r.roomiename).ToList(),
+                    createdTask.Note,
+                    createdTask.IsCompleted,
+                    createdTask.DayOfWeek,
+                    createdTask.TaskOrder,
+                    createdTask.LoginId
+                }
+            });
         }
 
         // POST: api/task/addRoomiesToTask/{taskId}
@@ -175,20 +222,15 @@ namespace WeeklyPlanner.API.Controllers
         [HttpPut("{taskId}")]
         public ActionResult UpdateTask([FromRoute] int taskId, [FromBody] PlannerTask task)
         {
-            Console.WriteLine("Received Update Request:");
-            Console.WriteLine($"TaskId in URL: {taskId}, TaskId in Body: {task?.TaskId}");
-            Console.WriteLine($"TaskName: {task?.TaskName}, AssignedRoomie: {task?.AssignedRoomie}");
-            Console.WriteLine($"IsCompleted: {task?.IsCompleted}, LoginId: {task?.LoginId}");
-
             if (task == null || taskId != task.TaskId)
             {
-                return BadRequest(new { error = "Task data is invalid or Task IDs do not match.", taskId, providedTaskId = task?.TaskId });
+                return BadRequest(new { error = "Task data is invalid or Task IDs do not match." });
             }
 
             var loginId = GetLoginIdFromClaims();
-            if (loginId == null)
+            if (loginId == null || task.LoginId != loginId)
             {
-                return Unauthorized(new { error = "You are not authenticated.", claimType = "LoginId" });
+                return Unauthorized("You are not authorized to update this task.");
             }
 
             var existingTask = Repository.GetTaskById(taskId);
@@ -197,27 +239,16 @@ namespace WeeklyPlanner.API.Controllers
                 return NotFound(new { error = $"Task with ID {taskId} not found." });
             }
 
-            if (existingTask.LoginId != loginId)
+            // Update the task with the provided data
+            var roomieIds = task.Roomies.Select(r => r.roomieid).ToList();
+            bool result = Repository.UpdateTask(task, roomieIds);
+
+            if (!result)
             {
-                return Unauthorized(new { error = "You are not authorized to perform this action.", existingTaskLoginId = existingTask.LoginId, currentLoginId = loginId });
+                return BadRequest(new { error = "Failed to update task." });
             }
 
-            try
-            {
-                bool result = Repository.UpdateTask(task);
-                if (result)
-                {
-                    return Ok(new { message = "Task updated successfully.", updatedTask = task });
-                }
-                else
-                {
-                    return BadRequest(new { error = "Failed to update task.", taskId });
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { error = "An error occurred while updating the task.", exceptionMessage = ex.Message, taskId });
-            }
+            return Ok(new { message = "Task updated successfully.", updatedTask = task });
         }
 
         // DELETE: api/task/{taskId}
