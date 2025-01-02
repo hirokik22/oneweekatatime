@@ -116,26 +116,44 @@ export class TaskComponent {
     });
   }  
 
-  private loadTasks(): void {
-    const loginId = this.getLoginIdFromStorage();
-    if (loginId) {
-      this.taskService.getTasksByLoginId(loginId).subscribe({
-        next: (tasks) => {
-          this.tasks = tasks.map((task) => ({
-            ...task,
-            roomies: task.roomies || [], // Ensure roomies are initialized as an empty array if undefined
-          }));
-        },
-        error: (err) => {
-          this.errorMessage = err.message || 'Failed to load tasks for this user.';
-        },
-      });
-    } else {
-      this.errorMessage = 'No user ID found. Please log in again.';
-    }
-  }  
+    private loadTasks(): void {
+      const loginId = this.getLoginIdFromStorage();
+      if (loginId) {
+        console.log('Login ID retrieved from storage:', loginId); // Debug login ID
+    
+        this.taskService.getTasksByLoginId(loginId).subscribe({
+          next: (tasks) => {
+            console.log('Tasks fetched from backend:', tasks); // Debug tasks fetched
+    
+            this.tasks = tasks.map((task) => {
+              // Map assignedRoomies to Roomie objects
+              const roomies = task.assignedRoomies?.map((name, index) => ({
+                roomieid: index + 1, // Generate a placeholder roomieid
+                loginid: loginId,    // Assign loginId
+                roomiename: name,    // Assign roomie name
+              })) || [];
+    
+              console.log(`Task ID: ${task.taskId}, Roomies:`, roomies); // Debug each task and its roomies
+    
+              return {
+                ...task,
+                roomies, // Assign mapped roomies
+              };
+            });
+    
+            console.log('Processed tasks with roomies:', this.tasks); // Debug processed tasks
+          },
+          error: (err) => {
+            console.error('Error fetching tasks:', err); // Debug error
+            this.errorMessage = err.message || 'Failed to load tasks for this user.';
+          },
+        });
+      } else {
+        console.warn('No user ID found in storage.'); // Debug missing user ID
+        this.errorMessage = 'No user ID found. Please log in again.';
+      }
+    }  
   
-
   private loadRoomies(): void {
     const loginId = this.getLoginIdFromStorage();
     if (loginId) {
