@@ -9,16 +9,16 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
 @Component({
   selector: 'app-task',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Add CommonModule here
+  imports: [CommonModule, FormsModule],
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css'],
 })
 export class TaskComponent {
   errorMessage: string | null = null;
   tasks: Task[] = [];
-  roomies: Roomie[] = []; // Array to hold roomies
+  roomies: Roomie[] = []; 
   daysOfWeek: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-  showTaskForm: { [day: string]: boolean } = {}; // Tracks visibility of the form for each day
+  showTaskForm: { [day: string]: boolean } = {}; 
 
   newTask: Task = {
     taskId: 0,
@@ -27,8 +27,8 @@ export class TaskComponent {
     dayOfWeek: '',
     isCompleted: false,
     taskOrder: 0,
-    loginId: 0, // Updated field for LoginId
-    roomies: [], // Initialize as an empty array
+    loginId: 0, 
+    roomies: [], 
   };
   
 
@@ -59,8 +59,8 @@ export class TaskComponent {
         dayOfWeek: day,
         isCompleted: false,
         taskOrder: this.getTasksForDay(day).length + 1,
-        loginId: loginId || 0, // Assign LoginId to the new task
-        roomies: [], // Initialize with an empty array
+        loginId: loginId || 0, 
+        roomies: [], 
       };
     }
   }  
@@ -71,13 +71,13 @@ export class TaskComponent {
       return;
     }
   
-    const roomieIds = this.newTask.roomies.map((roomie) => roomie.roomieid); // Extract selected roomie IDs
+    const roomieIds = this.newTask.roomies.map((roomie) => roomie.roomieid); 
   
     this.taskService.createTask(this.newTask, roomieIds).subscribe({
       next: () => {
         this.errorMessage = null;
         this.loadTasks();
-        this.showTaskForm[this.newTask.dayOfWeek] = false; // Hide the form after task creation
+        this.showTaskForm[this.newTask.dayOfWeek] = false;
       },
       error: (err) => {
         this.errorMessage = err.message || 'Failed to create task.';
@@ -94,27 +94,34 @@ export class TaskComponent {
       },
     });
   }
-
-  toggleTaskCompletion(task: Task): void {
-    task.isCompleted = !task.isCompleted;
-  
-    // Exclude unnecessary fields
-    const sanitizedTask = { ...task };
-    delete (sanitizedTask as any).assignedRoomie;
-  
-    // Extract roomie IDs from the task
-    const roomieIds = task.roomies.map((roomie) => roomie.roomieid);
-  
-    console.log('Updating task with sanitized payload:', sanitizedTask, 'Roomie IDs:', roomieIds);
-  
-    this.taskService.updateTask(sanitizedTask, roomieIds).subscribe({
-      next: () => this.loadTasks(),
-      error: (err) => {
-        this.errorMessage = `Failed to update task: ${err.message}`;
-        console.error('Task update error:', err);
-      },
-    });
-  }  
+    toggleTaskCompletion(task: Task): void {
+   
+      task.isCompleted = !task.isCompleted;
+    
+   
+      const roomieIds = task.roomies.map((roomie) => roomie.roomieid);
+    
+      // Ensure roomies are included in the sanitized task
+      const sanitizedTask = {
+        ...task,
+        roomieIds: roomieIds // Include roomie IDs for backend processing
+      };
+    
+      console.log('Updating task with sanitized payload:', sanitizedTask);
+    
+      // Send the update request
+      this.taskService.updateTask(sanitizedTask, roomieIds).subscribe({
+        next: () => {
+          console.log(`Task ${task.taskId} updated successfully.`);
+          this.loadTasks(); 
+        },
+        error: (err) => {
+          this.errorMessage = `Failed to update task: ${err.message}`;
+          console.error('Task update error:', err);
+        },
+      });
+    }
+    
 
     private loadTasks(): void {
       const loginId = this.getLoginIdFromStorage();
@@ -128,28 +135,28 @@ export class TaskComponent {
             this.tasks = tasks.map((task) => {
               // Map assignedRoomies to Roomie objects
               const roomies = task.assignedRoomies?.map((name, index) => ({
-                roomieid: index + 1, // Generate a placeholder roomieid
-                loginid: loginId,    // Assign loginId
-                roomiename: name,    // Assign roomie name
+                roomieid: index + 1, 
+                loginid: loginId,   
+                roomiename: name,    
               })) || [];
     
               console.log(`Task ID: ${task.taskId}, Roomies:`, roomies); // Debug each task and its roomies
     
               return {
                 ...task,
-                roomies, // Assign mapped roomies
+                roomies, 
               };
             });
     
-            console.log('Processed tasks with roomies:', this.tasks); // Debug processed tasks
+            console.log('Processed tasks with roomies:', this.tasks); 
           },
           error: (err) => {
-            console.error('Error fetching tasks:', err); // Debug error
+            console.error('Error fetching tasks:', err); 
             this.errorMessage = err.message || 'Failed to load tasks for this user.';
           },
         });
       } else {
-        console.warn('No user ID found in storage.'); // Debug missing user ID
+        console.warn('No user ID found in storage.'); 
         this.errorMessage = 'No user ID found. Please log in again.';
       }
     }  
@@ -172,7 +179,7 @@ export class TaskComponent {
   // Helper method to retrieve loginId from session storage or other source
   private getLoginIdFromStorage(): number | null {
     console.log('Raw sessionStorage loginId:', sessionStorage.getItem('loginId'));
-    const loginId = sessionStorage.getItem('loginId'); // Or replace with appropriate key
+    const loginId = sessionStorage.getItem('loginId'); 
     return loginId ? Number(loginId) : null;
   }
 
@@ -185,7 +192,7 @@ export class TaskComponent {
     }
   
     if (checkbox.checked) {
-      // Check if the roomie is already added to prevent duplicates
+    
       if (!this.newTask.roomies.some(r => r.roomieid === roomie.roomieid)) {
         this.newTask.roomies.push(roomie);
       }

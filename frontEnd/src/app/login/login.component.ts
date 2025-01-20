@@ -30,7 +30,6 @@ export class LoginComponent {
       (response: any) => {
         console.log('Login successful:', response);
   
-        // Store loginId in session storage
         if (response.loginId) {
           console.log('Storing loginId:', response.loginId);
           sessionStorage.setItem('loginId', response.loginId.toString());
@@ -47,7 +46,6 @@ export class LoginComponent {
     );
   }
   
-
   // Handle navigation to sign-up page
   navigateToSignUp() {
     this.router.navigate(['/sign-up']); // Replace with the actual sign-up route

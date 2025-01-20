@@ -1,14 +1,14 @@
-/* Login container */
+
 .login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Full height of the viewport */
+  height: 100vh; 
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(to bottom, #e6f2ff, #0056b3); /* Soft gradient background */
+  background: linear-gradient(to bottom, #e6f2ff, #0056b3); 
   padding: 30px;
-  box-sizing: border-box; /* Ensure padding is included in height calculations */
+  box-sizing: border-box; 
 }
 
 /* Page title */
@@ -20,18 +20,18 @@ h1 {
   text-align: center;
 }
 
-/* Form styling */
+
 form {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   width: 100%;
-  max-width: 400px; /* Restrict the form width */
-  box-sizing: border-box; /* Ensure padding doesnâ€™t expand the form */
+  max-width: 400px; 
+  box-sizing: border-box; 
 }
 
-/* Form group styling */
+
 .form-group {
   margin-bottom: 20px;
 }
@@ -48,17 +48,17 @@ label {
 /* Input field styling */
 input {
   width: 100%;
-  padding: 12px 15px; /* Equal padding on both sides for placeholders */
+  padding: 12px 15px; 
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
   outline: none;
   transition: border-color 0.3s ease;
-  box-sizing: border-box; /* Ensures the padding fits within the width */
+  box-sizing: border-box;
 }
 
-/* Input hover and focus effects */
+
 input:focus {
   border-color: #007bff;
   background-color: #fff;
@@ -68,16 +68,16 @@ input:focus {
 /* Button container */
 .button-container {
   display: flex;
-  flex-direction: row; /* Stack buttons vertically */
-  gap: 15px; /* Space between the buttons */
-  align-items: center; /* Center buttons horizontally */
-  margin-top: 30px; /* Space above the buttons */
+  flex-direction: row;
+  gap: 15px; 
+  align-items: center;
+  margin-top: 30px; 
 }
 
 /* Button base styling */
 button {
-  width: 100%; /* Full button width */
-  max-width: 200px; /* Limit the button width */
+  width: 100%; 
+  max-width: 200px; 
   padding: 12px;
   font-size: 1rem;
   font-weight: bold;
@@ -88,7 +88,6 @@ button {
   text-align: center;
 }
 
-/* Login button styling */
 .login-btn {
   background-color: #0056b3;
   color: white;
@@ -99,7 +98,7 @@ button {
   transform: scale(1.05);
 }
 
-/* Sign-up button styling */
+
 .signup-btn {
   background-color: #333;
   color: white;
@@ -111,11 +110,10 @@ button {
 }
 .button-group {
   display: flex;
-  justify-content: space-between; /* Adjust spacing between buttons */
-  gap: 10px; /* Add gap between buttons */
+  justify-content: space-between; 
 }
 
 .btn {
-  flex: 1; /* Optional: Make buttons the same width */
+  flex: 1; 
   text-align: center;
 }

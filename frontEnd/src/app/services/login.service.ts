@@ -8,21 +8,21 @@ import { Login } from '../model/login';
   providedIn: 'root',
 })
 export class LoginService {
-  baseUrl: string = 'http://localhost:5193/api'; // Update if backend port changes
+  baseUrl: string = 'http://localhost:5193/api'; 
 
   constructor(private http: HttpClient) {}
 
   // Store Authorization header
   storeAuthHeader(email: string, passwordHash: string): void {
     const authHeader = `Basic ${btoa(`${email}:${passwordHash}`)}`;
-    localStorage.setItem('authHeader', authHeader); // Use sessionStorage if needed
+    localStorage.setItem('authHeader', authHeader); 
   }
 
   // Get all logins
   Logins(): Observable<Login[]> {
     return this.http
       .get<Login[]>(`${this.baseUrl}/Login`) // Assuming /login returns a list of logins
-      .pipe(catchError(this.handleError)); // Error handling
+      .pipe(catchError(this.handleError)); 
   }
 
   // Login user
@@ -31,7 +31,7 @@ export class LoginService {
       .post<any>(`${this.baseUrl}/Login/login`, credentials)
       .pipe(
         catchError(this.handleError),
-        // Store the Authorization header on successful login
+
         tap((response: any) => {
           this.storeAuthHeader(credentials.email, credentials.passwordHash);
         })

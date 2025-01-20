@@ -26,14 +26,14 @@
 .day-column {
   flex: 1;
   display: flex;
-  flex-direction: column; /* Stack tasks and button vertically */
-  justify-content: space-between; /* Space tasks and the button */
+  flex-direction: column; 
+  justify-content: space-between; 
   align-items: stretch; /* Ensure the button stretches properly */
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
   background-color: #f9f9f9;
-  min-height: calc(6 * 120px + 20px); /* Default height for 6 tasks (task height + margins) */
+  min-height: calc(6 * 120px + 20px); 
 }
 
 .tasks-wrapper {
@@ -44,20 +44,20 @@
 }
 /* Position and style for the 'x' delete icon */
 .delete-icon {
-  position: absolute; /* Position it relative to the task-item */
-  top: 5px; /* Adjust positioning as needed */
+  position: absolute; 
+  top: 5px; 
   right: 5px;
-  color: #dc3545; /* Red color for delete */
-  font-size: 20px; /* Adjust size */
+  color: #dc3545; 
+  font-size: 20px; 
   font-weight: bold;
-  cursor: pointer; /* Show pointer on hover */
-  z-index: 1; /* Ensure it's on top of other content */
+  cursor: pointer; 
+  z-index: 1; 
   transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .delete-icon:hover {
-  color: #a71d2a; /* Darker red on hover */
-  transform: scale(1.2); /* Slight zoom-in effect */
+  color: #a71d2a; 
+  transform: scale(1.2); 
 }
 .task-item {
   position: relative;
@@ -65,7 +65,7 @@
   border-radius: 5px;
   padding: 10px;
   background-color: #d8eaff;
-  height: 120px; /* Fixed height for task items */
+  height: 120px; 
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* Space out content in tasks */
@@ -81,25 +81,25 @@
 .add-task-wrapper {
   margin-top: 10px; /* Add spacing between tasks and the button */
   display: flex;
-  justify-content: center; /* Center-align the button horizontally */
-  align-items: center; /* Center-align the button vertically if needed */
-  margin-top: auto; /* Push the button to the bottom of the day-column */
+  justify-content: center; 
+  align-items: center;
+  margin-top: auto; 
 }
 
 /* Circular button for adding tasks */
 .add-task-button {
-  width: 50px; /* Small, circular button */
+  width: 50px; 
   height: 50px;
   padding: 0;
   border: none;
   background-color: #007bff;
   color: white;
-  border-radius: 50%; /* Circular shape */
+  border-radius: 50%; 
   cursor: pointer;
-  font-size: 40px; /* Larger font size for "+" */
+  font-size: 40px; 
   text-align: center;
-  display: flex; /* Make the button content flex */
-  align-items: center; /* Center-align the "+" inside the button */
+  display: flex; 
+  align-items: center; 
   justify-content: center;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
@@ -112,7 +112,7 @@
 
 /* Checkbox styling */
 input[type='checkbox'] {
-  transform: scale(1.2); /* Make the checkbox slightly larger */
+  transform: scale(1.2); 
   cursor: pointer;
 }
 
@@ -142,7 +142,7 @@ input[type='checkbox'] {
 .task-form input,
 .task-form textarea,
 .task-form select {
-  width: 100%; /* Ensure full-width input fields */
+  width: 100%; 
   padding: 5px;
   margin-top: 5px;
   border: 1px solid #ccc;
@@ -150,9 +150,9 @@ input[type='checkbox'] {
   font-size: 14px;
 }
 
-/* Style for the dropdown (select) */
+/* Style for the dropdown */
 .task-form select {
-  background-color: white; /* Ensure the dropdown is visible */
+  background-color: white; 
   cursor: pointer;
 }
 

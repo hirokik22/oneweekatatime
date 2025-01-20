@@ -7,7 +7,7 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class SignUpService {
-  private baseUrl = 'http://localhost:5193/api/'; // Replace with your actual backend URL
+  private baseUrl = 'http://localhost:5193/api/'; 
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +16,7 @@ export class SignUpService {
    * @param signUpData - Contains email, password, and an array of roomie names
    */
   signUp(signUpData: { email: string; passwordHash: string; roomieNames: string[] }): Observable<any> {
-    const url = `${this.baseUrl}Login/sign-up`; // Ensure this matches your backend endpoint
+    const url = `${this.baseUrl}Login/sign-up`; 
 
     // Generate the Basic Auth header
     const authHeader = this.createAuthHeader(signUpData.email, signUpData.passwordHash);
@@ -28,19 +28,19 @@ export class SignUpService {
       .pipe(
         map((response: any) => {
           if (response?.success) {
-            return response; // Success case
+            return response; // In case of Success 
           } else {
             throw new Error(response?.message || 'Unexpected error occurred.');
           }
         }),
-        catchError(this.handleError) // Handle HTTP and parsing errors
+        catchError(this.handleError) 
       );
   }
 
   /**
-   * Create Basic Auth header
+   *  Basic Auth header
    * @param email - User email
-   * @param passwordHash - User password hash
+   * @param passwordHash - User password 
    */
   private createAuthHeader(email: string, passwordHash: string): string {
     return `Basic ${btoa(`${email}:${passwordHash}`)}`;

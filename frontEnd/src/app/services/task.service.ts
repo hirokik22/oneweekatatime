@@ -8,7 +8,7 @@ import { Task } from '../model/task';
   providedIn: 'root',
 })
 export class TaskService {
-  baseUrl: string = 'http://localhost:5193/api'; // Update if backend port changes
+  baseUrl: string = 'http://localhost:5193/api'; 
 
   constructor(private http: HttpClient) {}
 
@@ -59,12 +59,25 @@ export class TaskService {
   }
   
 
-  // Update an existing task
+  // Update an existing task /*FRANCESCO414
+
   updateTask(task: Task, roomieIds: number[]): Observable<any> {
     if (!task.taskId) {
       throw new Error('Task ID is missing in the request.');
     }
-    const payload = { ...task, roomieIds }; // Combine task and roomieIds into a single payload
+  
+    // Costruisci il payload per includere sempre i roomieIds
+    const payload = {
+      taskId: task.taskId,
+      taskName: task.taskName,
+      note: task.note,
+      isCompleted: task.isCompleted, // Aggiorna lo stato
+      dayOfWeek: task.dayOfWeek,
+      taskOrder: task.taskOrder,
+      loginId: task.loginId,
+      roomieIds: roomieIds // Roomie assegnati inclusi
+    };
+  
     return this.http
       .put(`${this.baseUrl}/task/${task.taskId}`, payload, { headers: this.getAuthHeader() })
       .pipe(
@@ -73,7 +86,11 @@ export class TaskService {
           return throwError(() => new Error(`Failed to update task: ${error.message}`));
         })
       );
-  }  
+  }
+  
+  
+
+
 
   // Delete a task by ID
   deleteTask(taskId: number): Observable<any> {

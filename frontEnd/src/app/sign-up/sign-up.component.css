@@ -23,8 +23,8 @@ form {
 
 .form-row {
     display: flex; /* Create a horizontal row layout */
-    justify-content: space-between; /* Add space between columns */
-    gap: 20px; /* Adds 20px space between the two columns */
+    justify-content: space-between; 
+    gap: 20px; 
 }
 
 .form-column {
@@ -33,8 +33,7 @@ form {
 }
 
 .form-column:last-child {
-    margin-right: 0; /* Remove margin for the last column */
-}
+    margin-right: 0; }
 
 .form-group {
     margin-bottom: 15px;
