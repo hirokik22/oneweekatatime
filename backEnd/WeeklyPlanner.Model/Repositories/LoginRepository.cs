@@ -6,47 +6,12 @@ using Npgsql;
 using NpgsqlTypes;
 
 
-
 namespace WeeklyPlanner.Model.Repositories
 {
     public class LoginRepository : BaseRepository
     {
         public LoginRepository(IConfiguration configuration) : base(configuration) { }
 
-
-/*  replacing below with GetLoginByEmail
-        public Login GetLoginByUsername(string email)
-        {
-            using (var dbConn = new NpgsqlConnection(ConnectionString))
-            {
-                try
-                {
-                    dbConn.Open();
-                    var cmd = dbConn.CreateCommand();
-                    cmd.CommandText = "SELECT * FROM login WHERE LOWER(email) = LOWER(@Email)";
-                    cmd.Parameters.AddWithValue("@Email", NpgsqlDbType.Varchar, email);
-
-                    var data = GetData(dbConn, cmd);
-
-                    if (data != null && data.Read())
-                    {
-                        return new Login
-                        {
-                            LoginId = Convert.ToInt32(data["loginid"]),
-                            Email = data["email"].ToString(),
-                            PasswordHash = data["passwordhash"].ToString()
-                        };
-                    }
-                    return null;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error fetching login: {ex.Message}");
-                    throw new Exception("Error fetching login by username", ex);
-                }
-            }
-        }
-*/
 
         // Retrieve all logins
         public List<Login> GetAllLogins()

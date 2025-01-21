@@ -1,34 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/WeeklyPlanner.API.csproj": {}
+    "/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/WeeklyPlanner.API.csproj": {}
   },
   "projects": {
-    "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/WeeklyPlanner.API.csproj": {
+    "/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/WeeklyPlanner.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/WeeklyPlanner.API.csproj",
+        "projectUniqueName": "/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/WeeklyPlanner.API.csproj",
         "projectName": "WeeklyPlanner.API",
-        "projectPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/WeeklyPlanner.API.csproj",
-        "packagesPath": "/Users/hiroki/.nuget/packages/",
-        "outputPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.API/obj/",
+        "projectPath": "/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/WeeklyPlanner.API.csproj",
+        "packagesPath": "/Users/francesco/.nuget/packages/",
+        "outputPath": "/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.API/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/hiroki/.nuget/NuGet/NuGet.Config"
+          "/Users/francesco/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj": {
-                "projectPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj"
+              "/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj": {
+                "projectPath": "/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj"
               }
             }
           }
@@ -76,27 +75,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.404/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj": {
+    "/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj",
+        "projectUniqueName": "/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj",
         "projectName": "WeeklyPlanner.Model",
-        "projectPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj",
-        "packagesPath": "/Users/hiroki/.nuget/packages/",
-        "outputPath": "/Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/obj/",
+        "projectPath": "/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/WeeklyPlanner.Model.csproj",
+        "packagesPath": "/Users/francesco/.nuget/packages/",
+        "outputPath": "/Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/hiroki/.nuget/NuGet/NuGet.Config"
+          "/Users/francesco/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -120,6 +118,18 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[9.0.0, )"
@@ -145,7 +155,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.404/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

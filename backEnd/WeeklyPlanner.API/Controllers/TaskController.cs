@@ -50,7 +50,6 @@ namespace WeeklyPlanner.API.Controllers
         }
 
         // GET: api/task
-        // GET: api/task?loginId=1
         [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<object>> GetAllTasks()
@@ -220,36 +219,48 @@ namespace WeeklyPlanner.API.Controllers
         // PUT: api/task/{taskId}
         [Authorize]
         [HttpPut("{taskId}")]
-        public ActionResult UpdateTask([FromRoute] int taskId, [FromBody] PlannerTask task)
-        {
-            if (task == null || taskId != task.TaskId)
-            {
-                return BadRequest(new { error = "Task data is invalid or Task IDs do not match." });
-            }
+public ActionResult UpdateTask([FromRoute] int taskId, [FromBody] PlannerTask task)
+{
+    if (task == null || taskId != task.TaskId)
+    {
+        return BadRequest(new { error = "Task data is invalid or Task IDs do not match." });
+    }
 
-            var loginId = GetLoginIdFromClaims();
-            if (loginId == null || task.LoginId != loginId)
-            {
-                return Unauthorized("You are not authorized to update this task.");
-            }
+    var loginId = GetLoginIdFromClaims();
+    if (loginId == null || task.LoginId != loginId)
+    {
+        return Unauthorized("You are not authorized to update this task.");
+    }
 
-            var existingTask = Repository.GetTaskById(taskId);
-            if (existingTask == null)
-            {
-                return NotFound(new { error = $"Task with ID {taskId} not found." });
-            }
+    var existingTask = Repository.GetTaskById(taskId);
+    if (existingTask == null)
+    {
+        return NotFound(new { error = $"Task with ID {taskId} not found." });
+    }
 
-            // Update the task with the provided data
-            var roomieIds = task.Roomies.Select(r => r.roomieid).ToList();
-            bool result = Repository.UpdateTask(task, roomieIds);
+    // Preserve existing Roomies if not provided in the update
+    List<int> roomieIds;
+    if (task.Roomies == null || !task.Roomies.Any())
+    {
+        roomieIds = Repository.GetRoomiesForTask(taskId).Select(r => r.roomieid).ToList();
+    }
+    else
+    {
+        // Use Roomies provided in the update request
+        roomieIds = task.Roomies.Select(r => r.roomieid).ToList();
+    }
 
-            if (!result)
-            {
-                return BadRequest(new { error = "Failed to update task." });
-            }
+    // Update the task with the provided data
+    bool result = Repository.UpdateTask(task, roomieIds);
 
-            return Ok(new { message = "Task updated successfully.", updatedTask = task });
-        }
+    if (!result)
+    {
+        return BadRequest(new { error = "Failed to update task." });
+    }
+
+    return Ok(new { message = "Task updated successfully.", updatedTask = task });
+}
+
 
         // DELETE: api/task/{taskId}
         [Authorize]
@@ -307,7 +318,6 @@ namespace WeeklyPlanner.API.Controllers
             return NoContent();
         }
 
-        // helper method
         private int? GetLoginIdFromClaims()
         {
             var loginIdClaim = User.Claims.FirstOrDefault(c => c.Type == "LoginId");

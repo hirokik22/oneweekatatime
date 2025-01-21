@@ -9,10 +9,10 @@ import { CommonModule } from '@angular/common';
   standalone:true,
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule], //premade stuff
 })
 export class SignUpComponent {
-  email: string = '';
+  email: string = '';// these are the variables
   password: string = '';
   rePassword: string = '';
   roomie1: string = '';

@@ -108,7 +108,7 @@ namespace WeeklyPlanner.Model.Repositories
                     }
                 }
 
-                return null; // Return null if no roomie is associated
+                return null; 
             }
         }
 

@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WeeklyPlanner.Model
-build_property.ProjectDir = /Users/hiroki/HD Projects/project-root/backEnd/WeeklyPlanner.Model/
+build_property.ProjectDir = /Users/francesco/Desktop/AppliedProgramming/OneWeekAtATime/backEnd/WeeklyPlanner.Model/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

@@ -26,7 +26,9 @@ namespace WeeklyPlanner.Model.Entities
         public int TaskOrder { get; set; }
 
         [Required(ErrorMessage = "LoginId is required.")]
-        public int LoginId { get; set; } // Foreign Key
+        public int LoginId { get; set; } 
+        public List<string>? AssignedRoomies { get; set; } //FRANCESCO414
+
 
         [ForeignKey("LoginId")]
         public virtual Login Login { get; set; } // Refers to the Login entity
@@ -44,3 +46,6 @@ namespace WeeklyPlanner.Model.Entities
         }
     }
 }
+
+
+

@@ -18,7 +18,7 @@ namespace WeeklyPlanner.API.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (context.GetEndpoint()?.Metadata.GetMetadata<IAllowAnonymous>() != null)
+            if (context.GetEndpoint()?.Metadata.GetMetadata<IAllowAnonymous>() != null) 
             {
                 await _next(context);
                 return;
